@@ -1,0 +1,122 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+{% block message_js %}
+    <!-- this makes message to auto dissappear after few seconds -->
+    <script type="text/javascript">
+
+    window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    
+
+    </script>
+{% endblock %}
+<style type="text/css">
+  @charset "utf-8";
+  .st0
+{
+  background : #FFFFFF;
+  background : rgba(255, 255, 255, 1);
+  border-style : Solid;
+  border-color : #231F20;
+  border-color : rgba(35, 31, 32, 1);
+  border-width : 0px;
+  
+  border-radius : 19px;
+  -moz-border-radius : 19px;
+  -webkit-border-radius : 19px;
+  box-shadow : 7px 7px 5px rgba(35, 31, 32, 0.3);
+  filter: alpha(opacity=3) progid:DXImageTransform.Microsoft.Alpha(opacity=3) progid:DXImageTransform.Microsoft.dropshadow(OffX=7, OffY=7, Color='#231F20') ;
+}
+</style>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>PDTPT PORTAL | LOGIN</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="{% static 'login/assets/bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'login/assets/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'login/assets/css/form-elements.css' %}">
+        <link rel="stylesheet" href="{% static 'login/assets/css/style.css' %}">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'login/assets/ico/apple-touch-icon-144-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'login/assets/ico/apple-touch-icon-114-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'login/assets/ico/apple-touch-icon-72-precomposed.png' %}">
+        <link rel="apple-touch-icon-precomposed" href="{% static 'login/assets/ico/apple-touch-icon-57-precomposed.png' %}">
+
+    </head>
+
+    <body>
+
+        <!-- Top content -->
+        <div class="top-content" style="margin-top: -70px;">
+          
+            <div class="inner-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                          <div class="form-top">
+                            
+                              <img src="{% static 'images/ICTA-Logo.png' %}" class="img-responsive center-block"   alt="">
+                            
+                           
+                            </div>
+                            <div class="form-bottom st0">
+                         
+                          <form class="login" method="POST" action="{% url 'account_login' %}" class="contact_form">
+  {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="button btn btn-success btn-block">
+             {% trans "Sign In" %}
+        </button>
+    {% endbuttons %}
+    
+    
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button secondaryAction" href="/accounts/password/reset/">{% trans "Forgot Password?" %}</a>
+  
+</form>
+                        </div>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+            
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="{% static 'login/assets/js/jquery-1.11.1.min.js' %}"></script>
+        <script src="{% static 'login/assets/bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'login/assets/js/jquery.backstretch.min.js' %}"></script>
+        <script src="{% static 'login/assets/js/scripts.js' %}"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>

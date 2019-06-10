@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+MENTORS LIST
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Mentors</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title button btn btn-red">MENTORS  LIST  </h3>
+            {% endblock %}
+{% block content %}
+ <div class="row">
+ <div class="col-md-1">
+   <a href="{% url 'add_mentor' %}" class="button btn btn-sm btn-primary">Add Mentor</a> 
+ </div>
+ <div class="col-md-1">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Mentor Name</th>
+                  <th>Honors</th>
+                  <th>Title</th>
+                  <th>Company</th>
+                  <th>Mobile Number</th>
+                  <th>Email</th>
+                  <th>Availability</th>
+                  
+                   <th>Profile</th>
+                    <th>Update</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for mentor in mentors %}
+                
+                <tr>
+                  <td>
+                   {% if mentor.supervisor.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ mentor.supervisor.userprofile.picture.url }}" height=40px width="40px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=40px width="40px" class="img-rounded zoom"> 
+            {% endif %} 
+                  {{mentor.supervisor.last_name}} {{mentor.supervisor.first_name}}</td>
+                  <td>{{mentor.honors}}</td>
+                  <td>{{mentor.position}}</td>
+                  <td>{{mentor.organization}}</td>
+                  <td>{{mentor.supervisor.userprofile.phone_number}}</td>
+                  <td>{{mentor.supervisor.email}}</td>
+                  <td>
+                  {% if mentor.mentor_availability == True %}
+                  Available
+                  {% else %}
+                  Not Available
+                  {% endif %}</td>
+                  <td>
+                  <a href="#{{mentor.supervisor.id}}" data-toggle="modal"><span class="button btn btn-sm btn-success  glyphicon glyphicon-user"></span></a>
+                  </td>
+                  <td>
+                  <a href="{% url 'mentor_profile_update' mentor.supervisor.id %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary glyphicon glyphicon-edit"></span></a>
+                  </td>
+                 
+                  
+                </tr>
+               <div class="modal fade" id="{{mentor.supervisor.id}}" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if mentor.supervisor.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ mentor.supervisor.userprofile.picture.url }}" height=160px width="160px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded zoom"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{mentor.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{mentor.supervisor.last_name}} {{mentor.supervisor.first_name}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Honors:
+          </div>
+          <div class="col-md-6">
+          {{mentor.honors}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Title:
+          </div>
+          <div class="col-md-6">
+          {{mentor.position}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Company:
+          </div>
+          <div class="col-md-6">
+          {{mentor.organization}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{mentor.supervisor.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{mentor.supervisor.email}}
+          </div>
+          </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+                {% endfor %}
+               </tbody>
+  </table>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+
+
+<script>
+$('.like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'deactivate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$('.activate').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [1,6] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

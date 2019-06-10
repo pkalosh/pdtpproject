@@ -1,0 +1,84 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block content %}
+      <!-- ================ -->
+      <div class="banner dark-translucent-bg" style="background-image:url('/static/slide4a.jpg'); background-position: 50% 27%;">
+        <!-- breadcrumb start -->
+        <!-- ================ -->
+        
+        <!-- breadcrumb end -->
+        <div class="container">
+          <div class="row justify-content-lg-center">
+            <div class="col-lg-8 text-center pv-20">
+              <h3 class="title logo-font hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 40px"><span class="text-default"style="color: red" >Request for</span> Interns.</h3>
+              <div class="separator hc-element-invisible mt-10" data-animation-effect="fadeIn" data-effect-delay="100"></div>
+              <p class="text-center hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 20px"> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- banner end -->
+
+      <!-- main-container start -->
+      <!-- ================ -->
+      <section class="main-container padding-bottom-clear" style="margin-top: 40px;">
+
+        <div class="container">
+          <div class="row">
+
+            <!-- main start -->
+            <!-- ================ -->
+            <div class="main col-12">
+             
+              <div class="separator-2"></div>
+              <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8">
+                        {% if messages %}
+      <ul>
+  {% for message in messages %}
+    <div class="alert alert-success ">
+    <p>{{message}}</p>
+     </div>
+    
+  {% endfor %}
+      </ul>
+    {% endif %}
+                <form action="." method="post">
+                  {% csrf_token %}
+                
+                  <div class="row">
+                {% for field in form %}
+                <div class="col-md-6">
+                   {% bootstrap_field field %}</div>
+                {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-md-12" style="float:right; text-align:right;color: white">
+          
+                  <input  type="submit"  value="Send" class="button btn btn-danger  btn-block" style=" white">
+                  </div>
+                </div>
+                </form>
+                </div>
+              </div>
+            </div>
+            <!-- main end -->
+
+          </div>
+
+
+        </div>
+
+        
+
+       
+        <!-- section end -->
+
+      </section>
+      <!-- main-container end -->
+
+    
+{% endblock %}

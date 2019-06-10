@@ -1,0 +1,139 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Digitalent</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+     <meta name="description" content="DigiTalent is the brand name for the Presidential Digital Talent Programme (PDTP), an internship programme that develops the ICT talent pool in Kenya through a collaboration between the public and private sectors. It is a partnership between government, public and private sector stakeholders and is to be implemented by the Ministry of Information Communications and Technology (MoICT) through the ICT Authority (ICTA)">
+    <meta name="author" content="author">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'ICTA-Logo.png' %}">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="{% static 'charity/css/font-awesome.min.css' %}">
+
+    <!-- ElegantFonts CSS -->
+    <link rel="stylesheet" href="{% static 'charity/css/elegant-fonts.css' %}">
+
+    <!-- themify-icons CSS -->
+    <link rel="stylesheet" href="{% static 'charity/css/themify-icons.css' %}">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="{% static 'charity/css/swiper.min.css' %}">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'charity/style.css' %}">
+     {% block message_js %}
+    <!-- this makes message to auto dissappear after few seconds -->
+    <script type="text/javascript">
+
+    window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    
+
+    </script>
+{% endblock %}
+    
+</head>
+<body>
+    <header class="site-header">
+        <div class="top-header-bar hidden-xs hidden-sm" >
+            <div class="container hidden-xs hidden-sm">
+                <div class="row flex-wrap justify-content-center justify-content-lg-between align-items-lg-center">
+                    <div class="col-12 col-lg-8 d-none d-md-flex flex-wrap justify-content-center justify-content-lg-start mb-3 mb-lg-0">
+                        <div class="header-bar-email">
+                            <a href="#">pdtp@ict.go.ke</a>
+                        </div><!-- .header-bar-email -->
+
+                       
+                    </div><!-- .col -->
+
+                    <div class="col-12 col-lg-4 d-flex flex-wrap justify-content-center justify-content-lg-end align-items-center">
+                        <div class="donate-btn">
+                            <a href="{% url 'request_interns' %}">Request for Interns</a>
+
+                        </div><!-- .donate-btn -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .top-header-bar -->
+
+        <div class="nav-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="site-branding d-flex align-items-center">
+                           <a class="d-block {% if nbar == 'home' %}current-menu-item{% endif %}" href="/" rel="home"><img class="d-block" src="{% static 'ICTA-Logo.png' %}" style="height:60px; width: 180px;" alt="logo"></a>
+                        </div><!-- .site-branding -->
+
+                        <nav class="site-navigation d-flex justify-content-end align-items-center">
+                            <ul class="d-flex flex-column flex-lg-row justify-content-lg-end align-content-center">
+                                <li class="{% if nbar == 'home' %}current-menu-item{% endif %}"><a href="/">Home</a></li>
+                                <li class=" {% if request.resolver_match.url_name == 'mentorship' %}current-menu-item{% endif %}"><a href="{% url 'mentorship' %}">Mentorship</a></li>
+                                <li class=" {% if request.resolver_match.url_name == 'partners' %}current-menu-item{% endif %}"><a href="{% url 'partners' %}">Partners</a></li>
+                                <li class="{% if request.resolver_match.url_name == 'experts' %}current-menu-item{% endif %} "><a href="{% url 'experts' %}">Our Graduates</a></li>
+                                <li class="{% if request.resolver_match.url_name == 'stories' %}current-menu-item{% endif %} {% if request.resolver_match.url_name == 'story' %}current-menu-item{% endif %}  "><a href="{% url 'stories' %}">Success Stories</a></li>
+                              
+                                <li><a href="https://recruitment.digitalent.go.ke">Apply Now</a></li>
+                                 <li><a href="{% url 'alumni_registration' %}">Alumni</a></li>
+                                <li><a href="{% url 'account_login' %}" style="color: green"><b>PORTAL</b></a></li>
+                            </ul>
+                        </nav><!-- .site-navigation -->
+
+                        <div class="hamburger-menu d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div><!-- .hamburger-menu -->
+                    </div><!-- .col -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .nav-bar -->
+    </header><!-- .site-header -->
+
+{% block content %}
+
+
+   
+
+
+    
+    {% endblock %}
+    <footer class="site-footer">
+        <div class="footer-bar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> Copyright © 2019. All rights reserved. <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="" target="_blank">Digitalent</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                    </div><!-- .col-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </div><!-- .footer-bar -->
+    </footer><!-- .site-footer -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+    <script type='text/javascript' src="{% static 'charity/js/jquery.js' %}"></script>
+    <script type='text/javascript' src="{% static 'charity/js/jquery.collapsible.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'charity/js/swiper.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'charity/js/jquery.countdown.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'charity/js/circle-progress.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'charity/js/jquery.countTo.min.js' %}"></script>
+    <script type='text/javascript' src="{% static 'charity/js/jquery.barfiller.js' %}"></script>
+    <script type='text/javascript' src="{% static 'charity/js/custom.js' %}"></script>
+
+</body>
+</html>

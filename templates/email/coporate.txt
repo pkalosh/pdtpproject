@@ -1,0 +1,16 @@
+
+
+<p>Dear {{supervisor}}</p>
+<p>
+I would like to kindly ask for your approval to my {{leave_type}} leave starting on {{start_date}} and ending on {{end_date}}.
+</p><p>
+Kindly logon to {{url}} for details and approval</p>
+<p>
+I appreciate your prompt response for my request.</p>
+<p>
+Best Regards</p>
+<p>{{intern}}<br>
+{{intern_email}}<br>
+
+</p>
+

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+     
+
+{% block content %}
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">{{person.last_name}} {{person.first_name}} Program Exit Debrief</h4>
+        
+      </div>
+      <div class="modal-body">
+      
+
+          <form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+<div id="demo" class="collapse">
+x
+</div>
+
+        {% bootstrap_form form %}
+     <button  type="submit" class="btn btn-primary odom-submit" >Submit</button>
+     </form>
+      </div>
+      
+  
+{% endblock %}

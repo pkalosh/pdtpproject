@@ -1,0 +1,101 @@
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+<html>
+    <head>
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href="{% static 'notify/notify.css' %}" rel="stylesheet"/>
+<script type="text/javascript" src="{% static 'notify/jquery-2.1.4.js' %}"></script>
+  <!-- include the notif-js -->
+  <script type="text/javascript" src="{%static 'notify/notify.js' %}"></script>
+        <style type="text/css">
+            body{
+                max-width: 100%; 
+                background-size: 100%;
+                background-image:url('{{ STATIC_URL }}static/images/login.png');
+                
+                background-repeat: no-repeat;
+            }
+            .form-control {
+    border-radius: 0;
+    width: 30%;
+    height: auto;
+}
+.aa{
+                
+                
+                margin: 0 auto;
+                margin-top: 250px;
+                padding-top:10px;
+                padding-left:20px;
+                border-radius:15px;
+                
+            }
+label {
+    margin-left: 40%;
+    
+}
+
+.aa input[type="submit"]{
+                width:100px;
+                height: 25px;
+                margin-top:10px;
+                margin-bottom:10px;
+                border:0;
+                border-radius:5px;
+                -webkit-border-radius:5px;
+                -o-border-radius:5px;
+                -moz-border-radius:5px;
+                background-color:skyblue;
+                font-weight:bolder;
+            }
+
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative;
+    margin-left: 40%;
+    margin-top: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+        </style>
+    </head>
+    <body >
+    {% if messages %}
+  {% for message in messages %}
+  <script>
+         notify('{{message.level_tag}}', "{{message}}");
+    </script>
+    
+  {% endfor %}
+      
+    {% endif %}
+<div class="aa"> 
+<form class="form-signin" method="POST" action="{% url 'account_login' %}">   
+<div class="inner-addon">
+     {% csrf_token %}
+    {% bootstrap_form form %}
+</div>
+<div class="inner-addon left-addon">
+    
+    <input type="submit" class="form-control" />
+</div>
+</div>
+    </body>
+</html>

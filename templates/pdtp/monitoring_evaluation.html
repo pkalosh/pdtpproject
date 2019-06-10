@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+     
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">On Site Monitoring and Evaluation</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+{% block content %}
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <h4 style="color: red;"><strong>INTERNSHIPS MONITORING AND & EVALUATION  QUESTIONNAIRE FOR {{phase.phase|upper}}</strong></h4>
+
+ <br>
+
+
+
+  <form  method="POST" action="" class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+  {% if user.userprofile.user_category  == "PDTP" %}
+ <b>I. FOR THE INTERN:</b><br>
+<b>Internship Evaluation:  <br> 
+
+ <br>
+<p>On a scale of 1-5, with 5 being excellent,4-Very good, 3-
+Good,2- Fair, 0-1=> Poor, how would you assess your
+performance in the following areas so far? </p>
+<ul>
+  <li>Excellent- Consistently exceeds expectations</li>
+  <li>Good- Sometimes exceeds expectations</li>
+  <li>Average - Meets expectation</li>
+  <li>Poor- Rarely meets expectations</li>
+  <li>N/A (Not Applicable)-Not applicable to this internship experience</li>
+  <li>Please provide examples and rationale where appropriate.
+</li>
+</ul></b>
+ {% for parameter in itern_me_params %}
+
+  <li>{{parameter.name}}</li>
+<label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Excellent">Excellent<br>
+      
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Good">Good
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Average">Average
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Poor">Poor
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="N/A">N/A
+    </label><br>
+  {% endfor %}
+<br>
+  {{ form.media }}
+   {% bootstrap_form form %}
+    <label>Choose supervisor to approve your Quarterly Report</label>
+ <select name=supervis>
+ <option >--------</option>
+ {% for super in supervisor %}
+   <option >{{super.supervisor.username}}</option>
+ {% endfor %}
+ </select>
+ 
+  {% else %}
+
+<b>II. FOR THE SUPERVISOR:</b>
+<p><strong>1. Rate the intern on the following parameters:</strong></p>
+
+ 
+ {% for parameter in supervisor_me_param %}
+
+  <li>{{parameter.name}}</li>
+<label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="5">5
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="1">1
+    </label><br>
+    
+  {% endfor %}
+ 
+    <div>
+<label> What are the interns outstanding STRENGTHS</label>
+<textarea class="form-control" name="me-intern_strength" ></textarea>
+   </div> 
+    <div>
+<label> In what areas does the intern need IMPROVEMENT?</label>
+<textarea class="form-control" name="areas_improvement" ></textarea>
+   </div> 
+   {% endif %}<br>
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" style="float: right;">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Submit
+      </button>
+  {% endbuttons %}
+
+</form>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+{% endblock %}

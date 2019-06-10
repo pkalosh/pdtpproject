@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{{year }} PARTNER ORGANIZATIONS LIST
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Organizations</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title btn-red">PARTNER ORGANIZATIONS </h3>
+            {% endblock %}
+{% block content %}
+ <div class="row">
+ <div class="col-md-2">
+   <a href="{% url 'add_organization' %}" class="button btn btn-sm btn-primary">Add Organization</a> 
+ </div>
+ <div class="col-md-1">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+        </div>
+</div>
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Location</th>
+<th>Contact Person</th>
+<th>Email</th>
+<th>Cell </th>
+                <th>Update</th>
+              <th>Supervisors</th>
+              <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for org in organizations %}
+                <tr>
+                  <td>{% if org.category == True %} Public 
+                  {% else %} Private 
+                  {% endif %}</td>
+                  <td>{{org.organization}}</td>
+                  <td>{{org.location}}</td>
+
+<td>{% for con in org.supervisor_set.all %}
+{% if con.is_contact_person == True %}{{con.supervisor.last_name}} {{con.supervisor.first_name}}{% endif %}
+{% endfor %}</td>
+<td>{% for con in org.supervisor_set.all %}
+{% if con.is_contact_person == True %}{{con.supervisor}} {% endif %}
+{% endfor %}</td>
+<td>{% for con in org.supervisor_set.all %}
+{% if con.is_contact_person == True %}{{con.supervisor.userprofile.phone_number}}{% endif %}
+{% endfor %}</td>
+
+
+
+                
+                  <td>
+                  <a href="{% url 'organization_update' org.id %}"><span class="glyphicon glyphicon-check button btn btn-sm btn-success"></span></a> 
+                  </td>
+                  <td>
+                  <a href="{% url 'supervisors' org.id %}"><i class="fa fa-user fa-lg " style="font-size:40px; color:#00a65a; text-align:right; float:right;" aria-hidden="true"></i></a>
+                  </td>
+                   
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+
+
+
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [7] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

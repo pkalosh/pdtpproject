@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        Trainings/Certificationss
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Trainings/Certifications
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+              <h3 class="box-title button btn btn-red">My Trainings/Certifications</h3>
+            {% endblock %}
+
+{% block content %}
+ {% for f in feed %}
+               {{f.feedback}}
+               {% endfor %}
+ <div class="row">
+  {% if user.userprofile.active == True %}
+ <div class="col-md-1">
+ 
+
+   <a href="{% url 'training_list' %}" class="button btn btn-sm btn-success">Apply Training/Certification</a> 
+ </div>
+ <div class="col-md-1"></div>
+ {% endif %}
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-success btn-sm" type="button" value="Back" />
+</div>
+
+</div>
+{% if train %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Training/certification</th>
+                  <th>Institution</th>
+                  <th>Status</th>
+                  <th>Category</th>
+                  
+                  <th>cert_no </th>
+                  <th>Attended Training </th>
+                  <th>update</th>
+                  <th>Feedback</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for course in train %}
+                
+                <tr>
+                  <td>{{course.course|safe}}</td>
+                  <td>{{course.institution|safe}}</td>
+                  <td>{{course.status|safe}}</td>
+                  <td>{{course.category|safe}}</td>
+                  <td>{{course.cert_no|safe}}</td>
+                  <td>{{course.attended_training|safe}}</td>
+                  {% if course.attended_training == False%}
+                  <td><a href="{% url 'update_my_training' course.id %}" class="btn btn-success">Update</a></td>
+                  {% else %}
+                  <td><a href="#" class="btn btn-success">Completed Training</a></td>
+
+                  
+                  {% endif %}
+                  {% if course.trainingfeedback.feedback %}
+                  <td><a href="#" class="btn btn-success">Submitted</a></td>
+                  {% else %}
+                  <td><a href="{% url 'training_Feedback' course.id %}" class="btn btn-success">Feedback</a></td>
+                  {% endif %}
+                   
+                   
+
+                 
+                  
+                </tr>
+               {% endfor %}
+                  
+
+                
+                  
+</tbody>
+</table>
+</div>
+{% else %}
+<h3 style="text-decoration-color: blue"> You have not applied for trainings. kindly click apply training/certification button</h3>
+{% endif %}
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

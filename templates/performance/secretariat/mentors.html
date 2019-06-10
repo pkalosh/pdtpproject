@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+MENTORS EVALUATIONS
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Mentors Evaluations</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    
+{% block content %}
+{% endblock %}

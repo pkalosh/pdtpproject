@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        QUARTERLY REPORTS
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Quarterly Reports
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+
+{% block content %}
+<div class="row">
+  {% if user.userprofile.active == True %}
+ <div class="col-md-1">
+ 
+
+   <a href="{% url 'add_quarter' %}" class="button btn btn-sm btn-primary">Add new quarter/phase</a> 
+ </div>
+ <div class="col-md-1"></div>
+ {% endif %}
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+
+</div>
+
+<br>
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Quarter/Phase</th>
+                  <th>status</th>
+                  <th>pdtp Reports</th>
+                  <th>Update Phase/Quarter</th>
+                
+                </tr>
+                </thead>
+                <tbody>
+                {% for report in reports %}
+                
+                <tr>
+                  <td>{{report.quater|safe}} {{report.pdtp.first_name|safe}}</td>
+                  <td>{{report.status|safe}}</td>
+                  <td><a href="{% url 'quarter_reports' report.id %}"  class="btn btn-success">reports submitted</a></td>
+                  <td><a href="{% url 'update_quarter' report.id %}" class="btn btn-success target="_blank">update </a></td>
+                   
+                 
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [  25, 50,100,150, -1 ],
+            [  '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

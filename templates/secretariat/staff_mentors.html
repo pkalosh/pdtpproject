@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Secretariat</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title button btn btn-red">ICTA SECRETARIAT MEMBERS
+</h3>
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+{% block content %}
+ <div class="row">
+ <div class="col-md-1">
+   <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Add as a Metor</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for mentor in management %}
+                
+                <tr>
+                  <td>{{mentor.user.last_name}} {{mentor.user.first_name}}</td>
+                  <td>{{mentor.user.email}}</td>
+                  <td>
+                  {% if mentor.user.supervisor_set.all %}
+                  {% for m in mentor.user.supervisor_set.all %}
+                  {% if m.is_mentor == True %}
+                  <span class="button btn btn-sm btn-success" style="float: right;">Is a mentor </span>
+                  {% else %}
+                  <a href="{% url 'add_staff'  mentor.user.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary" style="float: right;">Add</span></a>
+                  {% endif %}
+                  {% endfor %}
+                  {% else %}
+                  <a href="{% url 'add_staff'  mentor.user.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary" style="float: right;">Add</span></a>
+                  {% endif %}
+                  </td>
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+                {% for mentor in secretariat %}
+                
+                <tr>
+                  <td>{{mentor.user.last_name}} {{mentor.user.first_name}}</td>
+                  <td>{{mentor.user.email}}</td>
+                  <td>
+                  {% if mentor.user.supervisor_set.all %}
+                  {% for m in mentor.user.supervisor_set.all %}
+                  {% if m.is_mentor == True %}
+                  <span class="button btn btn-sm btn-success" style="float: right;">Is a mentor </span>
+                  {% else %}
+                  <a href="{% url 'add_staff'  mentor.user.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary" style="float: right;">Add</span></a>
+                  {% endif %}
+                  {% endfor %}
+                  {% else %}
+                  <a href="{% url 'add_staff'  mentor.user.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary" style="float: right;">Add</span></a>
+                  {% endif %}
+                  </td>
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+
+
+
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+
+
+<script>
+$('.like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'deactivate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$('.activate').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 10, 25, 50,100,150, -1 ],
+            [ '10 rows', '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+            'pageLength',
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        //columnDefs: [
+            //{ "visible": false, "targets": [2, 3,6,7] }
+        //]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

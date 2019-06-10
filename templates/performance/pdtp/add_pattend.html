@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load bootstrap %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Trainings and Certifications
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+             <div class="row">
+ <div class="col-md-2 col-xs-3 col-sm-3">
+   <a href="{% url 'ministry_activities' %}" class="button btn btn-sm btn-primary">Ministry Activities</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'private_sector_activities' %}" class="button btn btn-sm btn-primary">Private Sector</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'my_trainings' %}" class="button btn btn-sm btn-primary">Trainings</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'my_performance' %}" class="button btn btn-sm btn-primary">My Results</a> 
+ </div>
+ <div class="col-md-1"  style="margin-left: -3px;">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+          
+            {% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+  .add-row {
+display:block;
+margin-top:15px;
+}
+.add-row:before{
+font-family: FontAwesome;
+content: "\f055";
+margin-right: 0.3em;
+
+}
+.delete-row:before{
+font-family: FontAwesome;
+content: "\f056";
+margin-right: 0.3em;
+color: red;
+}
+</style>
+
+<!--
+
+<form  id="my-form" method="post" action="." >
+{% csrf_token %}
+
+
+<input type="submit" value="submit" class="button btn btn-primary btn-md" />
+</form>
+
+    
+
+
+
+
+-->
+<h2>Private sector attendance</h2>
+<form method="post" action="." enctype="multipart/form-data">
+          {% csrf_token %}
+        <div class="row">
+          {% for field in form %}
+        <div class="col-md-6 col-sm-12 col-xs-12">
+        {% bootstrap_field field %}
+      </div>
+       {% endfor %}
+     </div>
+        <input type="submit" class="btn btn-primary bt-sm" style="float: right;" Value =" Submit" />
+      </form>
+     
+    <!-- /.content -->{% endblock %}
+    {% block tables_js_script %}
+  
+  
+{% endblock %}
+
+

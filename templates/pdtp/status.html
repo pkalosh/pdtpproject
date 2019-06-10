@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+     
+
+{% block content %}
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+
+     
+        <div class="modal-body" style="border-color: green;">
+        <h2 style="color: green;">Exit Request Status</h2>
+        {% if status %}
+ 
+        {% if status.solved == True %}
+         <h4>Your Request Has been approved </h4>
+       
+         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#1{{user.id}}">View Secretariat's Comment</button> 
+           <div class="modal fade" id="1{{user.id}}" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Secretariats Comment</h4>
+                        </div>
+                        <div class="modal-body">
+                         {{user.exitr.reason_for_leaving|safe}}
+                        
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+         {% endif %}
+        
+           {% else %}
+           <h4>Pending Approvals</h4>
+          
+        </div>
+       
+        {% endif %}
+        <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#{{user.id}}">View Your Exit Form</button> 
+           <div class="modal fade" id="{{user.id}}" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">{{user.first_name}} {{user.last_name}}'s Exit Form</h4>
+                        </div>
+                        <div class="modal-body">
+                          {% for p in user.exitsinglesubmitted_set.all %}
+                          <p><strong>{{p.parameter}}</strong><br>
+                          {{p.jibu}}</p>
+                          {% endfor %}
+                          <hr>
+                          {% for p in user.exitsubmitted_set.all %}
+                          <p><strong>{{p.parameter}}</strong> --
+                          {{p.jibu}}</p>
+                          {% endfor %}
+                          <hr>
+                           {% for p in user.exitratesubmited_set.all %}
+                          <p><strong>{{p.parameter}}</strong> --
+                          {{p.jibu}}</p>
+                          {% endfor %}
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+</div>
+<div class="col-md-2">
+</div>
+{% endblock %}

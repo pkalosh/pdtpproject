@@ -1,0 +1,36 @@
+{% extends "klmis/jdashboard.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block content %}
+
+<div class="well">
+{% block messsages %}    
+
+ 
+    
+    {% if messages %}
+	{% for message in messages %}
+	
+    <div class="alert alert-success ">
+    <p>{{message}}</p>
+     </div>
+    
+	{% endfor %}
+      
+    {% endif %}
+    
+  {% endblock %}{# end messages block section #}
+<form  method="POST" action="." class="form">
+    <legend>Update Your Profile</legend>
+ {% csrf_token %}
+{% bootstrap_form uform %}
+{% bootstrap_form pform %}
+{% buttons %}
+    <button type="submit" class="btn btn-theme btn-block">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+</div>
+
+{% endblock %}

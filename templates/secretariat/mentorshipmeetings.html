@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        MENTORSHIP MEETINGS
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Mentorship Meetings Booked
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+
+{% block content %}
+
+<br>
+{% if meetings %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Mentor</th>
+                  <th>Agenda/Focus Area</th>
+                  <th>Date Booked</th>
+                  <th>Meeting date</th>
+                  <th>Venue</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for meeting in meetings %}
+                
+                <tr>
+                  <td>{{meeting.mentee.last_name}} {{meeting.mentee.first_name}}</td>
+                  <td>{{meeting.mentor.last_name}} {{meeting.mentor.first_name}}</td>
+                  <td>{{meeting.agenda}} </td>
+                  <td>{{meeting.date_booked}}</td>
+                  <td>{{meeting.meeting_date}} </td>
+                  <td>{{meeting.venue|safe}}</td>
+
+                 
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<h3>No Mentor has booked Meeting </h3>
+{% endif %}
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 10, 25, 50,100,150, -1 ],
+            [ '10 rows', '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+       
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

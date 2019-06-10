@@ -1,0 +1,36 @@
+{% load staticfiles %}
+
+    
+
+
+
+
+<li class="treeview">
+          <a href="{% url 'dashboard2' top_year.slug %}">
+            <i class="fa fa-dashboard"></i> <span>CURRENT {{top_year}} COHORTS  </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+       
+        </li>
+
+
+		<li class="treeview">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>ALUMNI  </span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+          
+          {% for year in years %}
+    <li><a href="{% url 'dashboard2' year.slug %}"><i class="fa fa-circle-o"></i>{{year.year}} COHORT</a></li>
+    {% endfor %}
+          </ul>
+        </li>
+
+
+
+

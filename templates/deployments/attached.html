@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Deployments</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title  btn-red">INTERNS ATTACHED AT {{organization}}</h3>
+</div>
+<div class="col-md-7" style="text-align: right;">
+{{organization}} 
+<br>Contact Person : {% for c in organization.supervisor_set.all %} {% if c.is_contact_person %}<a href="">{{c.supervisor}}</a> {% endif %}{% endfor %}
+
+              </div>
+              </div>
+
+            {% endblock %}
+
+{% block content %}
+<div class="row"> 
+<div class="col-md-2">
+  <a href="{% url 'assign_supervisor' organization.slug organization.id %}" class="button btn btn-primary btn-sm" > Assign Supervisors 
+        </a>
+</div>
+<div class="col-md-1">
+  <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+</div>
+
+
+{% if intakes %}
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Area of Specialization</th>
+                  <th>CV</th>
+                   <th>Supervisor</th>
+                   <th>Cohort Year</th>
+                  <th>Profile</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {% for p in intakes %}
+                <tr>
+                <td>{% if p.pdtp.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ p.pdtp.userprofile.picture.url }}" height=40px width="40px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=40px width="40px" class="img-rounded zoom"> 
+            {% endif %} {{p.pdtp.last_name}} {{p.pdtp.first_name}} </td>
+                <td>{{p.pdtp.userprofile.area_of_specialization}}</td>
+                <td>{% if p.pdtp.pdtpcv %}
+                <a href="{{ MEDIA_URL }}{{p.pdtp.pdtpcv.cv.url}}" target="_blank">View CV</a>
+                {% else %}
+                No CV 
+                {% endif %}</td>
+                <td></td>
+                <td>{{p.year}}</td>
+                <td><a href="#{{p.pdtp.id}}" data-toggle="modal"><span class="button btn btn-sm btn-success  glyphicon glyphicon-user"></span></a></td>
+                </tr>
+                <div class="modal fade" id="{{p.pdtp.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+           <div class="row">
+        <div class="col-md-4">
+          
+          {% if p.pdtp.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ p.pdptp.userprofile.picture.url }}" height=160px width="160px" class="img-rounded"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{p.pdtp.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+        <h4>Personal Details</h4>
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{p.pdtp.last_name}} {{p.pdtp.first_name}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Gender:
+          </div>
+          <div class="col-md-6">
+          {{p.pdtp.userprofile.gender}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date of Birth:
+          </div>
+          <div class="col-md-6">
+          {{p.pdtp.userprofile.date_of_birth}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Marital Status:
+          </div>
+          <div class="col-md-6">
+          {{p.pdtp.userprofile.marital_status}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{p.pdtp.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{p.pdtp.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Area of Specialization:
+          </div>
+          <div class="col-md-6">
+          {{p.pdtp.userprofile.area_of_specialization}}
+          </div>
+          </div>
+          <h4>Academic Details</h4>
+          {% for academic in p.pdtp.academicdetail_set.all %}
+          <div class="row">
+          <div class="col-md-3">
+          {{ academic.academic_level}}
+          </div>
+          <div class="col-md-3">
+          {{academic.course_name}}
+          </div>
+          <div class="col-md-3">
+          {{academic.higher_institution_attended}}
+          </div>
+          </div>
+          {% endfor %}
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+                {% endfor %}
+                </tbody>
+                </table>
+{% else %}
+<a href="" class="button btn btn-sm btn-primary">No Interns atached to {{organization}} </a>
+{% endif %}
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+
+
+    <!--        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script> -->
+<script type="text/javascript">
+        tinyMCE.init({
+                mode: "textareas",
+                theme: "simple"
+        });
+</script>
+
+        
+ 
+<script type="text/javascript" language="javascript" src="http://rangyinputs.googlecode.com/files/textinputs_jquery.js"></script>
+<script type="text/javascript" language="javascript">
+
+$(document).ready(function() {
+
+        $('textarea').bind('mouseup',function() { $(this).replaceSelectedText('hello');});
+});
+</script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+ 
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="{% static 'selector/selectr.js' %}"></script>
+  <script>
+  $(function(){
+        $("#to").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#from").datepicker({ dateFormat: 'yy-mm-dd' }).bind("change",function(){
+            var minValue = $(this).val();
+            minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+            minValue.setDate(minValue.getDate()+1);
+            $("#to").datepicker( "option", "minDate", minValue );
+        })
+    });
+  </script>
+<script>
+            $(document).ready(function () {
+                $("select").selectr({
+                    title: 'What would you like to drink?',
+                    placeholder: 'Search beverages'
+                });
+            });
+        </script>
+        <script type="text/javascript">
+  $(document).ready(function() {
+     $('#ddlCars').multiselect();
+      $('#ddlCars1').multiselect({ 
+         numberDisplayed: 2,
+          
+     });
+       $('#ddlCars2').multiselect({ 
+         includeSelectAllOption: true,
+           enableFiltering:true         
+           
+     });
+        $('#ddlCars3').multiselect({  
+           nonSelectedText :'Select Cars'
+           
+     });
+});
+</script>
+
+{% endblock %}

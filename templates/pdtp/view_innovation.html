@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load bootstrap %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         PDTP INNOVATIONS
+        <small> <font color="green"></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Pdtp Innovations</h3></a></li>
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+         {% block table_title %}
+     
+
+              <div class="row">
+     
+     <div class="col-md-7">
+              <h3 class="box-title button btn btn-red">{{innovation}} Innovation</h3><br>
+             <span style="font-size: 14px; font-style: italic;"> By {{innovation.pdtp.last_name|title}} {{innovation.pdtp.first_name|title}}</span>
+</div>
+<div class="col-md-1">
+  <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+              </div>
+                <div class="col-md-4">
+  <a href="{% url 'view_innovation' innovation.id %}" class="button btn btn-primary btn-sm"> View all Innovations</a>
+
+   <a href="#" data-toggle="modal" data-target="#myModal" class="button btn btn-primary btn-sm"> Panelists Feedback</a>
+              </div>
+              <!-- <div class="col-md-1">
+  <a href="{% url 'evaluate_innovation' innovation.id %}" class="button btn btn-primary btn-sm"> Evaluate</a>
+              </div> -->
+              </div>
+            {% endblock %}
+
+{% block content %}
+
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Panelists feedback on {{innovation.innovation_name|safe}}</h4>
+      </div>
+      <div class="modal-body">
+     <table id="example" class="table table-bordered table-striped table-hove">
+            <thead>
+              <th>Panelist</th>
+              <th>Parameter</th>
+              <th>Score</th>
+              <th>Comment</th>
+
+
+            </thead>
+          
+          <tbody>
+         {% for innovation in innovation.innovationevaluationdata_set.all %}
+          <tr>
+            <td><strong>{{innovation.evaluator.first_name}} {{innovation.evaluator.last_name}}</strong></td>
+            <td><strong>{{innovation.parameter}}</strong></td>
+            <td>{{innovation.score}}</td>
+            <td>{{innovation.comment}}</td>
+           
+          </tr>
+          {% endfor %}
+          </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<style type="text/css">
+  .BreakWord { white-space: -moz-pre-wrap; /* Mozilla */
+  white-space: -hp-pre-wrap; /* HP printers */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: pre-wrap; /* CSS 2.1 */
+  white-space: pre-line; /* CSS 3 (and 2.1 as well, actually) */
+  word-wrap: break-word; /* IE */
+  word-break: break-all;
+  }
+</style>
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Innovation Details</a>
+        </h4>
+      </div>
+      <div id="collapse1" class="panel-collapse collapse">
+        <div class="panel-body">
+          <table class="table">
+  <tbody>
+    <tr>
+      <td><strong>Innovation:</strong></td>
+      <td class="BreakWord">{{innovation.innovation_name|safe}}</td>
+    </tr>
+     <tr>
+      <td><strong>How it Works:</strong></td>
+      <td class="BreakWord">{{innovation.how_it_works|safe }}</td>
+    </tr>
+    <tr>
+     <td><strong>Need:</strong></td>
+      <td>{{innovation.need|safe}}</td>
+    </tr>
+    <tr>
+      <td><strong>Option:</strong></td>
+      <td class="BreakWord">{{innovation.option|safe}}</td>
+    </tr>
+    <tr>
+      <td><strong>Market Potential:</strong></td>
+      <td class="BreakWord">{{innovation.market_potential|safe}}</td>
+    </tr>
+    <tr>
+      <td><strong>Business Model:</strong></td>
+      <td class="BreakWord">{{innovation.business_model|safe}}</td>
+    </tr>
+    <tr>
+      <td><strong>Feasibility:</strong></td>
+      <td class="BreakWord">{{innovation.feasiblity|safe}}</td>
+    </tr>
+    <tr>
+     <td><strong>Relevance:</strong></td>
+      <td class="BreakWord">{{innovation.relevance|safe}}</td>
+    </tr>
+    <tr>
+      <td><strong>Relevant Info:</strong></td>
+      <td class="BreakWord">{{innovation.relevant_information|safe}}</td>
+    </tr>
+    <tr>
+      <td><strong>Bibliography:</strong></td>
+      <td class="BreakWord">{{innovation.bibliography|safe|linebreaksbr}}</td>
+    </tr>
+    <tr>
+      <td><strong>Appendix:</strong></td>
+      <td class="BreakWord">{{innovation.appendices|safe}}</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+      </div>
+    </div>
+ <!--    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Panelists Feedback</a>
+        </h4>
+      </div>
+      <div id="collapse2" class="panel-collapse collapse">
+        <div class="panel-body">
+         
+        </div>
+      </div>
+    </div> -->
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Evaluate</a>
+        </h4>
+      </div>
+      <div id="collapse3" class="panel-collapse collapse">
+        <div class="panel-body">
+
+<p><strong>Proposal Evaluation Guiding Principles</strong></p>
+<p><strong>Objectivity</strong><br>
+Proposals are evaluated on their own merit and their outcomes depend on the proposals as< submitted;  and not if changes were incorporated later.</p>
+<p><strong>Independence</strong><br>
+The innovation panelists conduct evaluations as individuals; they neither represent their employers  nor any other entities.</p>
+<p><strong>Accuracy</strong><br>
+Assessment is done against specified criteria in the evaluation form. Any aspects of assessment beyond defined criteria must be fully documented and justified.</p>
+<p><strong>Consistency</strong><br>
+The same standard of assessment is applied for all proposals.</p>
+<p><strong>Impartiality</strong><br>
+Proposals are treated impartially and based on their own merits, regardless of innovation proponents or their associations.</p>
+
+          <form method="post" action=".">
+  {% csrf_token %} 
+
+    {% for p in questions %}
+     <strong>{{forloop.counter}}. {{p.parameter}} :</strong> <br>
+     {{p.question}}
+    <table class="table">
+      <tbody>
+    <tr>
+  <td>  
+  <div class="form-group">
+  <label for="usr">Score (1-10):</label>
+  <input type="number" name="n{{p.id}}" min="1" max="10" class="form-control" required >
+</div>
+  </td>
+  <td>
+    <div class="form-group">
+  <label for="comment">Remarks:</label>
+  <textarea name="r{{p.id}}" class="form-control" required></textarea>
+</div>
+  </td>
+</tr>
+ </tbody>
+</table>
+{% endfor %}
+<input type="submit" name="" class="btn btn-primary" style="float: right;">
+</form>
+        </div>
+      </div>
+    </div>
+  </div> 
+
+
+ <br />
+
+    <!-- /.content -->
+
+{% endblock %}
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            // { "visible": false, "targets": [1,2] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}
+
+

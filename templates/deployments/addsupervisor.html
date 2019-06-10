@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Add  Supervisor</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title button btn btn-red"> New Supervisor</h3>
+            {% endblock %}
+{% block content %}
+    <div class="container">
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+<div class="col-md-2">
+{% bootstrap_field form.is_mentor  %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field form.is_contact_person %}
+</div>
+
+
+
+<div class="row">
+<h3>Personal Details</h3>
+<div class="col-md-3">
+{% bootstrap_field uform.email %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field uform.last_name %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field uform.first_name %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field cform.phone_number %}
+</div>
+</div>
+
+<div class="row">
+
+<div class="col-md-3">
+{% bootstrap_field form.position  %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field form.honors  %}
+</div>
+</div>
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" >
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Add
+    </button>
+  {% endbuttons %}
+</form>
+</div>
+    <!-- /.content -->{% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Assign Supervisors to interns</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title button btn btn-red"> Assign Supervisors to interns</h3>
+            {% endblock %}
+{% block content %}
+    <div class="container">
+    
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+<div class="row">
+<div class="col-md-4">
+
+                <h4>Select a Supervisor</h4>
+                <!-- Using opts object from .selectr() call above -->
+               
+                <select name="supervisor">
+                 {% for p in supervisors %}
+                    <option   value="{{p.supervisor.id}}">{{p.supervisor.last_name}} {{p.supervisor.first_name}}  -{{p.position}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+<!--
+
+                <select class="form-control" name="pdtps" data-selectr-opts='{ "title": "Select Interns", "placeholder": "Search PDTPs",  }'  multiple>
+
+                {% for p in interns %}
+
+                    <option   value="{{p.user}}">{{p.pdtp.last_name}} {{p.pdtp.first_name}}  -{{p.pdtp.userprofile.area_of_specialization}}</option>
+                    {% endfor %}
+                </select>
+                -->
+                <div class="col-sm-5">
+                <h4>Select Interns</h4>
+                <!-- Using data attributes -->
+                <select name="interns" data-selectr-opts='{ "title": "Select Interns", "placeholder": "Filter Interns by name or area of specialization" }'  multiple>
+                    {% for p in interns %}
+
+                    <option   value="{{p.pdtp.id}}">{{p.pdtp.last_name}} {{p.pdtp.first_name}}  -{{p.pdtp.userprofile.area_of_specialization}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+</div>
+        {% buttons %}    
+    <button type="submit" class="button btn btn-primary btn-sm" >
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Assign
+    </button>
+  {% endbuttons %}
+</form>
+
+</div>
+    <!-- /.content -->{% endblock %}
+{% block tables_js_script %}
+  <!-- DataTables -->
+
+
+           
+
+        <script src="{% static 'selector/selectr.js' %}"></script>
+<script>
+            $(document).ready(function () {
+                $("select").selectr({
+                    title: 'Pick a  Supervisor',
+                    placeholder: 'Filter Supervisors'
+                });
+            });
+        </script>
+       
+
+
+
+{% endblock %}

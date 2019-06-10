@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load bootstrap %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         PDTP TRAININGS/CERTIFICATIONS
+        <small> <font color="green"></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">trainings/certifications</h3></a></li>
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+         {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-1">
+     </div>
+     <div class="col-md-8">
+              <h3 class="box-title button btn btn-red">POST TRAININGS/CERTIFICATIONS</h3>
+</div>
+<div class="col-md-1">
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+<style type="text/css">
+  .add-row {
+display:block;
+margin-top:15px;
+}
+.add-row:before{
+font-family: FontAwesome;
+content: "\f055";
+margin-right: 0.3em;
+
+}
+.delete-row:before{
+font-family: FontAwesome;
+content: "\f056";
+margin-right: 0.3em;
+color: red;
+}
+</style>
+
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+ 
+ <div class="container">
+ <div class='row'>
+ <div class="col-md-2"></div>
+ <div class="col-md-6">
+    {% bootstrap_form form %}
+    </div>
+  <div class="col-md-1">
+  </div>
+  </div>
+  <div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="7">
+    <input type="submit" value="Submit" class="button btn btn-primary btn-md" />
+  </div>
+
+  <div class="col-md-3">
+    
+  </div>
+</div>
+ </div>
+
+</form>
+    <!-- /.content -->
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+       
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+       columnDefs: [
+            { "visible": false, "targets": [4,5,6,7,8,9,10,11,12,13] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}
+
+
+

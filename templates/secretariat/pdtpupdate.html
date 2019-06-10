@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Update PDTP Details</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title button btn btn-red"> Udate Details </h3>
+            {% endblock %}
+{% block content %}
+   
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+ <div class="row">
+{% for field in form %}
+<div class="col-md-4">
+   {% bootstrap_field field %}</div>
+{% endfor %}
+</div>
+<div class="row">
+{% for field in pform %}
+<div class="col-md-4">
+   {% bootstrap_field field %}</div>
+{% endfor %}
+</div>
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+  {% endbuttons %}
+</form>
+    <!-- /.content -->{% endblock %}
+    {% block tables_js_script %}
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+
+        <script>
+  $(function() {
+    $( "#id_date_of_birth" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "1970:2022",
+      // You can put more options here.
+
+    });
+  });
+  </script>
+  {% endblock %}

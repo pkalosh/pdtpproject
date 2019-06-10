@@ -1,0 +1,186 @@
+
+{% load staticfiles %}
+<style type="text/css">
+ #line{
+  color:#99CC99;
+
+  } 
+</style>
+<form action="" method="POST" style="padding-left: 20px;">
+<span class="logo-mini"><img src="static/images/ICTA-Logo.png" height="55" width="150" alt="PDT App"></span>
+<h3 style="text-align: center; color: red">PRESIDENTIAL DIGITALENT PROGRAMME</h3>
+ {% if report %}
+ <span style="text-align: center;font-weight: bold ; color: green; font-size: 15px;">MONITORING AND EVALUATION REPORT FOR {{report.phase|safe|upper}}</span>
+
+ <div class="container form-control ">
+   <div class="row">
+   <div class="col-md-3">
+     
+   </div>
+   <div class="col-md-6">
+   <div class="form-group">
+    <label style="font-weight: bold">Intern Name:</label>
+    <strong>{{ report.pdtp.first_name|safe }} {{ report.pdtp.last_name|safe }}</strong></span><br>
+    <label style="font-weight: bold">Supervior Name:</label>
+    <strong>{{ report.supervisor.first_name|safe }} {{ report.supervisor.last_name|safe }}</strong></span>
+  </div>
+<hr id="line" />
+<div class="form-group">
+    <label style="font-weight: bold ; color: green">Email:</label><br>
+    <strong>{{ report.pdtp.email|safe }}</strong></span>
+  </div>
+  
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Intern M&E Parameter:</label><br>
+    {% for param in rate %}
+    <span>{{param.intern_parameter|safe}}:</span> <span>{{param.rate|safe}}</span><br>
+    {% endfor %}
+  </div><br>
+  
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Projects:</label><br>
+    <span>{{report.projects|safe}}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Intern's Contributions:</label><br>
+    <span>{{report.my_contribution|safe}}</span>
+  </div><br>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Lesson Learnt From Internship:</label><br>
+    <span>{{report.lessons_learned_during_internship|safe }}</span>
+  </div><br>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Specific Projects/Assignement given:</label><br>
+    <span>{{report.specific_projects_or_assignments_you_are_given|safe }}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Projects given are they  Challenging:</label><br>
+    <span>{{report.projects_given_are_they_challenging_or_stimulating|safe }}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Intern Evaluation:</label><br>
+    <span>{{report.evaluate_your_experience|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Supervisor Instructions to intern:</label><br>
+    <span>{{report.instruction_and_Directions_given_by_supervisor|safe }}</span>
+  </div>
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Supervisor Availability:</label><br>
+    <span>{{report.supervisor_availability|safe }}</span>
+  </div>
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Intern Specialization:</label><br>
+    <span>{{report.field_of_specialization|safe }}</span>
+  </div>
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Opportunities for Learning:</label><br>
+    <span>{{report.opportunities_for_learning|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Intern Preparedness to Job World:</label><br>
+    <span>{{report.preparedness_to_enter_world_of_work|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Intern Relationship with workers:</label><br>
+    <span>{{report.Your_relationship_with_other_workers|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">How Intern is treated by Organizations:</label><br>
+    <span>{{report.How_have_you_been_treated_by_the_organization|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Trainee Internship expectation:</label><br>
+    <span>{{report.Has_the_attachment_met_your_expectations|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Intern suggestions on PDTP:</label><br>
+    <span>{{report.suggestions_to_improve_the_internship_programme|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Can You Recommend this-Organization:</label><br>
+    <span>{{report.recommend_this_organisation|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Best practices for gvnmt to borrow:</label><br>
+    <span>{{report.best_practices|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Innovation Areas:</label><br>
+    <span>{{report.innovation|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">No-Innovation Reasons:</label><br>
+    <span>{{report.innovation_reason|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Mentorship sessions:</label><br>
+    <span>{{report.mentorship_sessions|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Mentorship Lessons:</label><br>
+    <span>{{report.mentorship_lesson_learned|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Mentorship challenges:</label><br>
+    <span>{{report.mentorship_problem_faced|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Trainings attended:</label><br>
+    <span>{{report.training_attended|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Certifications Attained:</label><br>
+    <span>{{report.Certifications_attained|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Suggestions On_job Training:</label><br>
+    <span>{{report.suggestion_on_job_training|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Suggestions Innovations:</label><br>
+    <span>{{report.suggestion_innovation|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Suggestions Mentorship:</label><br>
+    <span>{{report.suggestion_mentorship|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Suggestions Training:</label><br>
+    <span>{{report.suggestion_training|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Comments on Secretariat Support:</label><br>
+    <span>{{report.comment_icta_secretariat_support|safe }}</span>
+  </div>
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Challenges Faced by Intern:</label><br>
+    <span>{{report.challenges_faced|safe }}</span>
+  </div>
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Intern's Strength:</label><br>
+    <span>{{report.intern_strength|safe }}</span>
+  </div>
+  
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Intern's Areas to_Improve:</label><br>
+    <span>{{report.areas_improvement|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Supervisor M&E Parameter:</label><br>
+    {% for param in jibu %}
+    <span>{{param.supervisor_parameter|safe}}:</span> <span>{{param.Jibu|safe}}</span><br>
+    {% endfor %}
+  </div><br>
+   </div>
+   <div class="col-md-3">
+     
+   </div>
+     
+   </div>
+ </div>
+
+  
+  {% endif %}
+ 
+</form>             

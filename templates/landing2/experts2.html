@@ -1,0 +1,245 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block content %}
+<style type="text/css">
+  .people-nearby .google-maps{
+  background: #f8f8f8;
+  border-radius: 4px;
+  border: 1px solid #f1f2f2;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.people-nearby .google-maps .map{
+  height: 300px;
+  width: 100%;
+  border: none;
+}
+
+.people-nearby .nearby-user{
+  padding: 20px 0;
+  border-top: 1px solid #f1f2f2;
+  border-bottom: 1px solid #f1f2f2;
+  margin-bottom: 20px;
+}
+
+img.profile-photo-lg{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}
+
+                                    
+
+</style>
+      <section class="main-container padding-bottom-clear">
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-3">
+              {{speciality.speciality|title}} Experts
+            </div>
+            <div class="col-md-9">
+                <form id="searchform" action="" method="get" accept-charset="utf-8">
+
+
+    
+          <div class="row">
+           
+            <div class="col-5 ">
+              <input type="text" name="q1" placeholder="Search by skill" class="form-control" required>
+          </div>
+           <div class="col-5 ">
+
+            <select class="form-control"  id="searchbox" name="q"  required>
+
+              <
+
+              <option selected disabled   value="">Filter by skill type</option>
+               {% for t in types %}
+                 <option value="{{t.skill_type}}">{{t.skill_type}}</option>
+                  {% endfor %}
+            </select>
+          </div>
+          <div class="col-2">
+            <input type="submit" class="btn-success btn btn-sm" name="" value="Search">
+        </div>
+            </div>
+      </form>
+            </div>
+          </div>
+          {% if experts %}
+          <div class="row">
+
+            {% for expert in experts %}
+            <div class="col-md-3 col-6">
+              <div class="people-nearby">
+              
+              <div class="nearby-user">
+                <div class="row">
+                  <div class="col-12">
+                    <h5><a href="#"  class="profile-link">{{expert.user.first_name|title}} {{expert.user.last_name|title}}</a></h5>
+                    <p>{{expert.title|title}}</p>
+                    <p class="text-muted"> <a href="" data-toggle="modal" data-target="#myModal{{expert.id}}" >Profile</a> | <a href="" data-toggle="modal" data-target="#contact{{expert.id}}">Contact</a></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+             <div class="modal" id="myModal{{expert.id}}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">{{expert.user.first_name|upper}} {{expert.user.last_name|upper}}'S PROFILE</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          <h5 class="modal-title" style="color: green;font-weight: bold;">Bio</h5>
+            {{expert.bio|safe}}
+            <hr>
+             {% if expert.user.skill_set.all %}
+               <h5 class="modal-title" style="color: green;font-weight: bold;">Skills</h5>
+               <div class="row">
+                <div class="col-4">
+                  <b style="color: green">Skill Type</b>
+                </div>
+                <div class="col-4">
+                  <b style="color: green">Level</b>
+                </div>
+                 <div class="col-4">
+                  <b style="color: green">Skill</b>
+                </div>
+              </div>
+                {% for ed in  expert.user.skill_set.all %}
+                <div class="row">
+                  <div class="col-4">
+                  {{ed.skill_type}}</div>
+                  <div class="col-4">
+                {{ed.skill_level}}
+              </div>
+              <div class="col-4">
+                 {{ed.skill}}</div>
+               </div>
+                  {% endfor %}
+                  <hr>
+           {% endif %}
+            {% if expert.user.academicdetail_set.all %}
+              
+                <h5 class="modal-title" style="color: green;font-weight: bold;">Education</h5>
+                {% for ed in  expert.user.academicdetail_set.all %}
+                <div class="row">
+                  <div class="col-md-4">
+                  {{ed.academic_level}}
+                </div>
+                <div class="col-md-4">{{ed.course_name}}
+                </div>
+              </div>
+                  {% endfor %}
+                  <hr>
+          {% endif %}
+          
+            {% if expert.user.project_set.all %}
+            <h5 class="modal-title" style="color: green;font-weight: bold;">Projects Done</h5>
+            {% for ed in  expert.user.project_set.all %}
+             <div class="row">
+                  <div class="col-md-4">
+                  {{ed.year}}
+                </div>
+                <div class="col-md-4">
+                  {{ed.project_name}}
+                </div>
+                <div class="col-md-4">
+                  {{ed.project_description}}
+                </div>
+              </div>
+                  {% endfor %}
+                
+            
+           {% endif %}
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+          <div class="modal" id="contact{{expert.id}}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">CONTACT {{expert.user.first_name|upper}} {{expert.user.last_name|upper}}</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+         <form method="post" action="?from={{ request.path|urlencode }}">
+                  {% csrf_token %}
+                  {% bootstrap_form form %}
+                  <input type="hidden" value="{{expert.user.id}}" name="expe">
+                 
+               
+                </div>
+                <div class="modal-footer">
+         <button type="submit" class="btn btn-primary" >Send</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+            </form>
+      
+      <!-- Modal footer -->
+
+</div>
+
+    </div>
+  </div>
+            {% endfor %}
+          </div>
+
+
+    <div class="row">
+  
+  <div class="col-12 " align="center" style="text-align: center;">
+    <ul class="pagination pagination-md">
+ 
+        {% if experts.has_previous %}
+           <li class="button btn-primary btn-sm"> <a href="?page={{ nes.previous_page_number }}" style="color: white;" >Previous</a></li>
+
+        {% endif %}
+{% for num in experts.paginator.page_range %}
+  {% ifequal num experts.number %}
+    <li class="button btn-success btn-sm"><span class="current "  style="color: white;"><b>{{ num }}</b></span></li>
+  {% else %}
+   <li class="button btn-danger btn-sm"> <a href="?page={{ num }}" style="color: white;"> {{ num }}</a></li>
+  {% endifequal %} 
+{% endfor %}
+{% if experts.has_next %}
+           <li class="button btn-primary btn-sm"> <a href="?page={{ experts.next_page_number }}" style="color: white;">Next </a></li>
+        {% endif %}
+        </ul>
+  </div>
+
+</div>
+          {% else %}
+
+          <h3>No Experts matching the query</h3>
+          {% endif %}
+
+
+      </section>
+      <!-- main-container end -->
+
+    
+{% endblock %}

@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load bootstrap %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Mentorship Report
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+             <div class="row">
+ <div class="col-md-2 col-xs-3 col-sm-3">
+   <a href="{% url 'ministry_activities' %}" class="button btn btn-sm btn-primary">Ministry Activities</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'private_sector_activities' %}" class="button btn btn-sm btn-primary">Private Sector</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'my_trainings' %}" class="button btn btn-sm btn-primary">Trainings</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'my_performance' %}" class="button btn btn-sm btn-primary">My Results</a> 
+ </div>
+ <div class="col-md-1"  style="margin-left: -3px;">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+          
+            {% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+  .add-row {
+display:block;
+margin-top:15px;
+}
+.add-row:before{
+font-family: FontAwesome;
+content: "\f055";
+margin-right: 0.3em;
+
+}
+.delete-row:before{
+font-family: FontAwesome;
+content: "\f056";
+margin-right: 0.3em;
+color: red;
+}
+</style>
+
+<!--
+
+<form  id="my-form" method="post" action="." >
+{% csrf_token %}
+
+
+<input type="submit" value="submit" class="button btn btn-primary btn-md" />
+</form>
+
+    
+
+
+
+
+-->
+<h2>Mentorship Experience Feedback</h2>
+{% if user.mentorshipinternreport %}
+
+<h4 style="color: green">Self awareness and personal branding</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ user.mentorshipinternreport.awareness_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{ user.mentorshipinternreport.awareness_impact }}
+        </div>
+      </div>
+       <h4 style="color: green">Life goals and career development</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{  user.mentorshipinternreport.goal_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{ user.mentorshipinternreport.goal_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Adaptability and Flexibility</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ user.mentorshipinternreport.adaptability_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{  user.mentorshipinternreport.adaptability_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Confidence and passion</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ user.mentorshipinternreport.confidence_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{  user.mentorshipinternreport.confidence_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Presentation and communication skills</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description(max 300 Characters)</label><br>
+          {{  user.mentorshipinternreport.presentation_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact(max 300 Characters)</label><br>
+           {{  user.mentorshipinternreport.presentation_impact }}
+        </div>
+      </div>
+{% else %}
+<form method="post" action="." enctype="multipart/form-data">
+          {% csrf_token %}
+      <h4>Self awareness and personal branding</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description(max 300 Characters)</label>
+          {% bootstrap_field form.awareness_description %}
+        </div>
+        <div class="col-md-6">
+          <label>Impact(max 300 Characters)</label>
+           {% bootstrap_field form.awareness_impact %}
+        </div>
+      </div>
+       <h4>Life goals and career development</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description(max 300 Characters)</label>
+          {% bootstrap_field form.goal_description %}
+        </div>
+        <div class="col-md-6">
+          <label>Impact(max 300 Characters)</label>
+           {% bootstrap_field form.goal_impact %}
+        </div>
+      </div>
+      <h4>Adaptability and Flexibility</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description(max 300 Characters)</label>
+          {% bootstrap_field form.adaptability_description %}
+        </div>
+        <div class="col-md-6">
+          <label>Impact(max 300 Characters)</label>
+           {% bootstrap_field form.adaptability_impact %}
+        </div>
+      </div>
+      <h4>Confidence and passion</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description(max 300 Characters)</label>
+          {% bootstrap_field form.confidence_description %}
+        </div>
+        <div class="col-md-6">
+          <label>Impact(max 300 Characters)</label>
+           {% bootstrap_field form.confidence_impact %}
+        </div>
+      </div>
+      <h4>Presentation and communication skills</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description(max 300 Characters)</label>
+          {% bootstrap_field form.presentation_description %}
+        </div>
+        <div class="col-md-6">
+          <label>Impact(max 300 Characters)</label>
+           {% bootstrap_field form.presentation_impact %}
+        </div>
+      </div>
+        <input type="submit" class="btn btn-primary bt-sm" style="float: right;" Value =" Submit" />
+      </form>
+     {% endif %}
+    <!-- /.content -->{% endblock %}
+    {% block tables_js_script %}
+  
+  
+{% endblock %}
+
+

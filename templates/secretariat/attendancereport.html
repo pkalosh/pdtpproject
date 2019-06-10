@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        MONTHLY ATTENDANCE REPORTS
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Attendance Reports
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+
+
+{% block content %}
+<div class="row">
+ <div class="col-md-1">
+   <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+ <div class="col-md-6">
+ <form method="post" action=".">
+ {% csrf_token %}
+ <p>Filter by dates</p>
+ <label for="from">From</label>
+ <input type="text" id="from" name="startdate" required>
+ <label for="from">To</label>
+ <input type="text" id="to" name="enddate"   required>
+ <input type="submit" value="Query" class="button btn btn-sm btn-primary">
+ </form>
+ </div>
+</div>
+
+<br>
+{% if attendance %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Supervisor</th>
+               
+                  <th>Organization</th>
+                  <th>Attendance</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for report in attendance %}
+                
+                <tr>
+                  <td>{{report.pdtp.last_name|safe}} {{report.pdtp.first_name|safe}}</td>
+                  <td>{{report.supervisor.last_name|safe}} {{report.supervisor.first_name|safe}}</td>
+                  <td>{{report.supervisor.company|safe}}</td>
+                  <td>{{report.days_attended|safe}}</td>
+                  
+                   
+                 
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<h4>No Supervisor has supbmitted a attendance report for the specified period</h4>
+{% endif %}
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [  25, 50,100,150, -1 ],
+            [  '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+</script>
+ 
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+
+
+
+      <script>
+  $(function(){
+        $("#to").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#from").datepicker({ dateFormat: 'yy-mm-dd' }).bind("change",function(){
+            var minValue = $(this).val();
+            minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+            minValue.setDate(minValue.getDate()+1);
+            $("#to").datepicker( "option", "minDate", minValue );
+        })
+    });
+  </script>
+
+{% endblock %}

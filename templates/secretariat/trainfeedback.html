@@ -1,0 +1,47 @@
+
+{% load staticfiles %}
+<style type="text/css">
+ #line{
+  color:#FF0000;
+
+  } 
+</style>
+<span class="logo-mini"><img src="static/images/ICTA-Logo.png" height="55" width="300" alt="PDT App"></span>
+<h3 style="text-align: center; color: red">PRESIDENTIAL DIGITALENT PROGRAMME</h3>
+
+ <span style="text-align: center;font-weight: bold ; color: green; font-size: 15px;"> {{cous.course|title}} TRAINING FEEDBACK</span>
+   <hr id="line" />
+
+ <div class="container form-control ">
+   <div class="row">
+   <div class="col-md-3">
+     
+   </div>
+ {% for feed in feed %}
+   <div class="col-md-6">
+   <div class="form-group">
+    <label style="font-weight: bold;color:red">Intern Name:</label>
+    <strong>{{ feed.pdtp.first_name|safe }} {{ feed.pdtp.last_name|safe }}</strong> |
+    <label>Date Submitted</label>
+    <strong>{{ feed.date_submitted|safe }}</strong>
+    
+  </div>
+<div class="form-group">
+    <label style="font-weight: bold ; color: red">Email:</label>
+    <strong>{{ feed.pdtp.email|safe }}</strong>
+  </div>
+   <div class="form-group">
+    <label style="font-weight: bold; color: red">FeedBack:</label><br>
+    <span>{{feed.feedback|safe}}</span>
+  </div>
+  
+   <hr id="line" />
+   {% endfor %}
+     
+   </div>
+   
+ </div>
+ </div>
+
+
+           

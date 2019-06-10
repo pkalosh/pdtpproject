@@ -1,0 +1,277 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" sizes="16x16" href="{%  static 'new/plugins/images/admin-text.png' %}">
+    <title>PDTP Potal</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'new/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="{% static 'new/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css' %}" rel="stylesheet">
+    <!-- toast CSS -->
+    <link href="{% static 'new/plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css' %}" rel="stylesheet">
+  
+    <link href="{% static 'new/plugins/bower_components/toast-master/css/jquery.toast.css' %}" rel="stylesheet">
+    <!-- morris CSS -->
+    <link href="{% static 'new/plugins/bower_components/morrisjs/morris.css" rel="stylesheet' %}">
+    <!-- chartist CSS -->
+    <link href="{% static 'new/plugins/bower_components/chartist-js/dist/chartist.min.css' %}" rel="stylesheet">
+    <link href="{% static 'new/plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
+    <!-- Calendar CSS -->
+    <link href="{% static 'new/plugins/bower_components/calendar/dist/fullcalendar.css' %}" rel="stylesheet" />
+    <!-- animation CSS -->
+    <link href="{% static 'new/css/animate.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'new/css/style2.css' %}" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="{% static 'new/css/colors/megna-dark.css' %}" id="theme" rel="stylesheet">
+
+
+    <!-- Popup CSS -->
+  
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="fix-header">
+    <!-- ============================================================== -->
+    <!-- Preloader -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> 
+        </svg>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Wrapper -->
+    <!-- ============================================================== -->
+    <div id="wrapper">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <nav class="navbar navbar-default navbar-static-top m-b-0">
+            <div class="navbar-header">
+                <div class="top-left-part">
+                    <!-- Logo -->
+                    <a class="logo" href="/">
+                        
+                        <!-- Logo text image you can use text also --><span class="hidden-xs">
+                        <!--This is dark logo text--><img src="{%  static 'new/plugins/images/admin-text.png' %}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{%  static 'new/plugins/images/logo1.png' %}" style="width:150px; height:54px;" alt="home" class="light-logo" />
+                     </span> </a>
+                </div>
+                <!-- /Logo -->
+                <!-- Search input and Toggle icon -->
+       
+                <ul class="nav navbar-top-links navbar-right pull-right">
+                    <li>
+                        <form role="search" class="app-search hidden-sm hidden-xs m-r-10">
+                            <input type="text" placeholder="Search..." class="form-control"> <a href=""><i class="fa fa-search"></i></a> </form>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="dropdown">
+                       
+                        <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> {% if user.userprofile.picture %}
+                                <img alt="User Pic" src="{{ MEDIA_URL }}{{user.userprofile.picture.url}}" height=36px width="36px" class="img-circle"> 
+                              {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=36px width="36px" class="img-circle"> 
+                              {% endif %}<b class="hidden-xs">{{user.first_name}}</b><span class="caret"></span> </a>
+                        <ul class="dropdown-menu dropdown-user animated flipInY">
+                            <li>
+                                <div class="dw-user-box">
+                                    <div class="u-img">{% if user.userprofile.picture %}
+                                            <img alt="User Pic" src="{{ MEDIA_URL }}{{user.userprofile.picture.url}}" height=100px width="100px" class="img-circle"> 
+                                          {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=100px width="100px" class="img-circle"> 
+                                          {% endif %}</div>
+                                    <div class="u-text">
+                                        <h4>{{user.first_name}}</h4>
+                                        <p class="text-muted">{{user.email}}</p>{% if user.userprofile.user_category  == "PDTP" %}
+               
+                                        <a href="{% url 'dashboard' %}" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                      {% endif %}
+                                                
+                                                   {% if user.userprofile.user_category  == "ADMINISTRATION" %}
+                                         <!--
+                                         <a href="{% url 'account_logout' %}" class="fa fa-sign-out">  Change Email</a><br>
+                                       -->
+                                      
+                                        <a href="{% url 'management_profile' %}" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                         {% endif %}
+                                        
+                                         {% if user.userprofile.user_category  == "SUPERVISOR" %}
+                                     
+                                       <a href="{% url 'dashboard' %}" class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                                      
+                                          <!--
+                                         <a href="#1email" data-toggle="modal"  class="fa fa-sign-out">  Change Email</a><br>
+                       
+                       
+                         -->
+                                         {% endif %}</div>
+                                </div>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            {% if user.userprofile.user_category  == "PDTP" %}
+                 <li> <a href="{% url 'dashboard' %}" class="ti-usert">  My Profile </a></li>
+               {% endif %}
+                         
+                            {% if user.userprofile.user_category  == "ADMINISTRATION" %}
+                  <!--
+                  <a href="{% url 'account_logout' %}" class="fa fa-sign-out">  Change Email</a><br>
+                -->
+                 <li> <a href="{% url 'management_profile' %}" class="ti-user">  My Profile </a></li>
+                  {% endif %}
+                 
+                  {% if user.userprofile.user_category  == "SUPERVISOR" %}
+                <li>  <a href="{% url 'dashboard' %}" class="ti-user">  My Profile </a></li>
+               
+                   <!--
+                  <a href="#1email" data-toggle="modal"  class="fa fa-sign-out">  Change Email</a><br>
+
+
+  -->
+                  {% endif %}
+                          
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'account_logout' %}"><i class="fa fa-power-off"></i> Logout</a></li>
+                        </ul>
+                      
+                    </li>
+                    {% else %}
+                    <!-- /.dropdown-user -->
+                   
+                    {% endif %}
+                    <!-- /.dropdown -->
+                </ul>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- /.navbar-top-links -->
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- End Top Navigation -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav">
+                <div class="sidebar-head">
+                    <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
+                <ul class="nav" id="side-menu">
+                 {% if user.is_authenticated %}
+                    <li> <a href="{% url 'dashboard' %}" class="waves-effect active"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> <span class="hide-menu"> Dashboard</span></a>
+                        
+                    </li>
+                    {% else %}
+                    <li> <a href="/" class="waves-effect active"><i class="mdi mdi-av-timer fa-fw" data-icon="v"></i> <span class="hide-menu"> Home</span></a>
+                        
+                    </li>
+                    {% endif %}
+                    <li class="devider"></li>
+                    <li> <a href="#" class="waves-effect"><i  class="mdi mdi-school fa-fw"></i> <span class="hide-menu"> Experts</span></a> </li>
+                    <li class="devider"></li>
+                    <li> <a href="#" class="waves-effect"><i  class="mdi mdi-account-multiple-plus fa-fw"></i> <span class="hide-menu">My Network</span></a> </li>
+                    <li class="devider"></li>
+                    <li> <a href="#" class="waves-effect"><i  class="mdi mdi-database fa-fw"></i> <span class="hide-menu">Companies</span></a> </li>
+                    <li class="devider"></li>
+                    <li> <a href="#" class="waves-effect"><i  class="mdi mdi-account-switch fa-fw"></i> <span class="hide-menu">Groups</span></a> </li>
+                    <li class="devider"></li>
+                    <li> <a href="#" class="waves-effect"><i  class="mdi mdi-search-web fa-fw"></i> <span class="hide-menu">Jobs</span></a> </li>
+                    <li class="devider"></li>
+                    <li> <a href="#" class="waves-effect"><i  class="mdi mdi-book-multiple fa-fw"></i> <span class="hide-menu">Education</span></a> </li>
+               
+                    <li class="devider"></li>
+                    <li> <a href="#" class="waves-effect"><i  class="mdi mdi-account-multiple fa-fw"></i> <span class="hide-menu">Alumni</span></a> </li>
+                </ul>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- Different data widgets -->
+                <!-- ============================================================== -->
+             {% block content %}
+             {% endblock %}
+                
+                <!-- ============================================================== -->
+                <!-- end right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- /.container-fluid -->
+            <footer class="footer text-center"> Copyright &copy; 2018 <a href="">PDTP Secretariat- ICT Authority</a>.</strong> All rights
+                reserved. </footer>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="{% static 'new/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'new/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    <!-- Menu Plugin JavaScript -->
+    <script src="{% static 'new/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js' %}"></script>
+    <!--slimscroll JavaScript -->
+    <script src="{% static 'new/js/jquery.slimscroll.js' %}"></script>
+    <!--Wave Effects -->
+    <script src="{% static 'new/js/waves.js' %}"></script>
+    <!--Counter js -->
+    <script src="{% static 'new/plugins/bower_components/waypoints/lib/jquery.waypoints.js' %}"></script>
+    <script src="{% static 'new/plugins/bower_components/counterup/jquery.counterup.min.js' %}"></script>
+    <!--Morris JavaScript -->
+    <script src="{% static 'new/plugins/bower_components/raphael/raphael-min.js' %}"></script>
+    <script src="{% static 'new/plugins/bower_components/morrisjs/morris.js' %}"></script>
+    <!-- chartist chart -->
+    <script src="{% static 'new/plugins/bower_components/chartist-js/dist/chartist.min.js' %}"></script>
+    <script src="{% static 'new/plugins/bower_components/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js' %}"></script>
+    <!-- Calendar JavaScript -->
+    <script src="{% static 'new/plugins/bower_components/moment/moment.js' %}"></script>
+    <script src="{% static 'new/plugins/bower_components/calendar/dist/fullcalendar.min.js' %}"></script>
+    <script src="{% static 'new/plugins/bower_components/calendar/dist/cal-init.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+  
+
+
+    <!-- Magnific popup JavaScript -->
+    <script src="{% static 'new/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'new/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js' %}"></script>
+    <!-- Custom Theme JavaScript -->
+    <!--Style Switcher -->
+ 
+    <script src="{% static 'new/js/custom.min.j' %}s"></script>
+    <script src="{% static 'new/js/dashboard1.js' %}"></script>
+    <!-- Custom tab JavaScript -->
+    <script src="{% static 'new/js/cbpFWTabs.js' %}"></script>
+    <script type="text/javascript">
+        (function () {
+                [].slice.call(document.querySelectorAll('.sttabs')).forEach(function (el) {
+                new CBPFWTabs(el);
+            });
+        })();
+    </script>
+    <script src="{% static 'new/plugins/bower_components/toast-master/js/jquery.toast.js' %}"></script>
+    <!--Style Switcher -->
+    <script src="{% static 'new/plugins/bower_components/styleswitcher/jQuery.style.switcher.js' %}"></script>
+</body>
+
+</html>

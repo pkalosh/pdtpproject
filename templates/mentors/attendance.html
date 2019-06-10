@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block top_section %}
+{% block tables_css %}
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTP Attendance</a></li>
+       
+      </ol>
+    </section>
+
+{% endblock %}
+ {% block table_title %}
+     
+
+              <div class="row">
+              <div class="col-md-2"></div>
+     <div class="col-md-6">
+     {% if interns %}
+             <h3 class="box-title button btn btn-red">{{ interns.company}} INTERNS' Monthly Attendance Submission</h3>
+             {% endif %}
+</div>
+<div class="col-md-4">
+
+              </div>
+              </div>
+            {% endblock %}
+{% block content %}
+ <form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+ 
+ <div class="container">
+ <div class='row'>
+ 
+ <div class="col-md-10">
+ <table id="example" class="table table-bordered table-striped table-hover">
+ <thead>
+   <th>Intern</th>
+   <th>Attendance</th>
+ </thead>
+ <tbody>
+ {% for intern in interns %}
+   <tr>
+     <td>
+       <label class="" for="option{{intern.id}}">
+            {{intern.pdtp.first_name}} {{intern.pdtp.last_name}}:
+           
+
+     </td>
+     <td>
+        <span > 
+                <input type="hidden" class="form-control"  name="org" id="option{{inter.id}}" value="{{ intern.company }}">
+                <input type="hidden" class="form-control"  id="option{{inter.id}}" name="pdtp" value="{{intern}}">
+                <input type='text' class="form-control" id="option{{intern.id}}" name="days" placeholder="days attended">
+                    
+                </span>
+     </td>
+   </tr>
+   {% endfor %}
+ </tbody>
+   
+ </table>
+
+        
+ 
+      
+        
+        
+    
+    </div>
+  
+  </div>
+  <div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="7">
+    <input type="submit" value="Submit Attendance" class="button btn btn-primary btn-md" />
+  </div>
+
+  <div class="col-md-3">
+    
+  </div>
+</div>
+ </div>
+
+</form>
+{% endblock %}
+
+
+
+
+
+
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

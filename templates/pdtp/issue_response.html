@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Raise an Issue</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     {% if user.userprofile.active ==  True %}
+               <a href="{% url 'raise_issue' %}?from={{ request.path|urlencode }}" class="button btn btn-primary btn-sm">Raise another issue</a> 
+               {% endif %}
+            {% endblock %}
+{% block content %}
+{% if issues %}
+<div class="table-responsive">
+<table id="example" class="table table-bordered table-striped table-hover" class="display" cellspacing="0" width="100%">
+              <thead>
+                <tr>
+                   <th>Date</th>
+                  <th>Subject</th>
+               
+                  <th>Details</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <body>
+{% for issue in issues %}
+
+<tr>
+<a href=".{{issue.id}}" data-toggle="modal">
+  <td>{{issue.date}}</td>
+  <td>{{issue.subject}}</td>
+  <td>{{issue.message|safe}}</td>
+  <td><button class="btn btn-sm btn-primary" data-toggle="modal" data-target=".{{issue.id}}"> Status</button></td>
+  
+  </a>
+</tr>
+
+
+<div  class="{{issue.id}} modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Status</h4>
+      </div>
+      <div class="modal-body">
+     {% for i in issue.issuestatus_set.all %}
+    
+     <strong>Date Raised: {{i.date}} </strong> <br><b>Status: </b>{{i.status}}<br> <b>Response : </b>{{i.comment|safe}}
+      <hr/>
+    
+     {% endfor %}
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target=".r{{issue.id}}" style="float: left"> Respond</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+          
+<div  class="r{{issue.id}} modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Status</h4>
+      </div>
+      <div class="modal-body">
+      <form method="post" action="?from={{ request.path|urlencode }}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="hidden" value="{{issue.id}}" name="issueid" />
+        <input type="submit"  value="Send" class="button btn btn-sm btn-primary" style="float: right;">
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    </div>
+    </div>
+{% endfor %}
+</body>
+</table>
+</div>
+{% else %}
+<h3> You have not raised any issue</h3>
+{% endif %}
+    <!-- /.content -->{% endblock %}
+ {% block tables_js_script %}
+<script type="text/javascript">
+        tinyMCE.init({
+                mode: "textareas",
+                theme: "simple"
+        });
+</script>
+{% endblock %}

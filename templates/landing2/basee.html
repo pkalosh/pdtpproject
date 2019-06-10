@@ -1,0 +1,318 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html dir="ltr" lang="zxx">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Digitalent</title>
+    <meta name="description" content="DigiTalent is the brand name for the Presidential Digital Talent Programme (PDTP), an internship programme that develops the ICT talent pool in Kenya through a collaboration between the public and private sectors. It is a partnership between government, public and private sector stakeholders and is to be implemented by the Ministry of Information Communications and Technology (MoICT) through the ICT Authority (ICTA)">
+    <meta name="author" content="author">
+
+    <!-- Mobile Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'ICTA-Logo.jpg' %}">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'base/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link href="{% static 'base/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+    <!-- Plugins -->
+    <link href="{% static 'base/plugins/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
+    <link href="{% static 'base/plugins/rs-plugin-5/css/settings.css' %}" rel="stylesheet">
+    <link href="{% static 'base/plugins/rs-plugin-5/css/layers.css' %}" rel="stylesheet">
+    <link href="{% static 'base/plugins/rs-plugin-5/css/navigation.css' %}" rel="stylesheet">
+    <link href="{% static 'base/css/animations.css' %}" rel="stylesheet">
+    <link href="{% static 'base/plugins/slick/slick.css' %}" rel="stylesheet">
+    
+    <!-- The Project's core CSS file -->
+    <!-- Use css/rtl_style.css for RTL version -->
+    <link href="{% static 'base/css/style.css' %}" rel="stylesheet" >
+    <!-- The Project's Typography CSS file, includes used fonts -->
+    <!-- Used font for body: Roboto -->
+    <!-- Used font for headings: Raleway -->
+    <!-- Use css/rtl_typography-default.css for RTL version -->
+    <link href="{% static 'base/css/typography-default.css' %}" rel="stylesheet" >
+    <!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer) -->
+    <link href="{% static 'base/css/skins/green.css' %}" rel="stylesheet">
+    
+
+    <!-- Custom css -->
+    <link href="{% static 'base/css/custom.css' %}" rel="stylesheet">
+
+     {% block message_js %}
+    <!-- this makes message to auto dissappear after few seconds -->
+    <script type="text/javascript">
+
+    window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    
+
+    </script>
+{% endblock %}
+    
+  </head>
+
+  <!-- body classes:  -->
+  <!-- "boxed": boxed layout mode e.g. <body class="boxed"> -->
+  <!-- "pattern-1 ... pattern-9": background patterns for boxed layout mode e.g. <body class="boxed pattern-1"> -->
+  <!-- "transparent-header": makes the header transparent and pulls the banner to top -->
+  <!-- "gradient-background-header": applies gradient background to header -->
+  <!-- "page-loader-1 ... page-loader-6": add a page loader to the page (more info @components-page-loaders.html) -->
+  <body class="front-page ">
+
+    <!-- scrollToTop -->
+    <!-- ================ -->
+    <div class="scrollToTop circle"><i class="fa fa-angle-up"></i></div>
+
+    <!-- page wrapper start -->
+    <!-- ================ -->
+    <div class="page-wrapper">
+      <!-- header-container start -->
+      <div class="header-container">
+        <!-- header-top start -->
+        <!-- classes:  -->
+        <!-- "dark": dark version of header top e.g. class="header-top dark" -->
+        <!-- "colored": colored version of header top e.g. class="header-top colored" -->
+        <!-- ================ -->
+        <div class="header-top dark">
+          <div class="container">
+            <div class="row">
+              <div class="col-2 col-md-5">
+                <!-- header-top-first start -->
+                <!-- ================ -->
+                <div class="header-top-first clearfix">
+                  <ul class="social-links circle small clearfix hidden-sm-down">
+                    <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    
+                    <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    <li class="googleplus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li class="youtube"><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                    
+                    <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    
+                  </ul>
+                  <div class="social-links hidden-md-up circle small">
+                    <div class="btn-group dropdown">
+                      <button id="header-top-drop-1" type="button" class="btn dropdown-toggle dropdown-toggle--no-caret" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-share-alt"></i></button>
+                      <ul class="dropdown-menu dropdown-animation" aria-labelledby="header-top-drop-1">
+                        <li class="twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                       
+                        <li class="linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li class="googleplus"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="youtube"><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                       
+                        <li class="facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!-- header-top-first end -->
+              </div>
+              <div class="col-10 col-md-7">
+
+                <!-- header-top-second start -->
+                <!-- ================ -->
+                <div id="header-top-second"  class="clearfix text-right">
+                  <ul class="list-inline">
+                     <li class="list-inline-item"><a href="{% url 'request_interns' %}" class="btn btn-danger btn-sm" style="background-color: red; color: white;"> Request for Interns</a></li>
+                   {% if user.is_authenticated %}
+                    <li class="list-inline-item" ><a href="{% url 'dashboard' %}" class="btn btn-danger btn-sm" style="background-color: red; color: white;"> Dashboard</a></li>
+                     <li class="list-inline-item" > <a href="{% url 'account_logout' %}" class="btn btn-danger btn-sm" style="background-color: red; color: white;"> Logout</a></li>
+                   {% else %}
+                    <li class="list-inline-item"><a href="{% url 'account_login' %}" class="btn btn-danger btn-sm" style="background-color: red; color: white;"> Login</a></li>
+                    {% endif %}
+
+                  </ul>
+                </div>
+                <!-- header-top-second end -->
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- header-top end -->
+
+        <!-- header start -->
+        <!-- classes:  -->
+        <!-- "fixed": enables fixed navigation mode (sticky menu) e.g. class="header fixed clearfix" -->
+        <!-- "fixed-desktop": enables fixed navigation only for desktop devices e.g. class="header fixed fixed-desktop clearfix" -->
+        <!-- "fixed-all": enables fixed navigation only for all devices desktop and mobile e.g. class="header fixed fixed-desktop clearfix" -->
+        <!-- "dark": dark version of header e.g. class="header dark clearfix" -->
+        <!-- "centered": mandatory class for the centered logo layout -->
+        <!-- ================ -->
+        <header class="header fixed fixed-desktop clearfix">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-auto hidden-md-down pl-3">
+                <!-- header-first start -->
+                <!-- ================ -->
+                <div class="header-first clearfix">
+
+                  <!-- logo -->
+                  <div id="logo" class="logo">
+            <a href="/"><img id="logo_img" src="{% static 'ICTA-Logo.png' %}" style="height:70px; width: 200px;" alt="Digitalent"></a>
+                  </div>
+
+                  <!-- name-and-slogan -->
+                  
+
+                </div>
+                <!-- header-first end -->
+
+              </div>
+              <div class="col-lg-8 ml-lg-auto">
+          
+                
+                <div class="header-second clearfix">
+                  
+                
+                <div class="main-navigation main-navigation--mega-menu  animated">
+                  <nav class="navbar navbar-expand-lg navbar-light p-0">
+                    <div class="navbar-brand clearfix hidden-lg-up">
+
+                      <!-- logo -->
+                      <div id="logo-mobile" class="logo">
+                        <a href="/"><img id="logo-img-mobile" src="{% static 'ICTA-Logo.png' %}" style="height:80px; width: 200px" alt="Digitalent"></a>
+                      </div>
+
+                      
+                    </div>
+                    
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-1" aria-controls="navbar-collapse-1" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                      <!-- main-menu -->
+                      <ul class="navbar-nav ml-xl-auto">
+
+                        <!-- mega-menu start -->
+                        <li class="nav-item dropdown  mega-menu mega-menu--wide {% if nbar == 'home' %}active{% endif %}" style="margin-left: -10px">
+                          <a href="/" class="nav-link"  aria-haspopup="true" aria-expanded="false">HOME</a>
+                        
+                        </li>
+                      
+                        <li class="nav-item dropdown mega-menu mega-menu--wide {% if request.resolver_match.url_name == 'mentorship' %}active{% endif %} ">
+                          <a href="{% url 'mentorship' %}" class="nav-link"  aria-haspopup="true" aria-expanded="false">MENTORSHIPS</a>
+                        
+                        </li>
+                        <li class="nav-item dropdown mega-menu mega-menu--wide {% if request.resolver_match.url_name == 'partners' %}active{% endif %} ">
+                          <a href="{% url 'partners' %}" class="nav-link"  aria-haspopup="true" aria-expanded="false">PARTNERS</a>
+                        
+                        </li>
+                         <li class="nav-item dropdown mega-menu mega-menu--wide {% if request.resolver_match.url_name == 'experts' %}active{% endif %} ">
+                          <a href="{% url 'experts' %}" class="nav-link"  aria-haspopup="true" aria-expanded="false">OUR GRADUATES</a>
+                        
+                        </li>
+                        <li class="nav-item dropdown mega-menu mega-menu--wide {% if request.resolver_match.url_name == 'blog' %}active{% endif %} {% if request.resolver_match.url_name == 'blog_item' %}active{% endif %}">
+                          <a href="https://recruitment.digitalent.go.ke" class="nav-link"  aria-haspopup="true" aria-expanded="false">APPLY NOW</a>
+                        
+                        </li>
+                        
+                       
+                        <!-- <li class="nav-item dropdown mega-menu mega-menu--wide {% if request.resolver_match.url_name == 'blog' %}active{% endif %} {% if request.resolver_match.url_name == 'our_blog' %}active{% endif %}">
+                          <a href="" class="nav-link"  aria-haspopup="true" aria-expanded="false">MEDIA</a>
+                        
+                        </li> -->
+                        
+                      </ul>
+                      <!-- main-menu end -->
+                    </div>
+                  </nav>
+                </div>
+                <!-- main-navigation end -->
+                </div>
+                <!-- header-second end -->
+
+              </div>
+              <div class="col-auto  pl-0 pl-md-1">
+                <!-- header dropdown buttons -->
+            
+                <!-- header dropdown buttons end -->
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- header end -->
+      </div>
+     
+    {% block content %}
+    
+      <!-- banner end -->
+      {% endblock %}
+ 
+      <!-- ================ -->
+      <footer id="footer" class="clearfix ">
+
+       
+        <div class="subfooter dark-bg">
+          <div class="container">
+            <div class="subfooter-inner">
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="text-center">Copyright © 2019. All rights reserved.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- .subfooter end -->
+
+      </footer>
+      <!-- footer end -->
+    </div>
+    <!-- page-wrapper end -->
+
+    <!-- JavaScript files placed at the end of the document so the pages load faster -->
+    <!-- ================================================== -->
+    <!-- Jquery and Bootstap core js files -->
+    <script src="{% static 'base/plugins/jquery.min.js' %}"></script>
+    <script src="{% static 'base/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- jQuery Revolution Slider  -->
+    <script src="{% static 'base/plugins/rs-plugin-5/js/jquery.themepunch.tools.min.js' %}"></script>
+    <script src="{% static 'base/plugins/rs-plugin-5/js/jquery.themepunch.revolution.min.js' %}"></script>
+    <!-- Isotope javascript -->
+    <script src="{% static 'base/plugins/isotope/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'base/plugins/isotope/isotope.pkgd.min.js' %}"></script>
+    <!-- Magnific Popup javascript -->
+    <script src="{% static 'base/plugins/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+    <!-- Appear javascript -->
+    <script src="{% static 'base/plugins/waypoints/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'base/plugins/waypoints/sticky.min.js' %}"></script>
+    <!-- Count To javascript -->
+    <script src="{% static 'base/plugins/countTo/jquery.countTo.js' %}"></script>
+    <!-- Slick carousel javascript -->
+    <script src="{% static 'base/plugins/slick/slick.min.js' %}"></script>
+    <!-- Initialization of Plugins -->
+    <script src="{% static 'base/js/template.js' %}"></script>
+    <!-- Custom Scripts -->
+    <script src="{% static 'base/js/custom.js' %}"></script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/5c4eb42851410568a108ee86/default';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+  </body>
+</html>

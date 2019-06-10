@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_title %}| {{user.last_name}}  {% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Approve Intern's Report</a></li>
+       
+      </ol>
+    </section>
+
+    {% endblock %}
+
+     {% block table_title %}
+     <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+            {% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-2">
+  </div>
+<div class="col-md-8">
+   {% if pdtp.ministryreport  %}
+  <h3>Approve {{pdtp.last_name|title}} {{pdtp.first_name|title}}'s Self Evaluation </h3>
+ 
+<form method="post" action=".">
+  {% csrf_token %}
+  <table class="table">
+    <tr>
+      <td><strong>Attended the programme for:</strong></td>
+      <td>{{attendance.attendance}}</td>
+    </tr>
+    <tr>
+      <td><strong>Quarterly Meetings Attended:</strong></td>
+      <td>{{attendance.meeting}}</td>
+    </tr>
+    <tr>
+      <td><strong>Quarterly Reports Submitted:</strong></td>
+      <td>{{attendance.report}}</td>
+    </tr>
+  </table>
+  <h4>Work Assignment</h4>
+  <table class="table">
+    <thead>
+      <th>Project</th>
+      <th>Description</th>
+      <th>Link</th>
+    </thead>
+    <tbody>
+   {% for assign in assignments %}
+    <tr>
+      <td>{{assign.project_name}}</td>
+      <td>{{assign.description}}</td>
+      <td>{{assign.link}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <h4>Activities Initiated by ICTA/other government bodies</h4>
+  <table class="table">
+    <thead>
+      <th>Project</th>
+      <th>Description</th>
+      <th>Link</th>
+    </thead>
+    <tbody>
+   {% for assign in additional %}
+    <tr>
+      <td>{{assign.project_name}}</td>
+      <td>{{assign.description}}</td>
+      <td>{{assign.link}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <h4>Falgship Projects</h4>
+  <table class="table">
+    <thead>
+      <th>Ministry</th>
+      <th>Project</th>
+      <th>Description</th>
+      <th>Link</th>
+    </thead>
+    <tbody>
+   {% for assign in flagships %}
+    <tr>
+      <td>{{assign.ministry}}</td>
+      <td>{{assign.project_name}}</td>
+      <td>{{assign.description}}</td>
+      <td>{{assign.link}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  
+   {% bootstrap_form form %}
+  
+<div class="row">
+  <div class="col-md-6">
+  </div>
+  <div class="col-md-3">
+  
+<input type="submit" name="" value="Not Approved" class="btn btn-warning" style="float: right;">
+</div>
+  <div class="col-md-3">
+  
+<input type="submit" name="" value="Approve" class="btn btn-primary" style="float: right;">
+</div>
+</div>
+</form>
+{% else %}
+The Intern has not submitted any reports for approval
+{% endif %}
+</div>
+{% endblock %}
+
+{% block tables_js_script %}
+  
+  
+{% endblock %}

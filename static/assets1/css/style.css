@@ -1,0 +1,37 @@
+﻿
+
+/*=======================================
+USER LIST STYLES
+==================================================*/
+.db-user-wrapper {
+    font-family: Verdana;
+}
+
+    .db-user-wrapper .media-list li {
+        padding: 5px;
+        background-color: #6C99D3;
+        color: #FFFFFF;
+        border: 5px solid #F0F0F0;
+    }
+
+        .db-user-wrapper .media-list li img {
+            width: 200px;
+            height: 130px;
+        }
+
+        .db-user-wrapper .media-list li a, .db-user-wrapper ul li a:hover {
+            color: #000;
+        }
+
+    .db-user-wrapper .media-list .media-body {
+        padding-top: 10px;
+    }
+
+        .db-user-wrapper .media-list .media-body p {
+            padding-top: 10px;
+        }
+
+        .db-user-wrapper .media-list .media-body .user-name {
+            color: #3B3B3C;
+            font-weight: 900;
+        }

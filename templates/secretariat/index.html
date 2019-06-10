@@ -1,0 +1,286 @@
+{% load staticfiles %}
+{% load pdtpyears %}
+{% load buddyyear %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <!-- Core CSS - Include with every page -->
+    <link href="{% static 'assets/plugins/bootstrap/bootstrap.css' %}" rel="stylesheet" />
+      <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+    <link href="{% static 'assets/font-awesome/css/font-awesome.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/plugins/pace/pace-theme-big-counter.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/main-style.css' %}" rel="stylesheet" />
+    <!-- Page-Level CSS -->
+    <link href="{% static 'assets/plugins/morris/morris-0.4.3.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'notify/notify.css' %}" rel="stylesheet"/>
+<script type="text/javascript" src="{% static 'notify/jquery-2.1.4.js' %}"></script>
+  <!-- include the notif-js -->
+  <script type="text/javascript" src="{%static 'notify/notify.js' %}"></script>
+
+   </head>
+<body>
+    <!--  wrapper -->
+    <div id="wrapper">
+        <!-- navbar top -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+            <!-- navbar-header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <!--<img src="{% static 'assets/img/logo.png' %}"   alt="" />-->
+                    <font color="white" size="+2">PDTP MANAGEMENT PORTAL</font>
+                </a>
+            </div>
+            <!-- end navbar-header -->
+            <!-- navbar-top-links -->
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- main dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <span class="top-label label label-danger">3</span><i class="fa fa-envelope fa-3x"></i>
+                    </a>
+                    <!-- dropdown-messages -->
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong><span class=" label label-danger">From</span></strong>
+                                    <span class="pull-right text-muted">
+                                        <em>On</em>
+                                    </span>
+                                </div>
+                                <div>Message</div>
+                            </a>
+                        </li>
+                        
+                       
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>Read All Messages</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- end dropdown-messages -->
+                </li>
+
+              
+
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-3x"></i>
+                    </a>
+                    <!-- dropdown user-->
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i>My PRofile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>Change Email</a>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i>Change Password</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="{% url 'account_logout' %}"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
+                        </li>
+                    </ul>
+                    <!-- end dropdown-user -->
+                </li>
+                <!-- end main dropdown -->
+            </ul>
+            <!-- end navbar-top-links -->
+
+        </nav>
+        <!-- end navbar top -->
+
+        <!-- navbar side -->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <!-- sidebar-collapse -->
+            <div class="sidebar-collapse">
+                <!-- side-menu -->
+                <ul class="nav" id="side-menu">
+                    <li>
+                        <!-- user image section-->
+                        <div class="user-section">
+                            <div class="user-section-inner">
+                     {% if user.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{user.userprofile.picture.url}}" height=300px width="300px"> 
+            {% else %} 
+            <img alt="User Pic" src="{% static 'images/user.png' %}" height=300px width="300px" > 
+            {% endif %}
+                            </div>
+                            <div class="user-info">
+                                <div>{{user.last_name}}<strong> {{user.first_name}}</strong></div>
+                                <div class="user-text-online">
+                                    <span class="user-circle-online btn btn-success btn-circle "></span>&nbsp;Online
+                                </div>
+                            </div>
+                        </div>
+                        <!--end user image section-->
+                    </li>
+                   
+                    <li class="selected">
+                        <a href="/"><i class="fa fa-dashboard fa-fw"></i>DASHBOARD</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> PDTP CORHORTS<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                             {% years_list %}
+                        </ul>
+                        <!-- second-level-items -->
+                    </li>
+                    <li>
+                        <a href="{% url 'mentors' %}"><i class="fa fa-wrench fa-fw"></i>MENTORS<span class="fa arrow"></span></a>
+                    </li>
+                    <li>
+                        <a href="{% url 'organizations' %}"><i class="fa fa-wrench fa-fw"></i>COMPANIES & MDAS <span class="fa arrow"></span></a>
+                    </li>
+                </ul>
+                <!-- end side-menu -->
+            </div>
+            <!-- end sidebar-collapse -->
+        </nav>
+        <!-- end navbar side -->
+        <!--  page-wrapper -->
+        <div id="page-wrapper">
+
+            <div class="row">
+                <!-- Page Header -->
+                <div class="col-lg-12">
+                    <h1 class="page-header">{% block top_section %}
+   {% endblock %}</h1>
+                </div>
+                <!--End Page Header -->
+            </div>
+
+            <div class="row">
+                <!-- Welcome -->
+                <div class="col-lg-12">
+                    <div class="alert alert-info">
+                        <i class="fa fa-folder-open">{% block table_title %}
+            {% endblock %}
+                    </div>
+                </div>
+                <!--end  Welcome -->
+            </div>
+
+
+            
+
+            <div class="row">
+                <div class="col-md-12">
+
+
+                	 {% if messages %}
+  {% for message in messages %}
+  <script>
+         notify('{{message.level_tag}}', "{{message}}");
+    </script>
+    
+  {% endfor %}
+      
+    {% endif %}
+                    <!--Area chart example -->
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i>Area Chart Example
+                            <div class="pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                        Actions
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li><a href="#">Action</a>
+                                        </li>
+                                        <li><a href="#">Another action</a>
+                                        </li>
+                                        <li><a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                            <div id="morris-area-chart"></div>
+                        </div>
+
+                    </div>
+
+              {% block content %}
+
+              {% endblock %}
+                    <!--End area chart example -->
+                   
+                        <!-- /.panel-body -->
+
+                    </div>
+                    <!--End simple table example -->
+
+
+                </div>
+
+           
+                    <!--End Notifications-->
+              
+                    <!--End Donut Example-->
+           
+
+
+         
+
+
+        </div>
+
+        <!-- end page-wrapper -->
+
+    </div>
+    <!-- end wrapper -->
+
+    <!-- Core Scripts - Include with every page -->
+    <script src="{% static 'assets/plugins/jquery-1.10.2.js' %}"></script>
+    <script src="{% static "plugins/jQuery/jquery-2.2.3.min.js" %}"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <script src="{% static 'assets/plugins/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/metisMenu/jquery.metisMenu.js' %}"></script>
+    <script src="{% static 'assets/plugins/pace/pace.js' %}"></script>
+    <script src="{% static 'assets/scripts/siminta.js' %}"></script>
+    <!-- Page-Level Plugin Scripts-->
+    <script src="{% static 'assets/plugins/morris/raphael-2.1.0.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/morris/morris.js' %}"></script>
+    <script src="{% static 'assets/scripts/dashboard-demo.js' %}"></script>
+    <link href="{% static 'notify/notify.css' %}" rel="stylesheet"/>
+
+  <!-- include the notif-js -->
+<!--
+<script type="text/javascript" src="{% static 'notify/notify.js' %}"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script> 
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script> 
+<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+-->
+<!-- page script -->
+{% block tables_js_script %}
+{% endblock %}
+
+</body>
+
+</html>

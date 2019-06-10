@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+
+    {% endblock %}
+     {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title  btn-red">LAPTOP APPLICANTS
+</h3>
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+{% block content %}
+ <div class="row">
+ 
+ <div class="col-md-2" >
+ 
+    <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th>Laptop Name</th>
+                  <th>MAC</th>
+                  <th>Serial Number</th>
+                  <th>Cores</th>
+                  <th>Processor Speed</th>
+                  <th>Cohort Year</th>
+                 <!--  <th>Payment History</th> -->
+                  <th>Update</th>
+                  
+                  
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for applicant in applicants %}
+                
+                <tr>
+                  <td>{{applicant.pdtp.last_name}} {{applicant.pdtp.first_name}}</td>
+                  <td>{{applicant.pdtp.email}}</td>
+                  <td>{{applicant.pdtp.userprofile.phone_number}}</td>
+                  <td>{{applicant.laptop.laptop_name}}</td>
+                  <td>{{applicant.laptop.MAC}}</td>
+                  <td>{{applicant.laptop.serial_no}}</td>
+                  <td>{{applicant.laptop.Cores}}</td>
+                  <td>{{applicant.laptop.Processor_Speed}}</td>
+                  <td>{{applicant.year}}</td>
+                  <!-- <td><button data-toggle="modal" data-target="#exampleModal">Payment history</button></td> -->
+                  
+                   <td> <a href="{% url 'update_laptop_applicants' applicant.id %}" class="btn btn-sm btn-success" >Payments</a></td>
+                  
+                  
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Payment History</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      {% for x in history %}
+      {{x.order}}
+      {{x.payment}}
+      {{x.payment_date}}
+      {% endfor %}
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  
+  
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [4,5,6,7] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

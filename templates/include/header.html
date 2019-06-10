@@ -1,0 +1,47 @@
+<!--top-header-->
+{% load staticfiles %}
+	
+	<div class="top-header ">
+		<div class="container">
+			<div class="top-header-main">
+				<div class="col-md-6 top-header-left">
+			{% if user.is_authenticated %}	
+			<!--<a href="" class="headfont">Display Date</a>	-->	 
+				Welcome, {{user.last_name}}
+				{% endif %}
+{% if user.userpictures.photo %} <img class="img-responsive zoom-img" src="{{ MEDIA_URL }}{{user.userpictures.photo.url}}" alt="" style="max-width: 29px; height:20px;
+float: left;">	
+{% else %}
+<img class="img-responsive zoom-img" src="{% static "images/pro.png" %}" alt="" style="max-width: 29px; height:20px;
+float: left;">	
+{% endif %}
+				
+						<div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="col-md-6 top-header-left">
+					<div class="cart box_1">
+                         {% if user.is_authenticated %}
+						<p><a href="{% url 'dashboard'  %}" class="headfont"><b>MY DASHBOARD</b> | </a> &nbsp; <a class="headfont" href="{% url 'account_logout' %}"><i class="fa fa-fw fa-sign-out"></i><span class="hidden-xs">Sign Out</span></a></p>
+						{% else %}
+						<p><a href="{% url 'account_signup' %}" class="headfont">Create Account</a> | <a href="{% url 'account_login' %}" class="headfont">Login</a></p>
+						{% endif %}
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+		</div>
+	</div>
+	<!--top-header-->
+	<!--start-logo-->
+	<div class="logo">
+		<a href="/"><img src="/static/images/lmislogo.png" style="text-align: right; max-width: 30%;"></a>
+		<a href="/"><h1 style="max-width: 65%;">Kenya Labour Market Information System<br><font size="-1" color="black"><i> For Optimal Human Resource Planning, Development and Utilization</i></font></h1>
+</a>
+
+
+	
+	</div>
+
+

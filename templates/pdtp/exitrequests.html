@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTPS Programme Exit Requests</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title button btn btn-red">PDTP Program Exit Requests
+</h3>
+</div>
+<div class="col-md-7">
+              </div>
+              </div>
+            {% endblock %}
+
+
+{% block content %}
+      <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>PDTP Name</th>
+                  <th>View Exit Form</th>
+                  <th>Download Exit Form</th>
+                   <th>#</th>
+                  
+
+                
+                </tr>
+                </thead>
+                 {% for p in requests %}
+                
+                <tr>
+                    <td>
+                    {{p.pdtp.first_name}} {{p.pdtp.last_name}}</td>
+                    <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#{{p.id}}">View Form</button>
+</td>
+                    <td>{{p.date_of_request}}</td>
+                     
+                    <td><a href="{% url 'pdtp_clearance' p.pdtp.userprofile.year p.pdtp.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-danger">Clear </span></a></td>
+
+                    <!-- Modal -->
+                  <div class="modal fade" id="{{p.id}}" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">{{p.pdtp.first_name}} {{p.pdtp.last_name}}'s Exit Form</h4>
+                        </div>
+                        <div class="modal-body">
+                          {% for p in p.pdtp.exitsinglesubmitted_set.all %}
+                          <p><strong>{{p.parameter}}</strong><br>
+                          {{p.jibu}}</p>
+                          {% endfor %}
+                          <hr>
+                          {% for p in p.pdtp.exitsubmitted_set.all %}
+                          <p><strong>{{p.parameter}}</strong> --
+                          {{p.jibu}}</p>
+                          {% endfor %}
+                          <hr>
+                           {% for p in p.pdtp.exitratesubmited_set.all %}
+                          <p><strong>{{p.parameter}}</strong> --
+                          {{p.jibu}}</p>
+                          {% endfor %}
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+    </tr>
+                  {% endfor %}
+            
+  </table>
+{% endblock %}
+
+
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

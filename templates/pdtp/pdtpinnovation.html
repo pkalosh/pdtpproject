@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'newprivate/src/bootstrap-duallistbox.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.min.js"></script>
+    <script src="{% static 'newprivate/src/jquery.bootstrap-duallistbox.js' %}"></script>
+{% endblock %}
+<section class="content-header">
+      <h1>
+        INNOVATIONS SUBMITTED
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Innovations
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+              <h3 class="box-title button btn btn-red"> Update innovations</h3>
+            {% endblock %}
+
+{% block content %}
+ <div class="row">
+  {% if user.userprofile.active == True %}
+ <div class="col-md-1">
+
+   <a href="{% url 'submit_innovation' %}" class="button btn btn-sm btn-primary">Add Innovation</a> 
+ </div>
+ <div class="col-md-1"></div>
+ {% endif %}
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+
+</div>
+{% if my_innovation %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Innovation</th>
+                  <th>Industry</th>
+                  <th>Innovators & Roles</th>
+                  <th>Need</th>
+                  <th>Option</th>
+                  <th>Market Potential</th>
+                
+                  <th>Business Model</th>
+                  <th>Feasibility</th>
+                  <th>Relevance</th>
+                  <th>How it Works</th>
+                  <th>Relevant Info</th>
+                  <th>Bibliography</th>
+                  <th>Appendices</th>
+                  <th>Edit</th>
+                  <th>Results</th>
+                   <th>Team Members</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for innovation in my_innovation %}
+                
+                <tr>
+                  <td>{{innovation.innovation_name|safe}}</td>
+                  <td>{{innovation.industry|safe}}</td>
+                  <td>{{innovation.innovators_roles|safe}}</td>
+                  <td>{{innovation.need|safe}}</td>
+                  <td>{{innovation.option|safe}}</td>
+                  <td>{{innovation.market_potential|safe}}</td>
+                  <td>{{innovation.business_model|safe}}</td>
+                  <td>{{innovation.feasiblity|safe}}</td>
+                  <td>{{innovation.relevance|safe}}</td>
+                  <td>{{innovation.how_it_works|safe }}</td>
+                  <td>{{innovation.relevant_information|safe}}</td>
+                  <td>{{innovation.bibliography|safe}}</td>
+                  <td>{{innovation.appendices|safe}}</td>
+                  <td><a href="{% url 'edit_innovation' innovation.id %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary">Edit</span></a></td> 
+                   <td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#results{{innovation.id}}">Results</button></td> 
+           
+
+<td><button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal{{innovation.id}}">Members</button>
+
+<!-- Modal -->
+<div id="myModal{{innovation.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Team Members</h4>
+      </div>
+      <div class="modal-body">
+        {% if innovation.innovationteam_set.all %}
+        {% for innovation in innovation.innovationteam_set.all %}
+        {{innovation.pdtp.first_name}} {{innovation.pdtp.last_name}} -{{innovation.pdtp.username}}<br>
+        {% endfor %}
+       
+      
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div></td> 
+
+
+                 
+                  
+                </tr>
+
+<div id="results{{innovation.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Panelists feedback on {{innovation.innovation_name|safe}}</h4>
+      </div>
+      <div class="modal-body">
+    
+         {% for innovation in innovation.innovationevaluationperparam_set.all %}
+         <div class="row">
+          <div class="col-md-6">
+          <strong>{{innovation.parameter}}</strong> 
+        </div>
+          <div class="col-md-6">
+            {{innovation.average}}
+            
+          </div>
+        </div>
+          {% endfor %}
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<h3 style="text-decoration-color: blue"> You have not yet submitted your innovation </h3>
+{% endif %}
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [2,3,4,6,7,8,9,10] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

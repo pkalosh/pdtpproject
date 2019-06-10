@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+     
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Exit Request</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+{% block content %}
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <h4><strong>PDTP PROGRAMME EXIT FORM</strong></h4>
+Thank you for taking part in the PDTP Internship program. 
+Please answer the questions as honestly as possible. 
+We thank you for your thoughtful input and welcome any comments you might have.
+The information you provide us will assist with future decisions.
+All of the information that you provide will be confidential
+<h4>NOTE:</h4>
+<ul>
+<li>Your request will be sent to both your supervisor and the secretariat for their approval</li>
+<li>You are supposed to give a one month notice</li>
+</ul>
+
+
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+
+{% for parameter in parameterssingle %}
+ <p>
+ <label>{{parameter.parameter}}</label><br>
+  <input type="text" name="{{parameter.id}}" class="form-control" required /></p>
+  {% endfor %}
+
+  <p><b>The following questions pertain to your internship experience. 
+Please Check Yes or No</b></p>
+
+{% for parameter in parameters %}
+ <p>{{parameter.parameter}}</p>
+    <label class="radio-inline">
+      <input type="radio" name="1{{parameter.id}}" value="Yes">Yes
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="1{{parameter.id}}" value="No">No
+    </label>
+    {% endfor %}
+  
+<p><b>On a scale of 1-5 please rate your experience in the internship program with 
+5 meaning that you strongly agree and 1 meaning that you strongly disagree. 
+Please check  the number to indicate your response.</b></p>
+{% for parameter in parametersrate %}
+<p>{{parameter.parameter}}</p>
+<label class="radio-inline">
+      <input type="radio" name="2{{parameter.id}}" value="1">1
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="2{{parameter.id}}" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="2{{parameter.id}}" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="2{{parameter.id}}" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="2{{parameter.id}}" value="5">5
+    </label>
+    {% endfor %}
+   
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" style="float: right;">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Submit
+      </button>
+  {% endbuttons %}
+
+</form>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+{% endblock %}

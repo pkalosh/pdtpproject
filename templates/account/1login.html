@@ -1,0 +1,68 @@
+{% extends "account/base.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<div class="row" style="padding-top: 20px;">
+<div class="col-md-4 clo-sm-12 col-xs-12">
+</div>
+<div class="col-md-4 clo-sm-12 col-xs-12 col-md-offset-1 " style="float: center;" >
+    
+  <img src="{% static 'images/ICTA-Logo.png' %}"   alt="">
+
+</div>
+<div class="col-md-4 clo-sm-12 col-xs-12">
+</div>
+</div>
+<div class="row" style="padding-top: 10px;">
+
+
+  <div class="col-md-3">
+</div>
+<div class="col-md-9">
+
+
+<div class="well" style="background-image:url('/static/images/login2.png');background-size:cover;height:405px;padding-left: 0px;" >
+
+
+<div class="row" >
+
+<div class="col-md-2">
+</div>
+<div class="col-md-8" style="padding-left: 70px;padding-top: 45px;">
+
+
+{% if socialaccount.providers %}
+<p>{% blocktrans with site.name as site_name %}Please sign in with:{% endblocktrans %}</p>
+<div class="list-group">
+{% include "socialaccount/snippets/provider_list.html" with process="login" %}
+<div class="login-or">{% trans 'or' %}</div>
+</div>
+{% include "socialaccount/snippets/login_extra.html" %}
+{% endif %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}" class="contact_form">
+  {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="button btn btn-danger btn-block">
+             {% trans "Sign In" %}
+        </button>
+    {% endbuttons %}
+    
+    
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <a class="button secondaryAction" href="/accounts/password/reset/">{% trans "Forgot Password?" %}</a>
+  
+</form>
+</div>
+
+</div>
+  </div>
+</div>
+{% endblock %}

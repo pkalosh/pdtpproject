@@ -1,0 +1,75 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="banner dark-translucent-bg" style="background-image:url('/static/slide4a.jpg'); background-position: 50% 27%;">
+        <!-- breadcrumb start -->
+        <!-- ================ -->
+  
+        <!-- breadcrumb end -->
+        <div class="container">
+          <div class="row justify-content-lg-center">
+            <div class="col-lg-8 text-center pv-20">
+              <h3 class="title logo-font hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 40px"><span class="text-default"style="color: green" >Success Stories.</span></h3>
+              <div class="separator hc-element-invisible mt-10" data-animation-effect="fadeIn" data-effect-delay="100"></div>
+              <p class="text-center hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 20px" style="color: white !important; "><!-- <font color="green">In learning you will teach, in teaching you will learn. </font> --> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="news-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <div class="news-content">
+                      <a href="#"><img src="{{story.photo.url}}" style="width: 100%; height: 400px;" alt=""></a>
+
+                        <header class="entry-header d-flex flex-wrap justify-content-between align-items-center">
+                            <div class="header-elements">
+                            
+                                <h2 class="entry-title"><a href="#"> {{story.name|title}}</a></h2>
+                            </div>
+
+                          
+                        </header>
+
+                        <div class="entry-content">
+                            <h4></h4>
+                            <p>{{story.content|safe}}</p>
+                        </div>
+
+                        
+                    </div>
+
+
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <div class="sidebar">
+                        <div class="popular-posts">
+                            <h2>Related Stories</h2>
+
+                            <ul class="p-0">
+                                {% for story in stories %}
+                                <li class="d-flex flex-wrap justify-content-between align-items-center">
+                                    <figure><a href="#"><img src="{{story.photo.url}}" style="width:50px; height: 50px;" alt=""></a></figure>
+
+                                    <div class="entry-content">
+                                        <h3 class="entry-title"><a href="{% url 'story' story.id story.slug %}">{{story.name|title}} </a></h3>
+                                          <div class="posted-date">{{story.role|title}} | {{story.organization|title}}</div>
+
+                                        
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div><!-- .cat-links -->
+
+
+                    </div><!-- .sidebar -->
+                </div><!-- .col -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

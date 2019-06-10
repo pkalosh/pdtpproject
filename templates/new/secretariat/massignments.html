@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTPS</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title  btn-red"> {{year}} Mentors-Mentees Assignments
+</h3>
+</div>
+<div class="col-md-7">
+{% include 'secretariat/links.html' %}
+              </div>
+              </div>
+            {% endblock %}
+{% block content %}
+   <a href="{% url 'mentorship_mapping' year %}" class="button btn btn-sm btn-primary">New Mentorship Assignments</a> 
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Mentor's Name</th>
+                  <th>Mentor's Cell</th>
+                  <th> Mentor's Email</th>
+                  <th>Mentee's Name</th>
+                  <th>Mentee's Cell</th>
+                  <th> Mentee's Email</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for a in assignments %}
+                
+                <tr>
+                  <td><a href="#{{a.mentor.id}}" data-toggle="modal">{{a.mentor.last_name}} {{a.mentor.first_name}}</a></td>
+                  <td>{{a.mentor.userprofile.phone_number}}</td>
+                  <td>{{a.mentor.email}}</td>
+                  <td><a href="#{{a.mentee.id}}" data-toggle="modal">{{a.mentee.last_name}} {{a.mentee.first_name}}</a></td>
+                  <td>{{a.mentee.userprofile.phone_number}}</td>
+                  <td>{{a.mentee.email}}</td>
+                  
+                </tr>
+                <!--Mentees Profile Pop up -->
+               <div class="modal fade" id="{{a.mentee.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+           <div class="row">
+        <div class="col-md-4">
+          
+          {% if a.mentee.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ a.mentee.userprofile.picture.url }}" height=160px width="160px" class="img-rounded"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{a.mentee.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+        <h4>Personal Details</h4>
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{a.mentee.last_name}} {{a.mentee.first_name}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Gender:
+          </div>
+          <div class="col-md-6">
+          {{a.mentee.userprofile.gender}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date of Birth:
+          </div>
+          <div class="col-md-6">
+          {{a.mentee.userprofile.date_of_birth}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Marital Status:
+          </div>
+          <div class="col-md-6">
+          {{a.mentee.userprofile.marital_status}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{a.mentee.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{a.mentee.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Area of Specialization:
+          </div>
+          <div class="col-md-6">
+          {{a.mentee.userprofile.area_of_specialization}}
+          </div>
+          </div>
+          <h4>Academic Details</h4>
+          {% for academic in a.mentee.academicdetail_set.all %}
+          <div class="row">
+          <div class="col-md-3">
+          {{ academic.academic_level}}
+          </div>
+          <div class="col-md-3">
+          {{academic.course_name}}
+          </div>
+          <div class="col-md-3">
+          {{academic.higher_institution_attended}}
+          </div>
+          </div>
+          {% endfor %}
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <!-- end of mentees profile pop up -->
+  <!-- mentors profile pop up -->
+   <div class="modal fade" id="{{a.mentor.id}}" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if a.mentor.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ a.mentor.userprofile.picture.url }}" height=160px width="160px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded zoom"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{a.mentor.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{a.mentor.last_name}} {{a.mentor.first_name}}
+          </div>
+          </div>
+          {% for m in a.mentor.supervisor_set.all %}
+          <div class="row">
+          <div class="col-md-6">
+          Honors:
+          </div>
+          <div class="col-md-6">
+          {{m.honors}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Title:
+          </div>
+          <div class="col-md-6">
+          {{m.position}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Company:
+          </div>
+          <div class="col-md-6">
+          {{m.organization}}
+          </div>
+          </div>
+          {% endfor %}
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{a.mentor.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{a.mentor.email}}
+          </div>
+          </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+                {% endfor %}
+               </tbody>
+  </table>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+
+
+ <script>
+$('.assignmentor').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'complete_mentorship_mapping' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      
+                    
+                      notify(response.targ, response.message);
+
+                      //window.location.reload();
+
+
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

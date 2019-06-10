@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        Monthly Reports
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">reports
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+              <h3 class="box-title button btn btn-red">My Monthly Reports</h3>
+            {% endblock %}
+
+{% block content %}
+ <div class="row">
+  {% if user.userprofile.active == True %}
+ <div class="col-md-1">
+ 
+
+   <a href="{% url 'submit_workplan' %}" class="button btn btn-sm btn-primary">Submit Monthly Report</a> 
+ </div>
+ <div class="col-md-1"></div>
+ {% endif %}
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+
+</div>
+{% if workplan %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Project Name</th>
+                  <th>task</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  
+                  <th>Download PDF </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for report in workplan %}
+                
+                <tr>
+                  <td>{{report.project_name|safe}}</td>
+                  <td>{{report.task|safe}}</td>
+                  <td>{{report.start_date|safe}}</td>
+                  <td>{{report.end_date|safe}}</td>
+                 
+                 
+                  <td><a href="{% url 'pdf_workplan' report.id %}" target="_blank"><i class="glyphicon glyphicon-download-alt" ></i> </a></td> 
+
+                 
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<h3 style="text-decoration-color: blue"> You have not yet submitted your report </h3>
+{% endif %}
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

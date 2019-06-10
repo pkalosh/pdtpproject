@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Workplans</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-2">
+ 
+    <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+<div class="col-md-3">
+             <h3 class="box-title button btn btn-red">Approve Interns' Quarterly Report</h3>
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+
+           {% block content %}
+           <div class="container">
+             <div class="row">
+             <div class="col-md-1">
+               
+             </div>
+             <div class="col-md-8">
+               {% if report %}
+          <label><strong>1: Introdution</strong></label><br>
+          
+            {{report.introduction|safe}}<br>
+          
+         
+          <strong>2: Project Involved:</strong><br>
+          
+            {{report.projects_involved|safe}}<br>
+          
+          <strong>3: Innovation Opportunity:</strong><br>
+        
+            {{report.innovation_opportunities|safe}}<br>
+          <strong>4: Mentorship Progress:</strong><br>
+          
+            {{report.mentorship_progress|safe}}<br>
+         
+          <strong>5: Training Certification:</strong><br>
+          
+            {{report.training_certification|safe}}<br>
+         
+          <strong>6: Lesson learnt:</strong><br>
+          
+            {{report.lesson_learnt|safe}}<br>
+          
+          <strong>7: Challenges Faced:</strong><br>
+          
+            {{report.challenges_faced|safe}}<br>
+         
+         {% endif %}
+            <form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+ 
+          {% bootstrap_form form %}
+  
+
+  <div class="col-md-3">
+  
+<input type="submit" name="" value="Approve report" class="btn btn-primary" style="float: right;">
+</div>
+
+
+  </form>
+             </div>
+             <div class="col-md-2">
+
+               
+             </div>
+               
+             </div>
+           </div>
+           
+     
+         
+           {% endblock %}

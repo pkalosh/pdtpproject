@@ -1,0 +1,432 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTP Evaluation</a></li>
+       
+      </ol>
+    </section>
+    <style>
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 30%;
+ 
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    
+    width: 70%;
+    border-left: none;
+   
+}
+</style>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+             <h3 class="box-title button btn btn-red"> MY Intern(S)</h3>
+</div>
+<div class="col-md-7" style="text-align: right;">
+ {% for c in user.supervisor_set.all %} {% if c.is_contact_person %}
+{{c.organization}} 
+<br>Contact Person :<a href="">{{c.supervisor}}</a> {% endif %}{% endfor %}
+
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+
+ {% if interns %}
+
+<div class="tab">
+  {% for intern  in interns %}
+  <button class="tablinks" onclick="openCity(event, 'm{{intern.id}}')" id="defaultOpen">{{intern.pdtp.last_name}}  {{intern.pdtp.first_name}}</button>
+  {% endfor %}
+</div>
+  {% for intern  in interns %}
+<div id="m{{intern.id}}" class="tabcontent">
+  <div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c{{intern.id}}">
+          Bio
+        </a>
+      </h4>
+    </div>
+    <div id="c{{intern.id}}" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if intern.pdtp.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ intern.pdtp.userprofile.picture.url }}" height=160px width="160px" class="img-rounded"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            {{intern.pdtp.userprofile.bio|safe}}
+            <br>
+            <a href="#" data-toggle="modal" data-target=".r{{issue.id}}" class="button btn btn-sm btn-primary" style="float:right;">Contact Intern</a>
+            </div>
+
+            </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c2{{intern.id}}">
+          Personal Details
+        </a>
+      </h4>
+    </div>
+    <div id="c2{{intern.id}}" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.last_name}} {{intern.pdtp.first_name}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Gender:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.gender}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date of Birth:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.date_of_birth}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Marital Status:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.marital_status}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Area of Specialization:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.area_of_specialization}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">Facebook Link:</div>
+          <div class="col-md-6">
+          {{intern.userprofile.facebook}}
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+          Twitter Link:</div>
+          <div class="col-md-6">
+            {{intern.userprofile.twitter}}
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-md-6">
+              Linkedin Link:
+            </div>
+            <div class="col-md-6">{{intern.userprofile.linkedin}}
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c3{{intern.id}}">
+          Academic Details
+        </a>
+      </h4>
+    </div>
+    <div id="c3{{intern.id}}" class="panel-collapse collapse">
+      <div class="panel-body">
+       {% for academic in intern.pdtp.academicdetail_set.all %}
+          <div class="row">
+          <div class="col-md-3">
+          {{ academic.academic_level}}
+          </div>
+          <div class="col-md-3">
+          {{academic.course_name}}
+          </div>
+          <div class="col-md-3">
+          {{academic.higher_institution_attended}}
+          </div>
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c5{{intern.id}}">
+          Mentor
+        </a>
+      </h4>
+    </div>
+    <div id="c5{{intern.id}}" class="panel-collapse collapse">
+      <div class="panel-body">
+       {% for m in intern.pdtp.mentee.all %}
+          <div class="row">
+          <div class="col-md-10">
+            {{ m.mentor.first_name}}  {{ m.mentor.last_name}}
+          </div>
+          <div class="col-md-2">
+         <a href="" class="button btn btn-primary btn-sm" data-toggle="modal" data-target=".c{{issue.id}}" >Send Note</a>
+          </div>
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<div class="modal-content">
+        
+        
+        
+        <div class="modal-footer">
+       <!--  <a href="{% url 'reports_quarterly' intern.pdtp.id %}" class="button btn btn-sm btn-primary">Quarterly Reports</a>
+        <a href="{% url 'view_Internmereport' intern.pdtp.id %}" class="button btn btn-sm btn-primary">M&E Reports</a>
+          <a href="{% url 'approve_workplans' %}" class="button btn btn-sm btn-primary">Approve Monthly Reports</a>  -->
+          {% if user.sup %}
+        
+           {% for c in user.supervisor_set.all %}
+                       {% if c.organization.category  %}
+                      
+                        {% if intern.pdtp.publicsupervisorevaluation_set.all %}
+                        <a href="" class="button btn btn-sm btn-success" style="float: right;">
+                        Has Been Evaluated </a>
+                        {% else %}
+
+                        <a href="{% url 'public_supervisor_evaluate' intern.pdtp.id %}" class="button btn btn-sm btn-primary" style="float: right;">Evaluate Intern</a>
+                      {% endif %}
+                      
+                   {% if intern.pdtp.buddyapprovalcomment %}
+                        <a href="" class="button btn btn-sm btn-success" style="float: right;">Self Evaluation approved</a>
+                      {% else %}
+                       <a href="{% url 'public_supervisor_approval' intern.pdtp.id %}" class="button btn btn-sm btn-primary" style="float: right;">Approve Intern's self Evaluation</a>
+
+                      {% endif %}
+
+                      {% else %}
+                     
+                        {% if intern.pdtp.privatesupervisorevaluation_set.all %}
+                        <a href="" class="button btn btn-sm btn-success" style="float: right;">Has Been Evaluated </a>
+                        {% else %}
+
+                        <a href="{% url 'supervisor_evaluate' intern.pdtp.id %}" class="button btn btn-sm btn-primary" style="float: right;">Evaluate Intern</a>
+                      {% endif %}
+                      
+                    
+                       {% if intern.pdtp.supervisorapprovalcomment %}
+                        <a href="" class="button btn btn-sm btn-success" style="float: right;"> Intern Evaluation approved</a>
+                      {% else %}
+                       <a href="{% url 'supervisor_approval' intern.pdtp.id %}" class="button btn btn-sm btn-primary" style="float: right;">Approve Intern Evaluation</a>
+
+                      {% endif %}
+
+                   
+                      {% endif %}
+                      {% endfor %} 
+                      {% endif %}
+           
+                         
+        </div>
+      </div>
+       
+  
+
+</div>
+
+
+{% endfor %}
+       
+<div  class="r{{issue.id}} modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Message</h4>
+      </div>
+      <div class="modal-body">
+      <form method="post" action="?from={{ request.path|urlencode }}">
+        {% csrf_token %}
+        
+        <input type="hidden" value="{{issue.id}}" name="issueid" />
+        <input type="submit"  value="Send" class="button btn btn-sm btn-primary" style="float: right;">
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div  class="c{{issue.id}} modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Message</h4>
+      </div>
+      <div class="modal-body">
+      <form method="post" action="?from={{ request.path|urlencode }}">
+        {% csrf_token %}
+        
+        <input type="hidden" value="{{issue.id}}" name="issueid" />
+        <input type="submit"  value="Send" class="button btn btn-sm btn-primary" style="float: right;">
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    </div>
+    </div>
+
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+     
+
+                      {% else %}
+                      
+                    
+You currently  have no Intern(s)
+                      {% endif %}
+ {% endblock  %}
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

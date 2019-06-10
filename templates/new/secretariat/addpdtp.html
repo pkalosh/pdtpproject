@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+            {% block content %}
+            {% block top_section %}
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Management Portal</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                        
+                        <ol class="breadcrumb">
+                            <li><a href="#">Dashboard</a></li>
+                            <li class="active">PDTPS</li>
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                 {% endblock %}
+      <div class="white-box">
+      <div class="row">
+ <div class="col-md-1 col-sm-1 col-xs-4">
+   <a href="{% url 'add_pdtp' %}" class="button btn btn-sm btn-primary">Add PDTP</a> 
+ </div>
+ <div class="col-md-1 col-sm-1 col-xs-4">
+  <!--
+<a href="" class="button btn btn-primary btn-sm"  onclick="window.history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+-->
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+<div class="col-md-10">
+
+   </div>
+   </div> 
+<form  method="POST" action="." class="form">
+ {% csrf_token %}
+{% bootstrap_form form %}
+{% bootstrap_form pform %}
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Add
+    </button>
+  {% endbuttons %}
+</form>
+</div>
+    <!-- /.content -->{% endblock %}

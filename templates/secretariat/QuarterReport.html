@@ -1,0 +1,86 @@
+{% load staticfiles %}
+<style type="text/css">
+ #line{
+  color:#99CC99;
+
+  } 
+</style>
+<form action="" method="POST" style="padding-left: 20px;">
+<span class="logo-mini"><img src="static/images/ICTA-Logo.png" height="55" width="150" alt="PDT App"></span>
+<h3 style="text-align: center; color: red">PRESIDENTIAL DIGITALENT PROGRAMME</h3>
+ {% for report in report %}
+ <span style="text-align: center;font-weight: bold ; color: green; font-size: 15px;">Quarterly Report for {{report.quater|safe}}</span>
+
+ <div class="container form-control ">
+   <div class="row">
+   <div class="col-md-3">
+     
+   </div>
+   <div class="col-md-6">
+   <div class="form-group">
+    <label style="font-weight: bold">Name:</label>
+    <strong>{{ report.pdtp.first_name|safe }} {{ report.pdtp.last_name|safe }}</strong>
+  </div>
+<hr id="line" />
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Supervisor:</label>
+    <span>{{report.supervisor.first_name|safe }} {{ report.supervisor.last_name|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Projects Involved:</label>
+    <span >{{report.introduction|safe}}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Projects Involved:</label>
+    <span>{{report.projects_involved|safe}}</span>
+  </div><br>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Project Category:</label><br>
+    <span>{{report.project_Category|safe }}</span>
+  </div><br>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Innovation Opportunities :</label>
+    <span>{{report.innovation_opportunity|safe }}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Mentorship Progress:</label>
+    <span>{{report.mentorship_progress|safe }}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Training and Certifications:</label>
+    <span>{{report.training_certification|safe }}</span>
+  </div>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Lesson Learnt:</label>
+    <span>{{report.lesson_learnt|safe }}</span>
+  </div>
+
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Challenges Faced:</label>
+    <span>{{report.challenges_faced|safe }}</span>
+  </div>
+
+<div class="form-group">
+    <label style="font-weight: bold; color: green">Recommendations:</label>
+    <span>{{report.recommendation|safe }}</span>
+  </div>
+  
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Supervisor Comments About the Intern:</label><br>
+    <span>{{report.comments|safe }}</span>
+  </div>
+     
+   </div>
+   <div class="col-md-3">
+     
+   </div>
+     
+   </div>
+ </div>
+
+  
+  {% endfor %}
+ 
+</form>
+             
+             

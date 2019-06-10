@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_title %}| {{user.last_name}}  {% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Approve Intern's Report</a></li>
+       
+      </ol>
+    </section>
+
+    {% endblock %}
+
+      {% block table_title %}
+                  <div class="row">
+ 
+ <div class="col-md-1"  style="margin-left: -3px;">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+            {% endblock %}
+
+{% block content %}
+<h3>The Intern has not submitted the self evaluation reports</h3>
+
+{% endblock %}
+
+{% block tables_js_script %}
+  
+  
+{% endblock %}

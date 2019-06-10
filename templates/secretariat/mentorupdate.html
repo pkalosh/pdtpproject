@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{% url 'mentors' %}">Mentors</a></li>
+        <li><a href="#">Update Mentor</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     <div class="row">
+      <div class="col-md-12">
+              <h3 class="box-title button btn btn-red"> Update Mentor Details</h3>
+            </div>
+          </div>
+            {% endblock %}
+{% block content %}
+   
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+ <div class="row">
+      <div class="col-md-12">
+              <h3>Contact Person Details</h3>
+            </div>
+          </div>
+ <div class="row">
+
+<div class="col-md-3">
+{% bootstrap_field uform.last_name %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field uform.first_name %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.position %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.title %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.honors  %}
+</div>
+</div>
+<div class="row">
+<div class="col-md-2">
+{% bootstrap_field cform.alternate_email  %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field cform.phone_number  %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field cform.alternate_cell  %}
+</div>
+
+<div class="col-md-2">
+{% bootstrap_field sform.is_supervisor  %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.is_contact_person  %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.mentor_availability  %}
+</div>
+</div>
+
+
+
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+    <!-- /.content -->{% endblock %}

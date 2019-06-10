@@ -1,0 +1,8 @@
+
+media_files/
+static_files/
+logs/
+local_settings.py
+*.pyc
+media/
+

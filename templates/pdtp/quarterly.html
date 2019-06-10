@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        Quarterly Report Submission Form
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Quarterly Report
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title  btn-red">Quarterly Report
+</h3>
+</div>
+
+              </div>
+            {% endblock %}
+
+{% block content %}
+ <div class="row">
+ 
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-sm btn-success" type="button" value="Back" />
+</div>
+
+</div>
+
+
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <h4 style="color: red;"><strong>PRESIDENTIAL DIGITALENT {{quarter|upper}} REPORT</strong></h4>
+
+<hr style="background-color: red; height: 1px; border: 0; ">
+<form  method="POST" action="" class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+ <br>
+ {{form.media}}
+ {% bootstrap_form form %}
+ <label>Choose supervisor to approve your Quarterly Report</label>
+ <select name=supervis>
+ <option >--------</option>
+ {% for super in supervisor %}
+   <option >{{super.supervisor.username}}</option>
+ {% endfor %}
+ </select>
+
+           {% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" style="float: center;">
+     submit
+      </button>
+  {% endbuttons %}
+  </form>
+           </div>
+           
+           
+           
+
+
+
+<div class="col-md-2">
+</div>
+</div>
+
+{% endblock %}
+

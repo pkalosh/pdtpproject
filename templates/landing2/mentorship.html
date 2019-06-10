@@ -1,0 +1,74 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+      <!-- ================ -->
+      <div class="banner dark-translucent-bg" style="background-image:url('/static/slide4a.jpg'); background-position: 50% 27%;">
+        <!-- breadcrumb start -->
+        <!-- ================ -->
+  
+        <!-- breadcrumb end -->
+        <div class="container">
+          <div class="row justify-content-lg-center">
+            <div class="col-lg-8 text-center pv-20">
+              <h3 class="title logo-font hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 40px"><span class="text-default"style="color: green" >Digitalent Mentorship.</span></h3>
+              <div class="separator hc-element-invisible mt-10" data-animation-effect="fadeIn" data-effect-delay="100"></div>
+              <p class="text-center hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 20px" style="color: white !important; "><font color="green">In learning you will teach, in teaching you will learn. </font> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- banner end -->
+
+      <!-- main-container start -->
+      <!-- ================ -->
+      <section class="main-container padding-bottom-clear"  style="padding-top: 30px;">
+
+        <div class="container">
+          <div class="row">
+
+            <!-- main start -->
+            <!-- ================ -->
+            <div class="main col-md-12">
+              <h3 class="title">About <strong>Digitalent Mentorship Programme</strong></h3>
+              <div class="separator-2"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <p>A key component in Digitalent is mentorship. Mentors are important in the programme as they guide the trainees in their personal and professional growth, and share essential career knowledge in the field. The PDTP mentoring programme is formal and planned and structured, covering:</p>
+
+<ol>
+  <li>Career mentoring: mentee is paired with an ICT professional from the industry working in the mentee’s area of interest. The mentor offers guidance and support as they go through the one year internship programme</li>
+<li> Personal development mentoring: mentees receive guidance on selected competencies and life skills</li>
+</ol>
+<p>The structure of the mentorship programme is fully outlined in the Mentorship Guide, which is a reference document on what is expected from the volunteer mentors.</p><br />
+     
+ <p> To become a mentor please read the Mentorship Guide and submit the  <a href="{% url 'partnership_apply' %}" style="color: red">Digitalent Mentor Application Form.</a> The purpose of this form is to assist the Mentorship Office match you with the right intern and to develop your mentor profile.</p>
+                </div>
+                <div class="col-md-6">
+                
+                   <img src="{% static 'm.png' %}" style="padding-top: 20px; width: 100%">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-center">
+                 
+                </div>
+              </div>
+            </div>
+            <!-- main end -->
+
+          </div>
+
+
+        </div>
+
+        
+
+       
+        <!-- section end -->
+
+      </section>
+      <!-- main-container end -->
+
+    
+{% endblock %}

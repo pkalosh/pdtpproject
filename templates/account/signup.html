@@ -1,0 +1,43 @@
+{% extends 'account/base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+{% block content %}
+<div class="row">
+  <div class="col-md-3">
+</div>
+<div class="col-md-6">
+
+<div class="well" style="margin-top: 60px;">
+
+  <img src="{% static 'images/ICTA-Logo.png' %}" class="img-responsive center-block"   alt="">
+
+ <!--
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+ {% csrf_token %}
+    {% bootstrap_form form %}
+    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+    {% buttons %}
+        <button type="submit" class="btn btn-success btn-block">
+            {% trans "Sign Up" %}
+        </button>
+    {% endbuttons %}
+    
+  {% if redirect_field_value %}
+  <input type="hidden" class="button btn btn-primary" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  
+</form>
+-->
+ <h3>Account Creation is currently closed. Contact System Admin</h3>
+
+
+</div>
+</div>
+<div class="col-md-3">
+</div>
+</div>
+{% endblock %}

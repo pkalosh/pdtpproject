@@ -1,0 +1,36 @@
+
+
+
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+
+
+<a href="{{ site_domain }}">
+	 
+</a><br>
+
+Hello from {{ site_name }}!
+<br>
+Congratulations, you have successfully registered on PDTP Management Portal, {{ site_domain }}! <br><br>
+Your username is <b>{{ user_display }}</b> .<br>
+
+
+If this is correct, click the button below to activate your account<br>
+
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <table border="0" cellspacing="0" cellpadding="0">
+        <tr style="float: center;">
+          <td bgcolor="#337ab7" style="padding: 12px 18px 12px 18px; -webkit-border-radius:3px; border-radius:3px" align="center"><a href="{{ activate_url }}" target="_blank" style="font-size: 16px; font-family: Helvetica, Arial, sans-serif; font-weight: normal; color: #ffffff; text-decoration: none; display: inline-block;">ACTIVATE ACCOUNT &rarr;</a></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+or copy and paste this link <br> {{ activate_url }}<br><br>
+
+{% endblocktrans %}{% endautoescape %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Thank you from {{ site_name }}!<br><br>
+regards,<br>
+{% endblocktrans %}

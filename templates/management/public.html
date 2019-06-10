@@ -1,0 +1,296 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         MANAGEMENT PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+    <div class="row">
+    <div class="col-md-2">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+        </div>
+        <div class="col-md-10">
+              <h3 class="btn-red"> PUBLIC SECTOR ORGANIZATIONS REPORTS</h3>
+              </div>
+              </div>
+              
+            {% endblock %}
+{% block content %}
+
+<div class="table-responsive">
+ <table  class="table table-bordered table-striped table-hover example" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                  <th>Organization</th>
+                  <th>Mentors</th>
+                  <th>Interns</th>
+                  
+               
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for private in privates %}
+                <tr>
+                 <td><a href="#org{{private.id}}" data-toggle="modal">{{private.organization}}</a></td>
+                 <td><a href="#men{{private.id}}" data-toggle="modal">
+                 {% if private.supervisor_set.all %} {{private.supervisor_set.count}} </a>{% else %} 0{% endif %}</td>
+                 <td><a href="#int{{private.id}}" data-toggle="modal">
+                 {% if private.deployment_set.all %} {{private.deployment_set.count}} </a>{% else %} 0{% endif %}</td>
+                 <div id="men{{private.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Mentors and supervisors from {{private.organization}}</h4>
+      </div>
+      <div class="modal-body">
+      {% for men in private.supervisor_set.all %}
+        <div class="row">
+          <div class="col-md-12">
+         <h4>{{men.supervisor.last_name}} {{men.supervisor.first_name}} </h4>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{men.supervisor.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{men.supervisor.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Is Mentor:
+          </div>
+          <div class="col-md-6">
+          		{{men.is_mentor}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Is Supervisor:
+          </div>
+          <div class="col-md-6">
+          {{men.is_supervisor}}
+          </div>
+          </div>
+     {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>                
+
+
+
+
+
+          <div id="int{{private.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Interns attached at {{private.organization}}</h4>
+      </div>
+      <div class="modal-body">
+      {% for men in private.deployment_set.all %}
+        <div class="row">
+          <div class="col-md-12">
+         <h4><a href="{% url 'pdtp_profile' men.year.year men.pdtp.id %}">{{men.pdtp.last_name}} {{men.pdtp.first_name}}</a> </h4>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{men.pdtp.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{men.pdtp.userprofile.phone_number}}
+          </div>
+          </div>
+          
+     {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div id="org{{private.id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{private.organization}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+         Location:
+          </div>
+          <div class="col-md-6">
+          {{private.location}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          County Located:
+          </div>
+          <div class="col-md-6">
+          {{private.county}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Town located:
+          </div>
+          <div class="col-md-6">
+          {{private.town}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Contact Person:
+          </div>
+          <div class="col-md-6">
+          		{% for person in private.supervisor_set.all %}
+          		{% if person.is_contact_person == True %}
+          		{{person.supervisor.last_name}} {{person.supervisor.first_name}} ,{{person.supervisor.email}}, {{person.supervisor.userprofile.phone_number}}<br>
+          		{% endif %}
+          		{% endfor %}
+          </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>                
+                </tr>
+			{% endfor %}
+			</tbody>
+			</table>
+{% endblock %}
+
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('.example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 100,-1 ],
+            [ '100 rows', 'Show all' ]
+        ],
+        buttons: [
+            'pageLength',
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            //{
+                //extend: 'copyHtml5',
+               // exportOptions: {
+                   // columns: [ 0, ':visible' ]
+                //}
+           // },
+            {
+                extend: 'excelHtml5',
+                
+                exportOptions: {
+                    columns: ':visible'
+                },
+            },
+            //{
+               // extend: 'pdfHtml5',
+               // exportOptions: {
+               //     columns: ':visible'
+               // }
+           // },
+            //{
+               // extend: 'print',
+                //exportOptions: {
+                 //   columns: ':visible'
+               // }
+           // },
+
+        ],
+        
+    } );
+} );
+</script>
+
+
+
+{% endblock %}

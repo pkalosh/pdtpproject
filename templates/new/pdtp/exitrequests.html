@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTPS Programme Exit Requests</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title button btn btn-red">PDTP Program Exit Requests
+</h3>
+</div>
+<div class="col-md-7">
+              </div>
+              </div>
+            {% endblock %}
+
+
+{% block content %}
+      <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>PDTP Name</th>
+                  <th>Exit Reason</th>
+                  <th>Request Date</th>
+          
+                  <th>Approved By Supervisor</th>
+                  <th>Supervisor Comment</th>
+                  <th>Date Approved</th>
+                 
+                   <th>#</th>
+                  
+
+                
+                </tr>
+                </thead>
+                 {% for p in requests %}
+                
+                <tr>
+                  <td>
+                  
+            {% if p.pdtp.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ p.pdtp.userprofile.picture.url }}" height=40px width="40px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=40px width="40px" class="img-rounded zoom"> 
+            {% endif %} 
+
+                  {{p.pdtp.first_name}} {{p.pdtp.last_name}}</td>
+                <td>{{p.exit_request}}</td>
+                <td>{{p.date_of_request}}</td>
+                {% if p.approved_by_supervisor == True %}
+                  <td>Yes</td>
+                  <td>{{p.supervisor_comment}}</td>
+                  <td>{{p.date_approved_by_supervisor}}</td>
+                  {% else %}
+
+                  <td>No</td>
+                  <td>N/A</td>
+                  <td>N/A</td>
+                  {% endif %}
+                  <td><a href="{% url 'pdtp_clearance' p.pdtp.userprofile.year p.pdtp.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-danger">Approve </span></a></td>
+
+                  {% endfor %}
+  </tr>
+  </table>
+{% endblock %}
+
+
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

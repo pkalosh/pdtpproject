@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- If IE use the latest rendering engine -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'bootstrap/js/bootstrap.min.js' %}">
+<script src="{% static "login/js/jquery-1.11.0.min.js" %}"></script>
+<!-- Set the page to the width of the device and set the zoon level -->
+<meta name="viewport" content="width = device-width, initial-scale = 1">
+<title>PDTP PORTAL | LOGIN</title>
+{% block message_js %}
+    <!-- this makes message to auto dissappear after few seconds -->
+    <script type="text/javascript">
+
+    window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    
+
+    </script>
+{% endblock %}
+</head>
+
+<body>
+
+	
+	 {% block messsages %}    
+
+ 
+    
+    {% if messages %}
+	{% for message in messages %}
+	<script>
+         notify('success', "{{message}}");
+    </script>
+    
+	{% endfor %}
+      
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+
+
+
+
+
+{% endblock %}
+
+
+
+
+</body>
+</html>

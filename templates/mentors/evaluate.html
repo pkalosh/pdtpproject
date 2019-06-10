@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTP Evaluation</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+             <h3 class="box-title button btn btn-red"> EVALUATE {{pdtp}}</h3>
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+<b>On a scale of 1-5 please  rate the intern on the following parameters with 
+5 Excellent  and 1 Poor. 
+Please check  the number to indicate your response.</b>
+{% for p in parametors %}
+ <div class="form-group">
+            <label class="col-md-3 control-label" for="IsSmallBusiness">{{p.name}}:</label>
+           
+                <label class="radio-inline">
+                    <input name="{{p.id}}" type="radio" value="1">
+                    1
+                </label>
+                <label class="radio-inline">
+                    <input  name="{{p.id}}" type="radio" value="2">
+                    2
+                </label>
+                <label class="radio-inline">
+                    <input name="{{p.id}}" type="radio" value="3">
+                    3
+                </label>
+                <label class="radio-inline">
+                    <input  name="{{p.id}}" type="radio" value="4">
+                    4
+                </label>
+                <label class="radio-inline">
+                    <input  name="{{p.id}}" type="radio" value="5">
+                    5
+                </label>
+                
+        </div>
+{% endfor %}
+
+ {% endblock  %}

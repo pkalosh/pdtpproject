@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Workplans</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+             <div class="col-md-12">
+ 
+    <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+     <div class="col-md-5">
+             <h3 class="box-title button btn btn-red">View Intern's monitoring and Evaluation Report</h3>
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+
+           {% block content %}
+           
+           
+           <div class="table-responsive">
+           <table class="table">
+           	<thead>
+           	<tr>
+           		<th>Intern</th>
+           		<th>Submit M&E Report</th>
+              <th>Date Intern submited M&E Report</th>
+           		</tr>
+           	</thead>
+           	<tbody>
+           	{% for report in reports %}
+           		<tr>
+           			<td>{{report.pdtp.first_name}}  {{report.pdtp.last_name}}</td>
+                {% if report.intern_strength %}
+                <td><a href="#" class="button btn btn-sm btn-primary"> Report Submitted</a></td>
+                {% else %}
+           			<td><a href="{% url 'supervisor_monitoring_report' report.id %}" class="button btn btn-sm btn-primary"> Monitoring and Evaluation Report</a></td>
+                {% endif %}
+                
+                <td>{% if report.date_submitted_by_intern %}
+                {{ report.date_submitted_by_intern}} {% else%}Not yet approved{% endif %}</td>
+           		</tr>
+
+
+</div>
+           		{% endfor %}
+           	</tbody>
+           </table>
+           </div>
+         
+           {% endblock %}

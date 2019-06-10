@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTP Evaluation</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+             <h3 class="box-title button btn btn-red"> MY INTERN(S)</h3>
+</div>
+<div class="col-md-7" style="text-align: right;">
+ {% for c in user.supervisor_set.all %} {% if c.is_contact_person %}
+{{c.organization}} 
+<br>Contact Person :<a href="">{{c.supervisor}}</a> {% endif %}{% endfor %}
+
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+{% if user.mentormenteemapping_set.all %}
+<table id="example" class="table table-user-information">
+                    <thead> 
+                    <tr> 
+                      
+                      <th>Name</th> 
+                      <th>Cell</th>
+                      <th>Cohort Year</th> 
+                      <th>Profile</th>
+                      <th>Mentorship Session</th>
+                       
+                    </tr> 
+                  </thead> 
+                    <tbody>
+                   
+       
+{% for mentee  in user.mentormenteemapping_set.all %}
+                    <tr> 
+                       
+                      <td>{{mentee.mentee.last_name}}  {{mentee.mentee.first_name}} </td> 
+                      <td>{{mentee.mentee.userprofile.phone_number}}</td>
+                      <td>{{mentee.year}}</td>
+                  <td><a href="#{{mentee.id}}" data-toggle="modal" class="button btn btn-sm btn-primary">Profile</a>
+                       <div class="modal fade" id="{{mentee.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+           <div class="row">
+        <div class="col-md-4">
+          
+          {% if mentee.mentee.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ mentee.mentee.userprofile.picture.url }}" height=160px width="160px" class="img-rounded"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{mentee.mentee.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+        <h4>Personal Details</h4>
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.last_name}} {{mentee.mentee.first_name}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Gender:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.gender}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date of Birth:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.date_of_birth}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Marital Status:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.marital_status}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Area of Specialization:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.area_of_specialization}}
+          </div>
+          </div>
+          <h4>Academic Details</h4>
+          {% for academic in mentee.mentee.academicdetail_set.all %}
+          <div class="row">
+          <div class="col-md-3">
+          {{ academic.academic_level}}
+          </div>
+          <div class="col-md-3">
+          {{academic.course_name}}
+          </div>
+          <div class="col-md-3">
+          {{academic.higher_institution_attended}}
+          </div>
+          </div>
+          {% endfor %}
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+                  </td> 
+                      <td><a href="" class="button btn btn-sm btn-primary">Start Session</a></td>
+                           
+                      </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+                      {% else %}
+                      
+                      
+                    
+You currently  have no mentee(s)
+                      {% endif %}
+         
+            
+
+ {% endblock  %}
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

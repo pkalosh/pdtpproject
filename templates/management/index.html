@@ -1,0 +1,390 @@
+{% extends 'base.html' %}
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         MANAGEMENT PORTAL | {{year}} STATISTICS
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        
+       
+      </ol>
+    </section>
+    
+    {% endblock %}
+     
+{% block content %}
+<style type="'text/css'">
+    .huge {
+  font-size: 40px;
+}</style> 
+{% for group in user.groups.all %}
+    {% if group.name == 'EXECUTIVE' %}
+<div class="row">
+ <div class=" col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{total}}</div>
+                                    <div>{{year}} Recruited Interns</div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <a href="{% url 'pdtps-all' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                      
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{interns}}</div>
+                                    <div>Total Active Interns</div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <a href="{% url 'pdtps' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                      
+                    </div>
+                </div>
+               
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{male}}</div>
+                                    <div>Active Male </div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                        <a href="{% url 'pdtps-male' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                   
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{female}}</div>
+                                    <div>Active Female</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'pdtps-female' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                 
+                
+            </div>
+
+<div class="row">
+
+              <!--   <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{private_deployments}}</div>
+                                    <div>Interns in Private Sector</div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <a href="{% url 'pdtps_in_private_sector' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                      
+                    </div>
+                </div> -->
+               <!--  <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-success">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{public_deployments}}</div>
+                                    <div>Interns in Public Sector</div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                        <a href="{% url 'pdtps_in_public_sector' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                   
+                    </div>
+                </div> -->
+               <!--  <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{unattached}}</div>
+                                    <div>Pending Deployment</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'pdtps_not_deployed' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div> -->
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                               
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{exited}}</div>
+                                    <div>Exited the Programme</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'pdtps-exited' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                              
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{assignments}}</div>
+                                    <div>Interns With Mentors</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'interns_with_mentors' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                  <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                               
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{unmentored}}</div>
+                                    <div>Interns Without Mentors</div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <a href="{% url 'interns_without_mentors' year %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                      
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                              
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{mentors}}</div>
+                                    <div>Active Mentors</div>
+                                </div>
+                            </div>
+                        </div>
+                   
+                        <a href="{% url 'mentors' %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                   
+                    </div>
+                </div>
+               
+            </div>
+
+    <div class="row">
+
+              
+                
+                
+          
+            </div>
+
+
+<div class="row">
+     <div class="col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                            
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{supervisors}}</div>
+                                    <div>Supervisors</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'all_supervisors' %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View Details</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                      <div class="col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{public}}</div>
+                                    <div>Public Organizations</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{% url 'public_sector_reports' %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View All</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge" style="font-size: 40px;">{{private}}</div>
+                                    <div>Private Organizations</div>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <a href="{% url 'private_sector_reports' %}">
+                            <div class="panel-footer">
+                                <span class="pull-left">View All</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                      
+                    </div>
+                </div>
+       {% endif %}
+        {% if group.name == 'SECRETARIAT' %}
+   
+   <div class="col-md-12">
+ 
+      <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group">
+                                <a href="{% url 'raised_issues' %}" class="list-group-item">
+                                    <i class="fa fa-comment fa-fw"></i> Unresolved Interns Issues
+                                    <span class="pull-right text-muted small"><em>{{issues}}</em>
+                                    </span>
+                                </a>
+                                <a href="{% url 'exit_requests' %}" class="list-group-item">
+                                    <i class="fa fa-twitter fa-fw"></i> Programme Exit Requests 
+                                    <span class="pull-right text-muted small"><em>{{exits}}</em>
+                                    </span>
+                                </a>
+                                <a href="{% url 'bank_update_requests' %}" class="list-group-item">
+                                    <i class="fa fa-envelope fa-fw"></i> Bank Detail Update Requests
+                                    <span class="pull-right text-muted small"><em>{{updates}}</em>
+                                    </span>
+                                </a>
+                                
+                                  
+                            </div>
+                            
+                        </div>
+
+              
+              </div>      </div>
+ 
+
+            
+               
+            </div>
+{% endif %}
+ 
+
+{% endfor %}
+
+
+{% endblock %}

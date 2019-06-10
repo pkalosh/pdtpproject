@@ -1,0 +1,1130 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">My Profile</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+              
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+  <div class="panel panel-info">
+            <div class="panel-heading">
+            
+            
+              <h3 class="panel-title">{{user.last_name}} {{user.first_name}}</h3>
+ 
+            </div>
+            <div class="panel-body">
+              <div class="row">
+              
+                <div class="col-md-3 col-lg-3 " align="center">
+                {% if user.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{user.userprofile.picture.url}}" height=200px width="200px" class="img-rounded img-responsive "> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=200px width="200px" class="img-rounded img-responsive "> 
+            {% endif %} <br>
+            <button class="button btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Change Picture</button>
+            </div>
+                           
+                
+                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
+                  <dl>
+                    <dt>DEPARTMENT:</dt>
+                    <dd>Administrator</dd>
+                    <dt>HIRE DATE</dt>
+                    <dd>11/12/2013</dd>
+                    <dt>DATE OF BIRTH</dt>
+                       <dd>11/12/2013</dd>
+                    <dt>GENDER</dt>
+                    <dd>Male</dd>
+                  </dl>
+                </div>-->
+                <div class=" col-md-9 col-lg-9 "> 
+
+<div class="bs-example">
+    <div class="panel-group" id="accordion">
+     <div class="panel panel-default">
+
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#bio">Bio
+                    </a>
+                </h4>
+            </div>
+              <div id="bio" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  {{user.userprofile.bio|safe}}
+                   
+
+
+
+                            <a  href="{% url 'bio_update' user.id %}?from={{ request.path|urlencode }}" class="btn btn-sm btn-primary hidden-xl hidden-lg hidden-md center-block">Update</a>
+                           <a  href="{% url 'bio_update' user.id %}?from={{ request.path|urlencode }}" class="btn btn-sm btn-primary hidden-xs hidden-sm  pull-right">Update</a>
+                     
+              
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseOne">Personal Details 
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse ">
+                <div class="panel-body">
+                    <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Gender:</td>
+                        <td>{{user.userprofile.gender}}</td>
+                      </tr>
+                      <tr>
+                        <td>PDTP Number:</td>
+                        <td>{{user.userprofile.ref_no}}</td>
+                      </tr>
+                      <tr>
+                        <td>Marital Status</td>
+                        <td>{{user.userprofile.marital_status}}</td>
+                      </tr>
+                      <tr>
+                        <td>Area of Specialization</td>
+                        <td>{{user.userprofile.speciality}}</td>
+                      </tr>  
+                      <tr>
+                        <td>ID Number:</td>
+                        <td>{{user.userprofile.id_no}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Phone Number:</td>
+                        <td>{{user.userprofile.phone_number}}</td>
+                      </tr>
+                        <tr>
+                        <td>Email</td>
+                        <td>{{user.email}}</td>
+                      </tr>
+                      <tr>
+                        <td>Postal Addresss</td>
+                        <td>{{user.userprofile.postal_address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td>
+                        <td>{{user.userprofile.date_of_birth}}</td>
+                      </tr>
+                      <tr>
+                        <td>County of Birth</td>
+                        <td>{{user.userprofile.county_of_birth}}</td>
+                      </tr>
+                      <tr>
+                        <td>Physical Address</td>
+                        <td>{{user.userprofile.physical_address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Nearest Public Institution</td>
+                        <td>{{user.userprofile.nearest_institution}}</td>
+                      </tr> 
+                      <tr>
+                        <td>Facebook Link</td>
+                        <td>{{person.userprofile.facebook}}</td>
+                      </tr> 
+                      <tr>
+                        <td>Twitter Link</td>
+                        <td>{{person.userprofile.twitter}}</td>
+                      </tr> 
+                      <tr>
+                        <td>Linkedin Link</td>
+                        <td>{{person.userprofile.linkedin}}</td>
+                      </tr>  
+                      
+                     
+                      
+                           
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                  <!--
+                  <a href="{% url 'pdtp_profile_update' user.id %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary"  style="float: right;">Update Personal Information</span></a>
+-->
+
+                  <a  href="{% url 'pdtp_profile_update' user.id %}?from={{ request.path|urlencode }}" class="btn btn-sm btn-primary hidden-xl hidden-lg hidden-md center-block">Update</a>
+                           <a  href="{% url 'pdtp_profile_update' user.id %}?from={{ request.path|urlencode }}" class="btn btn-sm btn-primary hidden-xs hidden-sm  pull-right">Update</a>
+                      
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseTwo">Bank Details</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table table-user-information">
+                    <tbody>
+                    
+                      <tr>
+                        <td>Bank Name:</td>
+                        <td>{{user.bankdetail.bank_name}}</td>
+                      </tr>
+                      <tr>
+                        <td>Bank Code:</td>
+                        <td>{{user.bankdetail.bank_code}}</td>
+                      </tr>
+                      <tr>
+                        <td>Branch:</td>
+                        <td>{{user.bankdetail.branch}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Account Name:</td>
+                        <td>{{user.bankdetail.account_name}}</td>
+                      </tr>
+                        <tr>
+                        <td>Account Number:</td>
+                        <td>{{user.bankdetail.account_number}}</td>
+                      </tr>
+                      <tr>
+                        <td>KRA Pin:</td>
+                        <td>{{user.bankdetail.kra_pin}}</td>
+                      </tr>
+                      <tr>
+                        <td>NHIF Number:</td>
+                        <td>{{user.bankdetail.nhif_no}}</td>
+                      </tr>
+                      <tr>
+                        <td>PDTP laptop hire purchase:</td>
+                        {% if user.bankdetail.laptop == True %}
+                        <td>
+                        Yes , S/N. {{user.bankdetail.serial_no}}
+                        </td>
+
+                        {% else %}
+                        <td>
+                         No {% endif %}</td>
+                      </tr>
+                       
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+    {% if user.userprofile.active == True %}
+{% if user.bankdetail %}<button class="button btn btn-sm btn-primary" data-toggle="modal" data-target="#bupdate" style="float: right;">Resquest For Bank Details Update</button>
+<!-- Modal -->
+<div id="bupdate" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Bank Detail Update Details</h4>
+      </div>
+      <div class="modal-body">
+      <form method="post" action="{% url 'update_request' user.id %}">
+      {% csrf_token %}
+        {% bootstrap_form rform %}
+        <input type="submit" value="Submit" class="button btn btn-sm btn-primary" style="float: right;">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% else %}<a href="{% url 'update_bank_details' user.id %}?from={{ request.path|urlencode }}" style="float: right;"><span class="button btn btn-sm btn-primary">Add your Bank Details</span></a>{% endif %}
+                 {% endif %}   
+                </div>
+            </div>
+        </div>
+       
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseThree">Academic Details</a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+<a href="{% url 'add_academic_detail' user.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Add New Record</span></a>
+<div class="table-responsive">
+<table id="example" class="display" cellspacing="0"> 
+                  <thead> 
+                    <tr> 
+                      
+                      <th>Qualification</th> 
+                      <th>Institution</th> 
+                      <th>Course Name</th>
+                      <th>Year</th>
+                       <th>Grade</th>
+                     
+                      <th>Update</th>
+                     <th>Delete</th> 
+                    </tr> 
+                  </thead> 
+                  <tbody> 
+                  
+                 {% if user.academicdetail_set.all %}
+{% for academic  in user.academicdetail_set.all %}
+                    <tr> 
+                       
+                      <td>{{academic.academic_level}} </td> 
+                      <td>{{academic.higher_institution_attended}}</td>
+                  <td>{{academic.course_name}}</td> 
+                      <td>{{academic.year}}</td>
+                      <td>{{academic.grade}}</td>      
+                      
+                      
+<td><a href="{% url 'academic_update' academic.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Edit</span></a></td> 
+<td><a href="{% url 'academic_delete' academic.id %}?from={{ request.path|urlencode }} " onclick="return confirm('Are you sure want to delete this Record?');"><span class="label label-danger">Remove</span></a></td> 
+  </tr>
+{% endfor %} 
+
+{% endif %}
+                  </tbody> 
+                </table>
+                </div>
+
+
+                </div>
+            </div>
+        </div>
+ <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseFour">Skills</a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse">
+                <div class="panel-body">
+<a href="{% url 'add_skill' user.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Add New Record</span></a>
+<div class="table-responsive">
+<table id="example" class="display table table-bordered dataTable no-footer" cellspacing="0"> 
+                  <thead> 
+                    <tr> 
+                      
+                      <th>Skill Specialization</th> 
+                      <th>Skill Level</th> 
+                      <th>Skill Sets</th>
+                      <th>Detail</th>
+                      <th>Update</th>
+                      <th>Delete</th>
+
+                     
+
+                    </tr> 
+                  </thead> 
+                  <tbody> 
+                  
+                 {% if user.skill_set.all %}
+{% for skill  in user.skill_set.all %}
+                    <tr> 
+                       
+                      <td>{{skill.skill_type}} </td> 
+                      <td>{{skill.skill_level}}</td>
+                  <td>{{skill.skill}}</td> 
+                      <td>{{skill.detail}}</td>
+                           
+                      
+                      
+<td><a href="{% url 'update_skill' skill.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Edit</span></a></td> 
+<td><a href="{% url 'delete_skill' skill.id %}?from={{ request.path|urlencode }} " onclick="return confirm('Are you sure want to delete this Record?');"><span class="label label-danger">Remove</span></a></td> 
+  </tr>
+{% endfor %} 
+
+{% endif %}
+                  </tbody> 
+                </table>
+                </div>
+
+
+                </div>
+            </div>
+        </div>
+               
+ <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseFive">Achievements/Projects</a>
+                </h4>
+            </div>
+            <div id="collapseFive" class="panel-collapse collapse">
+                <div class="panel-body">
+<a href="{% url 'add_project' user.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Add New Record</span></a>
+<div class="table-responsive">
+<table id="example"  class="display dataTable no-footer" cellspacing="0"> 
+                  <thead> 
+                    <tr> 
+                      
+                      <th>Project Name</th> 
+                      <th>Project Start Date</th> 
+                      <th>Project End Date</th> 
+                      <th>Project Description</th>
+                      <th>Project Link</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+
+                    </tr> 
+                  </thead> 
+                  <tbody> 
+                  
+                 {% if user.project_set.all %}
+{% for project  in user.project_set.all %}
+                    <tr> 
+                       
+                      <td>{{project.project_name}} </td> 
+                      <td>{{project.project_date}}</td>
+                      <td>{{project.project_Edate}}</td>
+                      <td>{{project.project_description}}</td> 
+                      <td>{{project.link}}</td> 
+      
+                      
+                      
+<td><a href="{% url 'update_project' project.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Edit</span></a></td> 
+<td><a href="{% url 'delete_project' project.id %}?from={{ request.path|urlencode }} " onclick="return confirm('Are you sure want to delete this Record?');"><span class="label label-danger">Remove</span></a></td> 
+  </tr>
+{% endfor %} 
+
+{% endif %}
+                  </tbody> 
+                </table>
+                </div>
+
+
+                </div>
+            </div>
+        </div>
+        
+                <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseSix">Referees</a>
+                </h4>
+            </div>
+            <div id="collapseSix" class="panel-collapse collapse">
+                <div class="panel-body">
+<a href="{% url 'add_referee' user.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Add New Record</span></a>
+<br>
+<div class="table-responsive">
+<table id="example" class="table table-bordered dataTable no-footer" cellspacing="0"> 
+                  <thead> 
+                    <tr> 
+                      
+                      <th>Name</th> 
+                      <th>Organization</th> 
+                      <th>Position</th>
+                      <th>Phone Number</th>
+                      <th>Email</th>
+                      <th>Town</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+
+
+
+
+                     
+
+                    </tr> 
+                  </thead> 
+                  <tbody> 
+                  
+                 {% if user.referee_set.all %}
+{% for referee  in user.referee_set.all %}
+                    <tr> 
+                       
+                      <td>{{referee.name}} </td> 
+                      <td>{{referee.company}}</td>
+                  <td>{{referee.position}}</td> 
+                      <td>{{referee.phone_number}}</td>
+                      <td>{{referee.email}}</td>
+                      <td>{{referee.town}}</td>
+
+
+                           
+                      
+                      
+<td><a href="{% url 'update_referee' referee.id %}?from={{ request.path|urlencode }}"><span class="label label-primary">Edit</span></a></td> 
+<td><a href="{% url 'delete_referee' referee.id %}?from={{ request.path|urlencode }} " onclick="return confirm('Are you sure want to delete this Record?');"><span class="label label-danger">Remove</span></a></td> 
+  </tr>
+{% endfor %} 
+
+{% endif %}
+                  </tbody> 
+                </table>
+                </div>
+
+
+                </div>
+            </div>
+        </div>        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseSeven">My Mentor</a>
+                </h4>
+            </div>
+            <div id="collapseSeven" class="panel-collapse collapse">
+                <div class="panel-body">
+                    {% for mentee  in user.mentee.all %}
+                    <!--
+<a href="#{{mentee.mentor.id}}" data-toggle="modal">{{mentee.mentor.last_name}} {{mentee.mentor.first_name}}</a>
+         -->
+   
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if mentee.mentor.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ mentee.mentor.userprofile.picture.url }}" height=160px width="160px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+           
+            {{mentee.mentor.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+         Full Name:
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          {{mentee.mentor.last_name}} {{mentee.mentor.first_name}}
+          </div>
+          </div>
+          {% for m in mentee.mentor.supervisor_set.all %}
+          <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          Business Title:
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          {{m.position}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          Title:
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          {{m.title}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          Company:
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          {{m.organization}}
+          </div>
+          </div>
+          {% endfor %}
+          <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          {{mentee.mentor.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-3 col-sm-3 col-xs-6">
+          Email:
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-6">
+          {{mentee.mentor.email}}
+          </div>
+          </div>
+        {% for m in mentee.mentor.supervisor_set.all %}
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          Company Location:
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6">
+          {{m.organization.county }} County, {{m.organization.town }}, {{m.organization.location }}
+          </div>
+          </div>
+          {% endfor %}
+        </div>
+        
+      </div>
+      
+   
+{% endfor %}
+                </div>
+            </div>
+            </div>
+
+
+     <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#sup">My Supervisors</a>
+                </h4>
+            </div>
+            <div id="sup" class="panel-collapse collapse">
+              <!--
+            	<a href="{% url 'pick_supervisor'  user.id %}" class="btn btn-primary bt-sm">Choose your Supervisor</a>
+            -->
+            	<!-- {% if user.pdtp_assigned.all %}
+            	<table class="table">
+            		
+            	{% for supervisor in user.pdtp_assigned.all %}
+                   
+                   	<tr>
+                   		<td>
+                   
+                   	<h4><a href="#{{supervisor.supervisor.id}}" data-toggle="modal">{{supervisor.supervisor.last_name}} {{supervisor.supervisor.first_name}}</a></h4>
+                   </td>
+               </tr>
+
+
+                   	<div class="modal fade" id="{{supervisor.supervisor.id}}" role="dialog">
+    <div class="modal-dialog">
+      
+      <div class="modal-content">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if supervisor.supervisor.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ supervisor.supervisor.userprofile.picture.url }}" height=160px width="160px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded zoom"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{supervisor.supervisor.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{supervisor.supervisor.last_name}} {{supervisor.supervisor.first_name}}
+          </div>
+          </div>
+          {% for m in supervisor.supervisor.supervisor_set.all %}
+          <div class="row">
+          <div class="col-md-6">
+          Honors:
+          </div>
+          <div class="col-md-6">
+          {{m.honors}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Title:
+          </div>
+          <div class="col-md-6">
+          {{m.position}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Company:
+          </div>
+          <div class="col-md-6">
+          {{m.organization}}
+          </div>
+          </div>
+          {% endfor %}
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{supervisor.supervisor.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{supervisor.supervisor.email}}
+          </div>
+          </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+           
+            	
+            	{% endfor %}
+</table>
+{% else %}
+
+            	
+{% endif %} -->
+
+{% if user.internsupervisor_set.all %}
+{% for u in user.internsupervisor_set.all %}
+{{u.supervisor.first_name|title}} {{u.supervisor.last_name|title}} -{{u.supervisor.email|title}}<br>
+{% endfor %}
+{% else %}
+
+<p>You have not been assigned a supervisor</p>
+{% endif %}
+           
+            </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseEight">Attachment</a>
+                </h4>
+            </div>
+            
+            <div id="collapseEight" class="panel-collapse collapse">
+            
+                <div class="panel-body">
+                <div class="table-responsive">
+                <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Organization</th>
+                  <th>Reporting Date</th>
+                  <th>Completion Date</th>
+                  <!--
+                  <th>Supervisor</th>
+                -->
+                </tr>
+                </thead>
+                <tbody>
+                {% for u in user.deployment_set.all %}
+                  <tr>
+                  <td><a href="#{{u.organization.id}}" data-toggle="modal">{{u.organization}}</a></td>
+                 
+                  <td>{{u.reporting_date}}</td>
+                 
+                  <td>{{u.completion_date}}</td>
+                  <!--
+                   {% if u.organization.internsupervisor_set.all %}
+                   {% for supervisor in u.organization.internsupervisor_set.all %} -->
+                   <!--
+                  <td><a href="#{{forloop.counter}}" data-toggle="modal">{{supervisor.supervisor}}</a></td> -->
+                  <!--
+                  <div class="modal fade" id="{{forloop.counter}}" role="dialog">
+    <div class="modal-dialog">
+     
+      <div class="modal-content">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if supervisor.supervisor.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ supervisor.supervisor.userprofile.picture.url }}" height=160px width="160px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded zoom"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{supervisor.supervisor.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{supervisor.supervisor.last_name}} {{supervisor.supervisor.first_name}}
+          </div>
+          </div>
+          {% for m in supervisor.supervisor.supervisor_set.all %}
+          <div class="row">
+          <div class="col-md-6">
+          Honors:
+          </div>
+          <div class="col-md-6">
+          {{m.honors}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Title:
+          </div>
+          <div class="col-md-6">
+          {{m.position}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Company:
+          </div>
+          <div class="col-md-6">
+          {{m.organization}}
+          </div>
+          </div>
+          {% endfor %}
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{supervisor.supervisor.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{supervisor.supervisor.email}}
+          </div>
+          </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+                  {% endfor %}
+                  {% else %}
+                  <td><a href="{% url 'pick_supervisor'  u.pdtp.id %}" data-toggle="modal">Choose your Supervisor</a></td>
+                  {% endif %}
+                -->
+              </tr>
+              {% endfor %}
+              </tbody>
+              </table>
+              </div>
+
+            {% for u in user.deployment_set.all %}
+                    <div class="modal fade" id="{{u.organization.id}}" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+       
+            
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6">
+         Company:
+          </div>
+          <div class="col-md-6">
+          {{u.organization}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Company Location:
+          </div>
+          <div class="col-md-6">
+          {{u.organization.location}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date Confirmed:
+          </div>
+          <div class="col-md-6">
+          {{u.date_confirmed}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Reporting Date:
+          </div>
+          <div class="col-md-6">
+          {{u.reporting_date}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Instructions:
+          </div>
+          <div class="col-md-6">
+          {{u.reporting_details|safe}}
+          </div>
+          </div>
+          {% for m in u.organization.supervisor_set.all %}
+          {% if m.is_contact_person == True %}    
+          <div class="row">
+          <div class="col-md-6">
+         Company Contact Person Email:
+          </div>
+          <div class="col-md-6">
+          {{m.supervisor}}
+          </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+{% endfor %}
+                </div>
+                
+            </div>
+            </div>
+    </div>
+</div>
+                  
+                 <!-- <a href="#" class="btn btn-primary">My Sales Performance</a>
+                  <a href="#" class="btn btn-primary">Team Sales Performance</a>
+
+
+                  -->
+
+
+                      
+                </div>
+              </div>
+               </div>
+                <div class="panel-footer" style="float: center;">
+                <span style="float: center;">
+                 <button class="button btn btn-sm btn-primary"  data-toggle="modal" data-target="#email" >Change Email</button>
+        
+</span>
+                        
+                    </div>
+
+                  
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Update your Profile Picture</h4>
+      </div>
+      <div class="modal-body">
+          <form  method="POST" action="{% url 'upload_photo' user.id %}?from={{ request.path|urlencode }}" class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+{% bootstrap_form form %}
+{% buttons %}
+    <button type="submit" class="btn btn-theme btn-sm btn-primary">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<div id="email" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Change Your Email</h4>
+        <b>NOTE:</b> You will use this new email for your  next login 
+      </div>
+      <div class="modal-body">
+          <form  method="POST" id="passwordForm" action="{% url 'new_email' %}?from={{ request.path|urlencode }}" onsubmit="return myFunction() class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+ <div class="form-group">
+        <label for="inputPassword">Type Your new Email</label>
+        <input type="email" class="form-control" id="password" name="password" placeholder="New Email" required>
+    </div>
+            
+        
+           <div class="form-group">
+        <label for="confirm_password">Confirm Email</label>
+        <input type="email" class="form-control" id="password2"  name=password2" placeholder="Confirm Email" onkeyup="checkPass(); return false;" required>
+            <span id="confirmMessage" class="confirmMessage"></span>
+    </div>
+{% buttons %}
+    <button type="submit" class="btn btn-theme btn-sm btn-primary">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<script>
+$('.upload').click(function(e){
+      e.preventDefault();
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+        <script>
+function myFunction() {
+    var password = document.getElementById("password").value;
+    var password2 = document.getElementById("password2").value;
+    var ok = true;
+    if (password != password2) {
+        //alert("Passwords Do not match");
+        document.getElementById("password").style.borderColor = "#E34234";
+        document.getElementById("password2").style.borderColor = "#E34234";
+        ok = false;
+       
+    }
+    else {
+        
+    }
+    return ok;
+}
+ function checkPass()
+{
+    //Store the password field objects into variables ...
+    var password = document.getElementById('password');
+    var password2 = document.getElementById('password2');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(password.value == password2.value){
+        //The passwords match. 
+        //Set the color to the good color and inform
+        //the user that they have entered the correct password 
+        password2.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "Emails Match!"
+    }else{
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        password2.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Emails Do Not Match!"
+    }
+}  
+
+</script>          {% endblock  %}
+
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

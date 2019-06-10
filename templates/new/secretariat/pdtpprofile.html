@@ -1,0 +1,616 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block content %}
+   {% block top_section %}
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Management Portal</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                        
+                        <ol class="breadcrumb">
+                           {% include 'secretariat/links.html' %}
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                 {% endblock %}
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- Different data widgets -->
+                <!-- ============================================================== -->
+                 <!-- .row -->
+                 <div class="white-box">
+               
+            
+ <div class="row">
+
+ <div class="col-md-1 col-sm-1 col-xs-4">
+  <!--
+<a href="" class="button btn btn-primary btn-sm"  onclick="window.history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+-->
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+<div class="col-md-10">
+
+</div>
+   </div> 
+<div class="panel panel-default">
+            <div class="panel-heading">
+            
+            
+              <h3 class="panel-title">{{person.last_name}} {{person.first_name}}'s Profile </h3>
+ 
+            </div>
+            <div class="panel-body">
+              <div class="row">
+              
+                <div class="col-md-3 col-lg-3 " align="center">
+                {% if person.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ person.userprofile.picture.url }}" height=200px width="200px" class="img-rounded img-responsive"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=200px width="200px" class="img-rounded img-responsive "> 
+            {% endif %} <br>
+            
+            </div>
+                           
+                
+                <!--<div class="col-xs-10 col-sm-10 hidden-md hidden-lg"> <br>
+                  <dl>
+                    <dt>DEPARTMENT:</dt>
+                    <dd>Administrator</dd>
+                    <dt>HIRE DATE</dt>
+                    <dd>11/12/2013</dd>
+                    <dt>DATE OF BIRTH</dt>
+                       <dd>11/12/2013</dd>
+                    <dt>GENDER</dt>
+                    <dd>Male</dd>
+                  </dl>
+                </div>-->
+                <div class=" col-md-9 col-lg-9 "> 
+
+<div class="bs-example">
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+
+        <div class="panel-heading" style="background-color: #f5f5f0">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" class="accordion-toggle" href="#bio">Bio
+                    </a>
+                </h4>
+            </div>
+              <div id="bio" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  {{person.userprofile.bio|safe}}
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #f5f5f0">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseOne">Personal Profile 
+                    </a>
+                </h4>
+            </div>
+
+
+          
+        
+            <div id="collapseOne" class="panel-collapse collapse ">
+                <div class="panel-body">
+                    <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Gender:</td>
+                        <td>{{person.userprofile.gender}}</td>
+                      </tr>
+                      <tr>
+                        <td>PDTP Number:</td>
+                        <td>{{person.userprofile.ref_no}}</td>
+                      </tr>
+                      <tr>
+                        <td>Marital Status</td>
+                        <td>{{person.userprofile.marital_status}}</td>
+                      </tr>
+                      <tr>
+                        <td>Area of Specialization</td>
+                        <td>{{person.userprofile.area_of_specialization}}</td>
+                      </tr>  
+                      <tr>
+                        <td>ID Number:</td>
+                        <td>{{person.userprofile.id_no}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Phone Number:</td>
+                        <td>{{person.userprofile.phone_number}}</td>
+                      </tr>
+                        <tr>
+                        <td>Email Address:</td>
+                        <td>{{person.email}}</td>
+                      </tr>
+                      <tr>
+                        <td>Postal Addresss</td>
+                        <td>{{person.userprofile.postal_address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Date of Birth</td>
+                        <td>{{person.userprofile.date_of_birth}}</td>
+                      </tr>
+                      <tr>
+                        <td>County of Birth</td>
+                        <td>{{user.userprofile.county_of_birth}}</td>
+                      </tr>
+                      <tr>
+                        <td>Physical Address</td>
+                        <td>{{person.userprofile.physical_address}}</td>
+                      </tr>
+                      <tr>
+                        <td>Nearest Public Institution</td>
+                        <td>{{person.userprofile.nearest_institution}}</td>
+                      </tr> 
+                      <tr>
+                        <td>Facebook Link</td>
+                        <td>{{person.userprofile.facebook}}</td>
+                      </tr> 
+                      <tr>
+                        <td>Twitter Link</td>
+                        <td>{{person.userprofile.twitter}}</td>
+                      </tr> 
+                      <tr>
+                        <td>Linkedin Link</td>
+                        <td>{{person.userprofile.linkedin}}</td>
+                      </tr>  
+                      
+                       
+                           
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading"  style="background-color: #f5f5f0">
+                <h4 class="panel-title">
+
+                    <a data-toggle="collapse" class="accordion-toggle"  data-parent="#accordion" href="#collapseTwo">Bank Details</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table class="table table-user-information">
+                    <tbody>
+                    
+                      <tr>
+                        <td>Bank Name:</td>
+                        <td>{{person.bankdetail.bank_name}}</td>
+                      </tr>
+                      <tr>
+                        <td>Bank Code:</td>
+                        <td>{{person.bankdetail.bank_code}}</td>
+                      </tr>
+                      <tr>
+                        <td>Branch:</td>
+                        <td>{{person.bankdetail.branch}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Account Name:</td>
+                        <td>{{person.bankdetail.account_name}}</td>
+                      </tr>
+                        <tr>
+                        <td>Account Number:</td>
+                        <td>{{person.bankdetail.account_number}}</td>
+                      </tr>
+                      <tr>
+                        <td>KRA Pin:</td>
+                        <td>{{person.bankdetail.kra_pin}}</td>
+                      </tr>
+                      <tr>
+                        <td>NHIF Number:</td>
+                        <td>{{person.bankdetail.nhif_no}}</td>
+                      </tr>
+                      <tr>
+                        <td>PDTP laptop hire purchase:</td>
+                        {% if person.bankdetail.laptop == True %}
+                        <td>
+                        Yes ,  S/N. {{person.bankdetail.serial_no}}
+                        </td>
+
+                        {% else %}
+                        <td>
+                         No {% endif %}</td>
+                      </tr>
+                       
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #f5f5f0">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseThree">Academic Details</a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table id="example" class="table table-user-information">
+                    <thead> 
+                    <tr> 
+                      
+                      <th>Qualification</th> 
+                      <th>Institution</th> 
+                      <th>Course Name</th>
+                      <th>Year</th>
+                       <th>Grade</th>
+                    </tr> 
+                  </thead> 
+                    <tbody>
+                    {% if person.academicdetail_set.all %}
+{% for academic  in person.academicdetail_set.all %}
+                    <tr> 
+                       
+                      <td>{{academic.academic_level}} </td> 
+                      <td>{{academic.higher_institution_attended}}</td>
+                  <td>{{academic.course_name}}</td> 
+                      <td>{{academic.year}}</td>
+                      <td>{{academic.grade}}</td>      
+                      </tr>
+                      {% endfor %}
+                      {% endif %}
+                      
+                    </tbody>
+                  </table>
+                  
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #f5f5f0">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseSix">Trainings Attended</a>
+                </h4>
+            </div>
+            <div id="collapseSix" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table id="example" class="table table-user-information">
+                    <thead> 
+                    <tr> 
+                      
+                      <th>Certification</th> 
+                      <th>Course</th> 
+                      <th>Status</th>
+                      <th>Certificate</th>
+                       
+                    </tr> 
+                  </thead> 
+                    <tbody>
+                    {% if person.training_set.all %}
+{% for academic  in person.training_set.all %}
+                    <tr> 
+                       
+                      <td>{{academic.institution}} </td> 
+                      <td>{{academic.course}}</td>
+                  <td>{{academic.status}}</td> 
+                      <td>{{academic.cert}}</td>
+                         
+                      </tr>
+                      {% endfor %}
+                      {% else %}
+                      Not updated
+                      {% endif %}
+                      
+                    </tbody>
+                  </table>
+                </div>
+            </div>
+            </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #f5f5f0">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseFour">Mentor Assigned</a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse">
+                <div class="panel-body">
+               
+{% for mentee  in person.mentee.all %}
+<a href="#{{mentee.mentor.id}}" data-toggle="modal">{{mentee.mentor.last_name}} {{mentee.mentor.first_name}}</a>
+         <div class="modal fade" id="{{mentee.mentor.id}}" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if mentee.mentor.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ mentee.mentor.userprofile.picture.url }}" height=160px width="160px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded zoom"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{mentee.mentor.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentor.last_name}} {{mentee.mentor.first_name}}
+          </div>
+          </div>
+          {% for m in mentee.mentor.supervisor_set.all %}
+          <div class="row">
+          <div class="col-md-6">
+          Honors:
+          </div>
+          <div class="col-md-6">
+          {{m.honors}}
+          </div>
+          </div>
+          
+          <div class="row">
+          <div class="col-md-6">
+
+          Title:
+          </div>
+          <div class="col-md-6">
+          {{m.position}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Company:
+          </div>
+          <div class="col-md-6">
+          {{m.organization}}
+          </div>
+          </div>
+          {% endfor %}
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentor.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentor.email}}
+          </div>
+          </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+{% endfor %}
+
+                </div>
+            </div>
+            </div>
+          <div class="panel panel-default">
+            <div class="panel-heading" style="background-color: #f5f5f0">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#collapseFive">Deployment</a>
+                </h4>
+            </div>
+            <div id="collapseFive" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Organization</th>
+                  <th>Category</th>
+                  <th>Date Confirmed</th>
+                  <th>Reporting Date</th>
+                  <th>Completion Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for u in person.deployment_set.all %}
+                  <tr>
+                  <td><a href="#{{u.organization.id}}" data-toggle="modal">{{u.organization}}</a></td>
+                   <td>{{u.sector}}</td>
+                  <td>{{u.date_confirmed}}</td>
+                  <td>{{u.reporting_date}}</td>
+                  <td>{{u.completion_date}}</td>
+              </tr>
+              {% endfor %}
+              </tbody>
+              </table>
+            {% for u in person.deployment_set.all %}
+                            <div class="modal fade" id="{{u.organization.id}}" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+       
+            
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            
+        </div>
+        <div class="modal-body">
+          <div class="row">
+          <div class="col-md-6">
+         Company:
+          </div>
+          <div class="col-md-6">
+          {{u.organization}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Company Location:
+          </div>
+          <div class="col-md-6">
+          {{u.organization.location}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date Confirmed:
+          </div>
+          <div class="col-md-6">
+          {{u.date_confirmed}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Reporting Date:
+          </div>
+          <div class="col-md-6">
+          {{u.reporting_date}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Instructions:
+          </div>
+          <div class="col-md-6">
+          {{u.reporting_details|safe}}
+          </div>
+          </div>
+          {% for m in u.organization.supervisor_set.all %}
+          {% if m.is_contact_person == True %}    
+          <div class="row">
+          <div class="col-md-6">
+         Company Contact Person Email:
+          </div>
+          <div class="col-md-6">
+          {{m.supervisor}}
+          </div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+            {% endfor %}
+                </div>
+            </div>
+            </div>
+    </div>
+</div>
+                  
+                 <!-- <a href="#" class="btn btn-primary">My Sales Performance</a>
+                  <a href="#" class="btn btn-primary">Team Sales Performance</a>
+
+
+                  -->
+
+
+                      
+                </div>
+              </div>
+               </div>
+                <div class="panel-footer">
+                <div class="row">
+                <div class="col-md-3">
+          
+          </div>
+          <div class="col-md-7">
+                <div class="row">
+        <div class="col-md-4">
+       <a href="{% url 'pdtp_profile_update' person.id %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary">Update Personal Details</span></a>
+       </div>
+       <div class="col-md-4">
+       <a href="{% url 'update_bank_details' person.id %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary">Update Bank Details</span></a>
+       </div>
+                  <div class="col-md-4">
+                  
+                 {% if person.pdtpexitrequest.approved_by_secretariat %}
+                
+                    
+                 {% if person.pdtpexitrequest.debriefed_by_secretariat == True %}
+           <a href="{% url 'debrief_results' year person.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-success">Left The Programme and Has been Debriefed, View Debriefing Session</span></a>
+           {% else %}
+<a href="{% url 'pdtp_debrief' year person.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-warning"> Left The Programme but Has not been Debriefed, Debrief Now</span></a>
+{% endif %}
+                  
+
+                  
+                  {% else %}
+
+<a href="{% url 'pdtp_clearance' year person.id  %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-danger">Clear and Deactivate </span></a>
+                   {% endif %}
+                 
+          </div>
+          </div>
+                       
+                    </div>
+<div class="col-md-2">
+          
+          </div>
+          </div>
+
+</div>
+
+<!-- Modal -->
+
+
+
+<script type="text/javascript">
+  $(function () {
+    $('body').on('click', '.odom-submit', function (e) {
+        $(this.form).submit();
+        $('#myModal').modal('hide');
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+      
+    
+{% endblock %}
+{% block tables_js_script %}
+  <!-- DataTables -->
+
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

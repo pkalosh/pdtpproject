@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+
+            {% block content %}
+            {% block top_section %}
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Management Portal</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                        
+                        <ol class="breadcrumb">
+                            <li><a href="#">Dashboard</a></li>
+                            <li class="active">Dashboard 1</li>
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                 {% endblock %}
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- Different data widgets -->
+                <!-- ============================================================== -->
+                 <!-- .row -->
+                 {% for group in user.groups.all %}
+    {% if group.name == 'EXECUTIVE' %}
+                <div class="row">
+               
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                     <a href="{% url 'pdtps' year %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Total {{year}} Interns</h3>
+                            <ul class="list-inline two-part">
+                                
+                                <li class="text-right"> <span class="counter text-success">{{interns}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">{{year}} Male Interns</h3>
+                            <ul class="list-inline two-part">
+                               
+                                <li class="text-right"> <span class="counter text-purple">{{male}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">{{year}} Female Interns</h3>
+                            <ul class="list-inline two-part">
+                             
+                                <li class="text-right"> <span class="counter text-info">{{female}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Exited  Programme</h3>
+                            <ul class="list-inline two-part">
+                              
+                                <li class="text-right"> <span class="text-danger">{{exited}}</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                     <a href="{% url 'pdtps_in_private_sector' year %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Interns in Private Sector</h3>
+                            <ul class="list-inline two-part">
+                               
+                                <li class="text-right"> <span class="counter text-success">{{private_deployments}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <a href="{% url 'pdtps_in_public_sector' year %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Interns in Public Sector</h3>
+                            <ul class="list-inline two-part">
+                              
+                                <li class="text-right"> <span class="counter text-purple"> {{public_deployments}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                    
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <a href="{% url 'pdtps_not_deployed' year %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Interns Pending Deployment</h3>
+                            <ul class="list-inline two-part">
+                                
+                                <li class="text-right"><span class="text-danger">{{unattached}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                     <div class="col-lg-3 col-sm-6 col-xs-12">
+                     <a href="{% url 'interns_with_mentors' year %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Interns With Mentors</h3>
+                            <ul class="list-inline two-part">
+                               
+                                <li class="text-right"> <span class="counter text-success">{{assignments}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                  <div class="row">
+                   
+                  
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <a href="{% url 'interns_without_mentors' year %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Interns Without Mentors</h3>
+                            <ul class="list-inline two-part">
+                               
+                                <li class="text-right"> <span class="counter text-info">{{unmentored}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                    <a href="{% url 'mentors' %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Active Mentors</h3>
+                            <ul class="list-inline two-part">
+                                
+                                <li class="text-right"><span class="text-danger">{{mentors}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                   <a href="{% url 'all_supervisors' %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Active SUPERVISORS</h3>
+                            <ul class="list-inline two-part">
+                                
+                                <li class="text-right"><span class="text-danger">{{supervisors}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                     <div class="col-lg-3 col-sm-6 col-xs-12">
+                     <a href="{% url 'public_sector_reports' %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Public Organizations</h3>
+                            <ul class="list-inline two-part">
+                               
+                                <li class="text-right"> <span class="counter text-info">{{public}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                </div>
+                 <div class="row">
+                   
+                  
+                   
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                     <a href="{% url 'private_sector_reports' %}">
+                        <div class="white-box analytics-info">
+                            <h3 class="box-title">Private Organizations</h3>
+                            <ul class="list-inline two-part">
+                                
+                                <li class="text-right"><span class="text-danger">{{private}}</span></li>
+                            </ul>
+                        </div>
+                        </a>
+                    </div>
+                     {% endif %}
+                     {% if group.name == 'SECRETARIAT' %}
+                    <div class="col-lg-9 col-sm-6 col-xs-12">
+                    <div class="panel">
+                        <div class="panel-heading">NOTIFICATIONS</div>
+                        <div class="table-responsive">
+                            <table class="table table-hover manage-u-table">
+                                <thead>
+                                    <tr>
+                                        <th width="70" class="text-center">#</th>
+                                        <th>NOTIFICATION </th>
+                                        <th>TOTAL</th>
+                                        <th>VIEW</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td><span class="font-medium">Unresolved Interns Issues</span>
+                                            <br/><span class="text-muted">{{issues}}</span></td>
+                                        <td><a href="{% url 'raised_issues' %}"> View</a></td>
+                                       </tr>
+                                         <tr>
+                                        <td class="text-center">1</td>
+                                        <td><span class="font-medium">Programme Exit Requests </span>
+                                            <br/><span class="text-muted">{{exits}}</span></td>
+                                        <td><a href="{% url 'exit_requests' %}"> View</a></td>
+                                       </tr>
+                                         <tr>
+                                        <td class="text-center">1</td>
+                                        <td><span class="font-medium">Bank Detail Update Requests</span>
+                                            <br/><span class="text-muted">{{updates}}</span></td>
+                                        <td><a href="{% url 'bank_update_requests' %}"> View</a></td>
+                                       </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+               
+        
+        {% endif %}
+        {% endfor %}
+                <!--/.row -->
+
+                <!--row -->
+                <!-- /.row -->
+                
+                <!-- ============================================================== -->
+                <!-- Recent comment, table & feed widgets -->
+                <!-- ============================================================== -->
+             
+                <!-- ============================================================== -->
+                <!-- calendar widgets -->
+                <!-- ============================================================== -->
+               
+                
+                <!-- ============================================================== -->
+                <!-- chats, message & profile widgets -->
+                <!-- ============================================================== -->
+                
+               
+                <!-- ============================================================== -->
+                <!-- start right sidebar -->
+                <!-- ============================================================== -->
+              
+                <!-- ============================================================== -->
+                <!-- end right sidebar -->
+                <!-- ============================================================== -->
+                {% endblock %}
+        
+            
+        

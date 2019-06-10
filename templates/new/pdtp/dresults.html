@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Exit Requests</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    
+
+{% block content %}
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLongTitle">Clear {{person.last_name}} {{person.first_name}} from the PDTP Program?</h4>
+        
+      </div>
+      <div class="modal-body">
+      {% if person.pdtpexitrequest.pdtp_requested == True %}
+     <div class="row">
+          <div class="col-md-6">
+         {{person.last_name}}'s Clearance Request:
+          </div>
+          <div class="col-md-6">
+          {{person.pdtpexitrequest.exit_request}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date Submitted:
+          </div>
+          <div class="col-md-6">
+          {{person.pdtpexitrequest.date_of_request}}
+          </div>
+          </div>
+          {% if person.pdtpexitrequest.approved_by_supervisor == True %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Supervisor:
+          </div>
+          <div class="col-md-6">
+          Yes
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Supervisor's Comment:
+          </div>
+          <div class="col-md-6">
+         {{person.pdtpexitrequest.supervisor_comment}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+       Date Approved By Supervisor
+          </div>
+          <div class="col-md-6">
+          {{person.pdtpexitrequest.date_approved_by_supervisor}}
+          </div>
+          </div>
+          {% else %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Supervisor:
+          </div>
+          <div class="col-md-6">
+          Not Yet
+          </div>
+          </div>
+          {% endif %}
+           {% if person.pdtpexitrequest.approved_by_secretariat == True %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Secretariat:
+          </div>
+          <div class="col-md-6">
+          Yes
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+       Date Approved By SSecretariat
+          </div>
+          <div class="col-md-6">
+          {{person.pdtpexitrequest.date_approved_by_secretariat}}
+          </div>
+          </div>
+          {% else %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Secretariat:
+          </div>
+          <div class="col-md-6">
+          Not Yet
+          </div>
+          </div>
+          {% endif %}
+          {% else %}
+          {{person.last_name}} {{person.first_name}} has not made an exit request
+
+        
+{% endif %}
+
+          <form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+
+
+    
+     <button  type="submit" class="btn btn-danger odom-submit" >Clear</button>
+     </form>
+      </div>
+      
+  
+{% endblock %}

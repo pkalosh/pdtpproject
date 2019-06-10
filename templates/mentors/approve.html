@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Workplans</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+             <h3 class="box-title button btn btn-red">approve interns' workplan</h3>
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+
+           {% block content %}
+           
+           
+           <div class="table-responsive">
+           <table class="table">
+           	<thead>
+           	<tr>
+           		<th>Intern</th>
+           		<th>Assignment</th>
+           		<th>Approve</th>
+              <th>Date approved</th>
+           		</tr>
+           	</thead>
+           	<tbody>
+           	{% for plan in plans %}
+           		<tr>
+           			<td>{{plan.pdtp.last_name}} {{plan.pdtp.first_name}}</td>
+           			<td><a href="#{{plan.id}}" data-toggle="modal">{{plan.project_name}}</a></td>
+           			<td><a href="{% url 'approve_plan' plan.id %}?from={{ request.path|urlencode }}" class="button btn btn-sm btn-primary"> Approve</a></td>
+                <td>{% if plan.date_approved %}
+                {{ plan.date_approved }} {% else%}Not yet approved{% endif %}</td>
+           		</tr>
+
+           		<div class="modal fade" id="{{plan.id}}" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 ><strong>{{plan.project_name}}</strong></h4>
+        </div>
+        <div class="modal-body">
+         <div class="row">
+         	<div class="col-md-4">
+         	<strong>Start Date:</strong>
+         	</div>
+         	<div class="col-md-8">
+         		{{plan.start_date}}
+         	</div>
+         </div>
+         <div class="row">
+         	<div class="col-md-4">
+         	<strong>Due Date:</strong>
+         	</div>
+         	<div class="col-md-8">
+         		{{plan.end_date}}
+         	</div>
+         </div>
+         <div class="row">
+         	<div class="col-md-4">
+         	<strong>Intern task:</strong>
+         	</div>
+         	<div class="col-md-8">
+         		{{plan.task}}
+         	</div>
+         </div>
+         <div class="row">
+         	<div class="col-md-4">
+         	<strong>Required Resources:</strong>
+         	</div>
+         	<div class="col-md-8">
+         		{{plan.resources}}
+         	</div>
+         </div>
+         <div class="row">
+         	<div class="col-md-4">
+         	<strong>Outputs:</strong>
+         	</div>
+         	<div class="col-md-8">
+         		{{plan.outputs}}
+         	</div>
+         </div>
+         <div class="row">
+         	<div class="col-md-4">
+         	<strong>Expected Impact:</strong>
+         	</div>
+         	<div class="col-md-8">
+         		{{plan.expected_impact}}
+         	</div>
+         </div>
+         <div class="row">
+         	<div class="col-md-4">
+         	<strong>Status:</strong>
+         	</div>
+         	<div class="col-md-8">
+         		{{plan.status}}
+         	</div>
+         </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default btn-default pull-right" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
+           		{% endfor %}
+           	</tbody>
+           </table>
+           </div>
+         
+           {% endblock %}

@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="{% url 'organizations' %}"><i class="fa fa-dashboard"></i> Organizations</a></li>
+        <li><a href="#">supervisors</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title button btn btn-red">Supevisors from {{organization}} </h3>
+            {% endblock %}
+{% block content %}
+ <div class="row">
+ <div class="col-md-2">
+   <a href="{% url 'add_supervisor' organization.id %}?from={{ request.path|urlencode }}" class="button btn btn-sm btn-primary">Add Supevisor</a> 
+ </div>
+ <div class="col-md-1">
+   <a href="{% url 'organizations' %}" class="button btn btn-sm btn-primary">Back to Organizations</a> 
+ </div>
+</div>
+
+
+
+
+
+
+<table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>#</th>
+                  <th>#</th>
+                  <th>#</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>#</th>
+                  
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for sup in supervisors %}
+                
+                <tr>
+                 
+                  <td>    {{sup.supervisor.first_name}} {{sup.supervisor.last_name}}</td>
+                  <td>{{sup.position}}</td>
+                  <td>
+                  {% if sup.is_contact_person == True %}
+                  Contact Person
+                  
+                  {% endif %}
+                  </td>
+                  <td>
+                  {% if sup.is_mentor == True %}
+                  Mentor
+                  {% endif %}
+                  </td>
+                   <td>
+                  {% if sup.is_supervisor == True %}
+                  Supervisor
+                  {% endif %}
+                  </td>
+                  <td>{{sup.supervisor.userprofile.phone_number}}</td>
+                  <td>{{sup.supervisor}}</td>
+                  <td> <a href="{% url 'update_supervisor' sup.id sup.supervisor.id %}?from={{ request.path|urlencode }}"><span class="button btn btn-sm btn-primary">Update</span></a> </td>
+                  
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+
+
+
+
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+
+
+<script>
+$('.like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'deactivate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$('.activate').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [7] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+<p>Dear {{mentor|title}}</p>
+<p><strong>{{subject}}</strong></p>
+<p>
+Your mentee, {{first_name|title}} {{last_name|title}} has sent a report. Log on to the <a href="{{url}}" target="_blank">portal </a>to view his response
+</p><p>
+
+
+<p>
+Best Regards,<br>
+<br>
+</p>
+
+

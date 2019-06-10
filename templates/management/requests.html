@@ -1,0 +1,395 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_section %}
+<script type="text/javascript">
+  $(document).on('click', '.panel-heading span.clickable', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).on('click', '.panel div.clickable', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body').slideUp();
+        $this.addClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body').slideDown();
+        $this.removeClass('panel-collapsed');
+        $this.find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).ready(function () {
+    $('.panel-heading span.clickable').click();
+    $('.panel div.clickable').click();
+});
+
+</script>
+<style type="text/css">
+  .clickable
+{
+    cursor: pointer;
+}
+
+.clickable .glyphicon
+{
+    background: rgba(0, 0, 0, 0.15);
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px
+}
+
+.panel-heading span
+{
+    margin-top: -23px;
+    font-size: 15px;
+    margin-right: -9px;
+}
+a.clickable { color: inherit; }
+a.clickable:hover { text-decoration:none; }
+</style>
+<section class="content-header">
+      <h1>
+         MANAGEMENT PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+    <div class="row">
+    <div class="col-md-6">
+    <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+        </div>
+        <div class="col-md-6">
+              
+              </div>
+              </div>
+              
+            {% endblock %}
+            {% block content %}
+            <div class="row">
+            <div class="col-md-12">
+            
+
+       
+            
+
+<div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Interns Bank Details Update Requests</h3>
+                    <span class="pull-right "><i class="glyphicon glyphicon-minus"></i></span>
+                </div>
+                <div class="panel-body">
+               {% if requests %}
+                    <div class="table-responsive">
+ <table  class="table table-bordered table-striped table-hover example1" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                  <th>Name</th>
+                  <!--
+                  <th>Email</th>
+                  <th>Cell. No</th>
+                  -->
+                      <th>Message</th>
+                      <th>Update</th>
+                       <th>Solved</th>
+               
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for intern in requests %}
+                <tr>
+                 <td><a href="#un{{intern.pdtp.id}}" data-toggle="modal">{{intern.pdtp.last_name}} {{intern.pdtp.first_name}}</a></td>
+                 <!--
+                 1<td>{{intern.pdtp.email}}</td>
+                 <td>{{intern.pdtp.userprofile.phone_number}}</td>
+                 -->
+                  <td>{{intern.message}}</td>
+                  <td><a href="{% url 'update_bank_details' intern.pdtp.id %}?from={{ request.path|urlencode }}" class="button btn btn-primary btn-sm" style="float: right;">Update</a></td>
+                  <td><a href="{% url 'mark_as_solved' intern.id %}" class="button btn btn-primary btn-sm" style="float: right;">MArk as solved</a></td>
+                </tr>
+
+                               <div class="modal fade" id="un{{intern.user.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+           <div class="row">
+        <div class="col-md-4">
+          
+          {% if intern.pdtp.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{intern.pdtp.userprofile.picture.url }}" height=160px width="160px" class="img-rounded"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            {{intern.pdtp.userprofile.bio|safe}}
+            </div>
+            </div>
+        </div>
+        <div class="modal-body">
+        <h4>Personal Details</h4>
+          <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.last_name}} {{intern.pdtp.first_name}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Gender:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.gender}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date of Birth:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.date_of_birth}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Marital Status:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.marital_status}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Area of Specialization:
+          </div>
+          <div class="col-md-6">
+          {{intern.pdtp.userprofile.area_of_specialization}}
+          </div>
+          </div>
+          <h4>Academic Details</h4>
+          {% for academic in intern.pdtp.academicdetail_set.all %}
+          <div class="row">
+          <div class="col-md-3">
+          {{ academic.academic_level}}
+          </div>
+          <div class="col-md-3">
+          {{academic.course_name}}
+          </div>
+          <div class="col-md-3">
+          {{academic.higher_institution_attended}}
+          </div>
+          </div>
+          {% endfor %}
+          </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+                {% endfor %}
+                </tbody>
+
+                </table>
+                </div>
+                {% else %}
+           <h4 class="btn-red">No Requests</h4>
+            {% endif %}
+            </div>
+       
+    </div>
+
+
+
+
+
+
+
+                  
+           
+        
+     
+               
+
+                
+    
+
+
+
+
+
+
+                  
+           
+        
+     
+            </div>
+
+
+            </div>
+
+            {% endblock %}
+
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('.example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 100,-1 ],
+            [ '100 rows', 'Show all' ]
+        ],
+        buttons: [
+            'pageLength',
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            //{
+                //extend: 'copyHtml5',
+               // exportOptions: {
+                   // columns: [ 0, ':visible' ]
+                //}
+           // },
+            {
+                extend: 'excelHtml5',
+                
+                exportOptions: {
+                    columns: ':visible'
+                },
+            },
+            //{
+               // extend: 'pdfHtml5',
+               // exportOptions: {
+               //     columns: ':visible'
+               // }
+           // },
+            //{
+               // extend: 'print',
+                //exportOptions: {
+                 //   columns: ':visible'
+               // }
+           // },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [2,3] }
+        ]
+    } );
+} );
+</script>
+
+<script>
+
+$(document).ready(function() {
+    $('.example1').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            
+            [ 100, -1 ],
+            [ '100 rows', 'Show all' ]
+        
+        ],
+        buttons: [
+            'pageLength',
+
+           // {
+
+             //   extend: 'colvis',
+             //   postfixButtons: [ 'colvisRestore' ]
+            //},
+            //{
+                //extend: 'copyHtml5',
+               // exportOptions: {
+                   // columns: [ 0, ':visible' ]
+                //}
+           // },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            //{
+               // extend: 'print',
+                //exportOptions: {
+                 //   columns: ':visible'
+               // }
+           // },
+
+        ],
+        //columnDefs: [
+            //{ "visible": false, "targets": [2,3] }
+        //]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

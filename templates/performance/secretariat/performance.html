@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+PDTPS PERFORMANCE
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Mentors</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    
+{% block content %}
+ <div class="row">
+ <div class="col-md-1">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Email</th>
+                  <th>Mentorship</th>
+                  <th>Innovation</th>
+                  <th>Private Sector</th>
+                  <th>Public Sector</th>
+                  <th>Training</th>
+                  <th>Total</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for intern in pdtps %}
+                
+                <tr>
+                  <td>
+              
+                  {{intern.user.last_name}} {{intern.user.first_name}}</td>
+
+                  <td>
+              
+                  {{intern.user.email}}</td>
+                  <td>{% if intern.mentor_evaluation %}{{intern.mentor_evaluation}} {% else %} 0 {% endif %}</td>
+                  <td> {% if intern.user.innovationevaluation %} {{intern.user.innovationevaluation.total}} {% else %} 0 {% endif %}</td>
+                  <td>{% if intern.private_evaluation %}{{intern.private_evaluation}} {% else %} 0 {% endif %}</td>
+                  <td>{% if intern.public_evaluation %}{{intern.public_evaluation}} {% else %} 0 {% endif %}</td>
+                  <td>{% if intern.training_evaluation %}{{intern.training_evaluation}} {% else %} 0 {% endif %}</td>
+                  <td>{{intern.new_total}}</td>
+                </tr>
+                {% endfor %}
+               </tbody>
+  </table>
+ 
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [  100, -1 ],
+            [  '100 rows', 'Show all' ]
+        ],
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

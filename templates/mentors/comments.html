@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} MENTORSHIP REPORTS
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Intern Mentorship Reports</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+     
+
+              <div class="row">
+    
+     <div class="col-md-8">
+              <h3 class="box-title button btn btn-red">Mentorship Meetings with {{mentee.first_name}} {{mentee.last_name}}</h3>
+</div>
+<div class="col-md-1">
+              </div>
+              </div>
+            {% endblock %}
+{% block content %}
+
+<table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Date Booked</th>
+                  <th>Meeting Date</th>
+                  <th>Agenda</th>
+                  <th>Venue</th>
+                  <th>Additional Notes</th>
+                  <th>Confirm</th>
+                   <th>Intern's Report</th>
+                  <th>Mentor's Feedback</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for p in param %}
+                
+                <tr>
+                  <td>{{p.date_booked}}</td>
+                  <td>{{p.meeting_date}}</td>
+                  <td>{{p.agenda}}</td>
+                  <td>{{p.venue}}</td>
+                  <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add{{p.id}}">
+  Additional Notes
+</button></td>
+                  <td>
+  {% if p.confirm == "CONFIRMED" %}
+  <button type="button" class="btn btn-success btn-sm"  data-toggle="modal" data-target="#confirm{{p.id}}">CONFIRMED</button>
+  {% elif p.confirm == "NOT_CONFIRMED" %}
+  <button type="button" class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#confirm{{p.id}}">NOT CONFIRMED</button>
+  {% else %}
+  <button type="button" class="btn btn-primary btn-sm" >NOT RESPONDED</button>
+  {% endif %}
+</td>  
+                  <td>
+         {% if p.report %}
+  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#view{{p.id}}">View</button>
+  {% else %}
+  <button type="button" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#report{{p.id}}">Write Report</button>
+  {% endif %}</td>
+                  <td> 
+                    {% if p.feedback %}
+  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#feedback{{p.id}}">View</button>
+  {% else %}
+  <button type="button" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#fsubmit{{p.id}}">Feedback</button>
+  {% endif %}</td> 
+                
+                  
+                  
+                  
+                  
+                </tr>
+               <div class="modal fade" id="add{{p.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Meeting Additional Notes</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {{p.note}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" id="confirm{{p.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirm Meeting</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {{p.confirm_text|safe}}
+                      <input type="hidden" value="{{p.id}}"  name="meeting">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+                    </div>
+                 
+                  </div>
+                </div>
+              </div>
+
+              
+              <div class="modal fade" id="view{{p.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Write a Report</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      {{p.report|safe}}
+
+                      <input type="hidden" value="{{p.id}}"  name="meeting">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+       
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="modal fade" id="fsubmit{{p.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Confirm Meeting</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <form method="post" action=".">
+                        {% csrf_token %}
+                      {% bootstrap_form feedbackform %}
+
+                      <input type="hidden" value="{{p.id}}"  name="meeting">
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" name="ffeed" value="ffeed" class="btn btn-primary">Save changes</button>
+
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="modal fade" id="feedback{{p.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Mentor's Feedback</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                        {{p.feedback|safe}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+                {% endfor %}
+               </tbody>
+  </table>
+ 
+
+
+{% endblock %}
+{% block tables_js_script %}
+<script type="text/javascript">
+        tinyMCE.init({
+                mode: "textareas",
+                theme: "simple"
+        });
+</script>
+{% endblock %}

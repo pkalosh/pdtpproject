@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{{year }} PDTP DEPLYOMENTS 
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Deployments</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title  btn-red">{{year}} PDTP ATTACHMENT
+</h3>
+</div>
+<div class="col-md-7">
+{% include 'secretariat/links.html' %}
+              </div>
+              </div>
+            {% endblock %}
+{% block content %}
+ <div class="row">
+ <div class="col-md-1">
+   <a href="{% url 'public_sector' year %}" class="button btn btn-sm btn-primary"> Public Sector</a> 
+ </div>
+  <div class="col-md-1">
+   <a href="{% url 'private_sector' year %}" class="button btn btn-sm btn-primary"> Private Sector</a> 
+ </div>
+
+  <div class="col-md-2" style="margin-left: 6px;">
+ 
+    <a href="{% url 'interns_pending_confirmation' year %}" class="button btn btn-sm btn-primary">Pending Confirmation </a> 
+
+ </div>
+  <div class="col-md-2" style="margin-left: -35px;">
+   <a href="{% url 'secretariat_assign_supervisor' year %}" class="button btn btn-sm btn-primary">Assign Supervisors </a> 
+ </div>
+ <div class="col-md-2" style="margin-left: -35px;">
+ 
+    <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Organization</th>
+                  <th>Private/Public</th>
+                  <th>PDTP Name</th>
+                  <th>PDTP Skills</th>
+                  <th>Email</th>
+                  <th>cell</th>
+                  <th>Date Attached</th>
+                  <th> Completion Date</th>
+                  
+                   <th>Reattach</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for deployment in deployments %}
+                
+                <tr>
+                  <td>{{deployment.organization}}</td>
+                  <td>{{deployment.sector}}</td>
+                  <td>{{deployment.pdtp.last_name}} {{deployment.pdtp.first_name}}</td>
+                  <td>{{deployment.pdtp.userprofile.area_of_specialization}}</td>
+                  <td>{{deployment.pdtp}}</td>
+                  <td>{{deployment.pdtp.userprofile.phone_number}}</td>
+                  <td>{{deployment.date_confirmed}}</td>
+                  <td>{{deployment.completion_date}}</td>
+                  <td><a href="{% url 'redeploy' year  deployment.pdtp.pk deployment.organization.id %}" class="button btn-primary btn btn-sm"> Re-attach</a></td>
+                  
+                  
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+
+
+
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+
+
+<script>
+$('.like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'deactivate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$('.activate').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [ 3] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

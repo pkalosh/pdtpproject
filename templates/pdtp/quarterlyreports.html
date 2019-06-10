@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+     
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">On Site Monitoring and Evaluation</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+{% block content %}
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <h4 style="color: red;"><strong>PHASE I INTERNSHIPS M&E FIELD VISITS QUESTIONNAIRE</strong></h4>
+
+
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+ {{form.media }}
+ <br>
+ {% if user.userprofile.user_category  == "PDTP" %}
+ <b>I. FOR THE INTERN:</b><br>
+<b>Internship Evaluation:  <br> 
+Please rate the following aspects of your Internship placement on the basis of this scale: </b>
+<ul>
+  <li>Excellent- Consistently exceeds expectations</li>
+  <li>Good- Sometimes exceeds expectations</li>
+  <li>Average - Meets expectation</li>
+  <li>Poor- Rarely meets expectations</li>
+  <li>N/A (Not Applicable)-Not applicable to this internship experience</li>
+  <li>Please provide examples and rationale where appropriate.
+</li>
+</ul>
+ 
+<ol>
+{% for parameter in itern_me_params %}
+
+  <li>{{parameter.name}}</li>
+<label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Excellent">Excellent<br>
+      
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Good">Good
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Average">Average
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="Poor">Poor
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="N/A">N/A
+    </label><br>
+  {% endfor %}
+  </ol><br>
+ {% bootstrap_form form %}
+  {% elif user.userprofile.user_category  == "SUPERVISOR" %}
+
+<b>II. FOR THE SUPERVISOR:</b>
+<p><strong>1. How do you rate the intern on the following parameters:</strong></p>
+
+<ol type="I">
+{% for parameter in supervisor_me_param %}
+
+  <li>{{parameter.name}}</li>
+<label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="5">5
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{parameter.id}}" value="1">1
+    </label><br>
+    
+  {% endfor %}
+  </ol><br>
+{% bootstrap_form form %}
+   {% endif %}
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" style="float: right;">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Submit
+      </button>
+  {% endbuttons %}
+
+</form>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+{% endblock %}

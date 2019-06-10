@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_title %}| {{user.last_name}}  {% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">My Performance</a></li>
+       
+      </ol>
+    </section>
+
+    {% endblock %}
+
+     {% block table_title %}
+     
+             <div class="row">
+              {% if user.supervisortoevaluate_set.all %} 
+ <div class="col-md-2 col-xs-3 col-sm-3">
+   <a href="{% url 'ministry_activities' %}" class="button btn btn-sm btn-primary">Ministry Activities</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'private_sector_activities' %}" class="button btn btn-sm btn-primary">Private Sector</a> 
+ </div>
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'my_trainings' %}" class="button btn btn-sm btn-primary">Trainings</a> 
+ </div>
+ {% endif %}
+ <div class="col-md-2 col-xs-3 col-sm-3"  style="margin-left: -3px;">
+   <a href="{% url 'my_performance' %}" class="button btn btn-sm btn-primary">My Results</a> 
+ </div>
+ <div class="col-md-1"  style="margin-left: -3px;">
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+            {% endblock %}
+
+{% block content %}
+{% if user.supervisortoevaluate_set.all %} 
+{{ formset.media }}
+            {{ formset.management_form }}
+<style type="text/css">
+  .add-row {
+display:block;
+margin-top:15px;
+}
+.add-row:before{
+font-family: FontAwesome;
+content: "\f055";
+margin-right: 0.3em;
+
+}
+.delete-row:before{
+font-family: FontAwesome;
+content: "\f056";
+margin-right: 0.3em;
+color: red;
+}
+</style>
+
+  <div class="bs-example">
+    <div class="panel-group" id="accordion">
+     <div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#bio">Private Sector  Attendance
+                    </a>
+                </h4>
+            </div>
+              <div id="bio" class="panel-collapse collapse ">
+                <div class="panel-body">
+                  {% if user.privatesectorattendance %}
+                    
+                    <table class="table">
+                    	<tbody>
+                    		<tr>
+                    			<td>Completed 2 Months Private Sector Internship?</td>
+                    			<td>{{user.privatesectorattendance.attendance}}</td>
+                    		</tr>
+                    	</tbody>
+                    </table>
+                
+                  {% else %}
+                   You have not been graded in this category . <a href="{% url 'add_private_attendance' %}" > Proceed to add records for grading</a>
+      
+      
+        
+                  {% endif %}              
+            </div>
+        </div>
+        </div>
+
+
+<div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#proj">Projects done while in private sector
+                    </a>
+                </h4>
+            </div>
+              <div id="proj" class="panel-collapse collapse ">
+                <div class="panel-body">
+                  {% if user.supervisorapprovalcomment %}
+                  {% else %}
+                   <a href="{% url 'add_private_project' %}" class="btn-primary btn btn-sm" > Add Record</a>
+                 {% endif %}
+                  {% if user.privateproject_set.all %}
+                  <table class="table">
+                    <thead>
+                      <th>Project</th>
+                      <th>Description</th>
+                      <th>Link</th>
+                     
+                    </thead>
+                    <tbody>
+                      {% for u in user.privateproject_set.all %}
+                      <tr>
+                        <td>{{u.project_name}}</td>
+                        <td>{{u.description}}</td>
+                        <td>{{u.link}}</td>
+                        
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  {% else %}
+      
+ You have not been graded in this category .
+     
+                  {% endif %}              
+            </div>
+        </div>
+        </div>
+
+
+
+
+
+
+         <div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#assignment">On the Job Training (Not in area of specialization)
+                    </a>
+                </h4>
+            </div>
+              <div id="assignment" class="panel-collapse collapse ">
+                <div class="panel-body">
+                   {% if user.supervisorapprovalcomment %}
+                  {% else %}
+                	 <a href="{% url 'add_soft_training' %}" class="btn-primary btn btn-sm" > Add Record</a>
+                   {% endif %}
+                  {% if user.privateonjobtraining_set.all %}
+                  <table class="table">
+                    <thead>
+                      <th>Subject</th>
+                      <th>Description</th>
+                     
+                    </thead>
+                    <tbody>
+                      {% for u in user.privateonjobtraining_set.all %}
+                      <tr>
+                        <td>{{u.subject}}</td>
+                        <td>{{u.description}}</td>
+                        
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  {% else %}
+      
+ You have not been graded in this category .
+     
+                  {% endif %}              
+            </div>
+        </div>
+        </div>
+
+
+
+         <div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#additional">Training offered by the Organization(on skill area)
+                    </a>
+                </h4>
+            </div>
+              <div id="additional" class="panel-collapse collapse ">
+                <div class="panel-body">
+                   {% if user.supervisorapprovalcomment %}
+                  {% else %}
+                	 <a href="{% url 'add_org_training' %}" class="btn btn-sm btn-primary"> Add Record</a>
+                   {% endif %}
+                  {% if user.privatetraining_set.all %}
+                 <table class="table">
+                    <thead>
+                      <th>Subject</th>
+                      <th>Description</th>
+                     
+                    </thead>
+                    <tbody>
+                      {% for u in user.privatetraining_set.all %}
+                      <tr>
+                        <td>{{u.subject}}</td>
+                        <td>{{u.description}}</td>
+                        
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  {% else %}
+      
+          You have not been graded in this category .
+     
+                  {% endif %}              
+            </div>
+        </div>
+        </div>
+
+<div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#flagship">Supervisor Evaluation
+                    </a>
+                </h4>
+            </div>
+              <div id="flagship" class="panel-collapse collapse ">
+                <div class="panel-body">
+                          <table class="table">
+                    <thead>
+                      <th>Parameter</th>
+                      <th>Score</th>
+                     
+                    </thead>
+                    <tbody>
+                      {% for u in user.privatesupervisorevaluation_set.all %}
+                      <tr>
+                        <td>{{u.parameter}}</td>
+                        <td>{{u.score}}</td>
+                        
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>     
+            </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+     {% else %}
+   Kindly select both your public and private sector supervisor first. One for each category(Private,Public)
+   {% endif %}
+{% endblock %}
+{% block tables_js_script %}
+  
+  
+{% endblock %}

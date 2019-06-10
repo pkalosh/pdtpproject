@@ -1,0 +1,279 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+    <div class="swiper-container hero-slider">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide hero-content-wrap">
+                <img src="{% static '5.jpg' %}" alt="">
+
+                <div class="hero-content-overlay position-absolute w-100 h-100">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                              <!--   <header class="entry-header">
+                                    <h1>Donate</h1>
+                                    <h4>4 a better world</h4>
+                                </header> -->
+
+                             <!--    <div class="entry-content mt-4">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestibulum mauris quis aliquam. Integer accumsan sodales odio, id tempus ullamcorper</p>
+                                </div> -->
+
+                                <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                                  <!--   <a href="{% url 'experts' %}" class="btn gradient-bg mr-2">Hire our Graduates</a> -->
+                                    <a href="{% url 'partners' %}" class="btn orange-border">Partner with us</a>
+                                </footer>
+                            </div><!-- .col -->
+                        </div><!-- .row -->
+                    </div><!-- .container -->
+                </div><!-- .hero-content-overlay -->
+            </div><!-- .hero-content-wrap -->
+
+           <!--  <div class="swiper-slide hero-content-wrap">
+                <img src="images/hero.jpg" alt="">
+
+                <div class="hero-content-overlay position-absolute w-100 h-100">
+                    <div class="container h-100">
+                        <div class="row h-100">
+                            <div class="col-12 col-lg-8 d-flex flex-column justify-content-center align-items-start">
+                                <header class="entry-header">
+                                    <h1>Donate</h1>
+                                    <h4>4 a better world</h4>
+                                </header>
+
+                                <div class="entry-content mt-4">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestibulum mauris quis aliquam. Integer accumsan sodales odio, id tempus ullamcorper</p>
+                                </div>
+
+                                <footer class="entry-footer d-flex flex-wrap align-items-center mt-5">
+                                    <a href="#" class="btn gradient-bg mr-2">Donate Now</a>
+                                    <a href="#" class="btn orange-border">Read More</a>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>>
+            </div> -->
+
+        </div><!-- .swiper-wrapper -->
+
+        <div class="pagination-wrap position-absolute w-100">
+            <div class="container">
+                <div class="swiper-pagination"></div>
+            </div><!-- .container -->
+        </div><!-- .pagination-wrap -->
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next flex justify-content-center align-items-center">
+            <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z"/></svg></span>
+        </div>
+
+        <div class="swiper-button-prev flex justify-content-center align-items-center">
+            <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z"/></svg></span>
+        </div>
+    </div><!-- .hero-slider -->
+
+    <div class="home-page-icon-boxes">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-6 mt-4 mt-lg-0">
+                    <div class="icon-box">
+                        <figure class="d-flex justify-content-center">
+                            <img src="{% static 'charity/images/hands-gray.png' %}" alt="">
+                            <img src="{% static 'charity/images/hands-white.png' %}" alt="">
+                        </figure>
+
+                        <header class="entry-header">
+                            <h3 class="entry-title">Program Benefits</h3>
+                        </header>
+
+                        <div class="entry-content">
+                            <p>PDTP is beneficial in the following ways<p>
+<ol style="text-align: left">
+<li>Increased youth employability.</li>
+<li>Improved Public/Private sector collaboration.</li>
+<li>Accelerated economic impact through ICT effectiveness.</li>
+<li>Enhanced service delivery by leveraging on ICT.</li>
+<li>Support ICTA’s contribution to GDP projected to be 8% of GDP by 2017 as outlined in the ICT Masterplan.</li>
+</ol></p>
+                        </div>
+                    </div>
+                </div>
+
+              
+
+                <div class="col-12 col-md-6 col-lg-6 mt-4 mt-lg-0">
+                    <div class="icon-box">
+                        <figure class="d-flex justify-content-center">
+                            <img src="{% static 'charity/images/charity-gray.png' %}" alt="">
+                            <img src="{% static 'charity/images/charity-white.png' %}" alt="">
+                        </figure>
+
+                        <header class="entry-header">
+                            <h3 class="entry-title">Our Focus</h3>
+                        </header>
+
+                        <div class="entry-content">
+                            <ol>
+                            <li>Leadership development to develop ICT leaders in government management staff by entrenching them with ICT business principles to effectively run ICT structures.</li>
+<li>ICT technical capacity development by training freshly qualified graduates through an internship programme to develop a ready and affordable pool of ICT talent for government.</li>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .home-page-icon-boxes -->
+
+    <div class="home-page-welcome">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-7 ">
+                    <div class="welcome-content">
+                        <header class="entry-header">
+                            <h2 class="entry-title">Who we are</h2>
+                        </header><!-- .entry-header -->
+
+                        <div class="entry-content mt-5">
+                            <p>DigiTalent is the brand name for the Presidential Digital Talent Programme (PDTP), an internship programme that develops the ICT talent pool in Kenya through a collaboration between the public and private sectors. It is a partnership between government, public and private sector stakeholders and is to be implemented by the Ministry of Information Communications and Technology (MoICT) through the ICT Authority (ICTA). It is borne out of the need for government to enhance its capacity to use ICT in effective public service delivery. It also provides a training ground for potential employees and an affordable labour pool of freshly qualified individuals in government offices.</p>
+                            <p> Targeting recent graduates, PDTP offers participants an opportunity to understand government services, and provides them with a chance to contribute towards improving service delivery to Kenyan citizens..</p>
+                        </div><!-- .entry-content -->
+                    </div><!-- .welcome-content -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-md-5 mt-4 hidden-sm hidden-xs">
+                    <img src="{% static 'm.png' %}" style="width: 100%; height:380px;" alt="welcome">
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .home-page-icon-boxes -->
+
+
+
+
+    <div class="home-page-limestone">
+        <div class="container">
+            <div class="row align-items-end">
+                <div class="coL-12 col-lg-6">
+                    <div class="section-heading">
+                        <h2 class="entry-title">Our Impact.</h2>
+
+                        <p class="mt-5">A transformed country and an engaged citizenry through innovative and sustainable ICT skill development.</p>
+                    </div><!-- .section-heading -->
+                </div><!-- .col -->
+
+                <div class="col-12 col-lg-6">
+                    <div class="milestones d-flex flex-wrap justify-content-between">
+                        <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                            <div class="counter-box">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="images/teamwork.png" alt="">
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-baseline">
+                                    <div class="start-counter" data-to="900" data-speed="2000"></div>
+                                    <div class="counter-k">+</div>
+                                </div>
+
+                                <h3 class="entry-title">Graduates</h3><!-- entry-title -->
+                            </div><!-- counter-box -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                            <div class="counter-box">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="images/donation.png" alt="">
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-baseline">
+                                    <div class="start-counter" data-to="71" data-speed="2000"></div>
+                                     <div class="counter-k">%</div>
+                                </div>
+
+                                <h3 class="entry-title">Employed within 90 days after programme completion</h3><!-- entry-title -->
+                            </div><!-- counter-box -->
+                        </div><!-- .col -->
+
+                        <div class="col-12 col-sm-4 mt-5 mt-lg-0">
+                            <div class="counter-box">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="images/dove.png" alt="">
+                                </div>
+
+                                <div class="d-flex justify-content-center align-items-baseline">
+                                    <div class="start-counter" data-to="107" data-speed="2000"></div>
+                                </div>
+
+                                <h3 class="entry-title">Innovations Implemented </h3><!-- entry-title -->
+                            </div><!-- counter-box -->
+                        </div><!-- .col -->
+                    </div><!-- .milestones -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .our-causes -->
+
+    <div class="our-causes">
+        <div class="container">
+            <div class="row">
+                <div class="coL-12">
+                    <div class="section-heading">
+                        <h2 class="entry-title">Success stories</h2>
+                    </div><!-- .section-heading -->
+                </div><!-- .col -->
+            </div><!-- .row -->
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="swiper-container causes-slider">
+                        <div class="swiper-wrapper">
+                            {% for su in successs %}
+                            <div class="swiper-slide">
+                                <div class="cause-wrap">
+                                    <figure class="m-0">
+                                        <img src="{{su.photo.url}}" style="width:100%; height: 200px;" alt="">
+
+                                   
+                                    </figure>
+
+                                    <div class="cause-content-wrap">
+                                        <header class="entry-header d-flex flex-wrap align-items-center">
+                                            <h3 class="entry-title w-100 m-0"><a href="{% url 'story' su.id su.slug %}">{{su.name|title}} | {{su.role|title}} | {{su.organization|title}}</a></h3>
+                                        </header><!-- .entry-header -->
+
+                                       <!--  <div class="entry-content">
+                                            <span class="m-0">
+                                                {{su.content|safe|truncatewords:60}}
+                                            </span>
+                                        </div> --><!-- .entry-content -->
+
+                                        <!-- <div class="fund-raised w-100">
+                                            <div class="fund-raised-bar-1 barfiller">
+                                                <div class="tipWrap">
+                                                    <span class="tip"></span>
+                                                </div>
+                                                <span class="fill" data-percentage="83"></span>
+                                            </div>
+
+                                        </div> --><!-- .fund-raised -->
+                                    </div><!-- .cause-content-wrap -->
+                                </div><!-- .cause-wrap -->
+                            </div><!-- .swiper-slide -->
+                            {% endfor %}
+                        </div><!-- .swiper-wrapper -->
+
+                    </div><!-- .swiper-container -->
+
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next flex justify-content-center align-items-center">
+                        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1171 960q0 13-10 23l-466 466q-10 10-23 10t-23-10l-50-50q-10-10-10-23t10-23l393-393-393-393q-10-10-10-23t10-23l50-50q10-10 23-10t23 10l466 466q10 10 10 23z"/></svg></span>
+                    </div>
+
+                    <div class="swiper-button-prev flex justify-content-center align-items-center">
+                        <span><svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1203 544q0 13-10 23l-393 393 393 393q10 10 10 23t-10 23l-50 50q-10 10-23 10t-23-10l-466-466q-10-10-10-23t10-23l466-466q10-10 23-10t23 10l50 50q10 10 10 23z"/></svg></span>
+                    </div>
+                </div><!-- .col -->
+            </div><!-- .row -->
+        </div><!-- .container -->
+    </div><!-- .our-causes -->
+   {% endblock %}

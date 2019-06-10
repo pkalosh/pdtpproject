@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+     {% block content %}
+   {% block top_section %}
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Management Portal</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                        
+                        <ol class="breadcrumb">
+                          {% include 'secretariat/links.html' %}
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                 {% endblock %}
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- Different data widgets -->
+                <!-- ============================================================== -->
+                 <!-- .row -->
+                 <div class="white-box">
+               
+            
+ <div class="row">
+
+ <div class="col-md-1 col-sm-1 col-xs-4">
+  <!--
+<a href="" class="button btn btn-primary btn-sm"  onclick="window.history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+-->
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+<div class="col-md-10">
+
+</div>
+   </div> 
+ 
+ <table id="example1" class="table table-bordered table-striped table-hover" >
+                <thead >
+                <tr>
+                  <th>Name</th>
+                  <th>Location</th>
+                  <th>PDTP's </th>
+                  <th>Attach</th>
+                  
+                   
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for org in privates %}
+                
+                <tr>
+                  <td>{{org.organization}}</td>
+                  <td>{{org.location}}</td>
+                  <td>0</td>
+                  <td>
+                  <a href="{% url 'to_public' org.id year %}" style="float: right;"><span class="button btn btn-sm btn-primary">Attach</span></a>
+                  </td>
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+
+              {% for org in items %}
+                
+                <tr>
+                  <td>{{org.name}}</td>
+                  <td>{{org.location}}</td>
+                  <td>{{org.total}}</td>
+              
+                  <td>
+                  <a href="{% url 'to_public' org.id year %}" style="float: right;"><span class="button btn btn-sm btn-primary">Attach</span></a>
+                  </td>
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+
+
+
+ 
+  
+
+
+<script>
+$('.like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'deactivate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$('.activate').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+ 
+<script>
+
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 10, 25, 50,100,150, -1 ],
+            [ '10 rows', '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+        'pageLength',
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        //columnDefs: [
+            //{ "visible": false, "targets": [2, 3,6,7] }
+        //]
+    } );
+} );
+</script>
+
+
+{% endblock %}

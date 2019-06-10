@@ -1,0 +1,519 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_title %}| {{user.last_name}}  {% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Performance</a></li>
+       
+      </ol>
+    </section>
+
+    {% endblock %}
+
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title button btn btn-red">{{pdtp.last_name}}  {{pdtp.first_name}}
+</h3>
+</div>
+<div class="col-md-7">
+{% include 'secretariat/links.html' %}
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+<div class="row">
+ <div class="col-md-1">
+  <!--
+<a href="" class="button btn btn-primary btn-sm"  onclick="window.history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+-->
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+
+</div>
+{{ formset.media }}
+            {{ formset.management_form }}
+<style type="text/css">
+  .add-row {
+display:block;
+margin-top:15px;
+}
+.add-row:before{
+font-family: FontAwesome;
+content: "\f055";
+margin-right: 0.3em;
+
+}
+.delete-row:before{
+font-family: FontAwesome;
+content: "\f056";
+margin-right: 0.3em;
+color: red;
+}
+</style>
+
+  <div class="bs-example">
+    <div class="panel-group" id="accordion">
+     <div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#bio">Ministry Reports and Attendance
+                    </a>
+                </h4>
+            </div>
+              <div id="bio" class="panel-collapse collapse ">
+                <div class="panel-body">
+                    <table class="table">
+                    <tbody>
+                      {% if pdtp.ministryreport %}
+                      <tr>
+                        <td>Days Attended</td>
+                        <td>{{pdtp.ministryreport.attendance}}</td>
+                        <!--<td>Score:</td>
+                        <td>{{pdtp.ministryreport.report.score}}</td>
+-->
+                      </tr>
+                      
+                      <tr>
+                        <td>Qarterly Meetings attended</td>
+                        <td>{{pdtp.ministryreport.meeting}}</td>
+                        <!--<td>Score:</td>
+                        <td>{{pdtp.ministryreport.report.score}}</td>
+-->
+                      </tr>
+                      <tr>
+                        <td>Quarterly Reports Submitted </td>
+                        <td>{{pdtp.ministryreport.report }}</td>
+                        <!--<td>Score:</td>
+                        <td>{{pdtp.ministryreport.report.score}}</td>
+-->
+                      </tr>
+                      {% else %}
+                      Intern has not submitted this data
+                      {% endif %}
+                      <tr>
+                    
+
+                     
+                    </tbody>
+                  </table>
+
+                
+                <h4>Public Sector Assignments</h4>
+                  <table class="table">
+                    {% if pdtp.workassignmentevidence_set.all %}
+                    <thead>
+                      <th>Poject</th>
+                      <th>Description</th>
+                      <th>Link</th>
+                    </thead>
+                    <tbody>
+                      {% for work in pdtp.workassignmentevidence_set.all %}
+                      <tr>
+                        <td>{{work.project_name}}</td>
+                        <td>{{work.description}}</td>
+                        <td>{{work.link}}</td>
+                      
+                      </tr>
+                    {% endfor %}
+                      {% else %}
+                      Intern has not submitted this data
+                      {% endif %}
+                      <tr>
+                    </tbody>
+                  </table>
+
+                  <h4>Additional Activities Initiated by ICTA/Other government body </h4>
+                  <table class="table">
+                    {% if pdtp.additionalactivity_set.all %}
+                    <thead>
+                      <th>Poject</th>
+                      <th>Task/Role</th>
+                      <th>Description</th>
+                      <th>Link</th>
+                    </thead>
+                    <tbody>
+                      {% for work in pdtp.additionalactivity_set.all %}
+                      <tr>
+                        <td>{{work.project_name}}</td>
+                        <td>{{work.task}}</td>
+                        <td>{{work.description}}</td>
+                        <td>{{work.link}}</td>
+                      
+                      </tr>
+                    {% endfor %}
+                      {% else %}
+                      Intern has not submitted this data
+                      {% endif %}
+                      <tr>
+                    </tbody>
+                  </table>
+
+                  <h4>Project Transformation(Flagship/Specifi Ministry Project) </h4>
+                  <table class="table">
+                    {% if pdtp.transformation_set.all %}
+                    <thead>
+                      <th>Ministry</th>
+                      <th>Poject</th>
+                      <th>Role/Task</th>
+                      <th>Description</th>
+                      <th>Link</th>
+                    </thead>
+                    <tbody>
+                      {% for work in pdtp.transformation_set.all %}
+                      <tr>
+                        <td>{{work.ministry}}</td>
+                        <td>{{work.project_name}}</td>
+                        <td>{{work.task}}</td>
+                        <td>{{work.description}}</td>
+                        <td>{{work.link}}</td>
+                      
+                      </tr>
+                    {% endfor %}
+                      {% else %}
+                      Intern has not submitted this data
+                      {% endif %}
+                      <tr>
+                    </tbody>
+                  </table>
+      
+        <h4>Supervisor Evaluation</h4> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      {% for work in pdtp.publicsupervisorevaluation_set.all %}
+                      <tr>
+                        <td>Parametor:</td>
+                        <td>{{work.parameter}}</td>
+                        <td>Score:</td>
+                        <td>{{work.score}}</td>
+
+                      </tr>
+                      {% endfor %}
+                      
+
+
+                     
+                    </tbody>
+                  </table>  
+                <h4>Supervisor Comment</h4> 
+                {{pdtp.buddycomment.comment }}
+                  
+                            
+            </div>
+               
+        </div>
+        </div>
+
+
+         <div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#assignment">Private Sector Attachment Reports
+                    </a>
+                </h4>
+            </div>
+              <div id="assignment" class="panel-collapse collapse ">
+                <div class="panel-body">
+                  {% if pdtp.privatesectorattendance %}
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <td>Completed 2 months Private Sector attachment?</td>
+                        <td>{{pdtp.privatesectorattendance.attendance}}</td>
+                        <!--<td>Score:</td>
+                        <td>{{pdtp.ministryreport.report.score}}</td>
+-->
+                      </tr>
+                      {% else %}
+                      Intern has not submitted this data
+                      {% endif %} 
+                      </tbody>
+                      </table>
+
+
+
+                 <h4>Projects done while in private sector </h4>
+                  <table class="table">
+                    
+                    <thead>
+                      <th>Project</th>
+                 
+                      <th>Description</th>
+                      <th>Link</th>
+             
+                    </thead>
+                    <tbody>
+                      {% for work in pdtp.privateproject_set.all %}
+                      <tr>
+                        <td>{{work.project_name}} </td>
+                       
+                        <td>{{work.description}}</td>
+                          <td>{{work.link}}</td>
+                    
+                      
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>  
+
+
+
+                <h4>Trainings done while in Private Sector </h4>
+                  <table class="table">
+                    
+                    <thead>
+                      <th>Course Title</th>
+                 
+                      <th>Description</th>
+             
+                    </thead>
+                    <tbody>
+                      {% for work in pdtp.privateonjobtraining_set.all %}
+                      <tr>
+                        <td>{{work.subject}} </td>
+                       
+                        <td>{{work.description}}</td>
+                    
+                      
+                      </tr>
+
+                    {% endfor %}
+
+                     {% for work in pdtp.privatetraining_set.all %}
+                      <tr>
+                        <td>{{work.subject}} </td>
+                       
+                        <td>{{work.description}}</td>
+                    
+                      
+                      </tr>
+
+                    {% endfor %}
+                    </tbody>
+                  </table>  
+                  <h4>Supervisor Evaluation</h4> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      {% for work in pdtp.privatesupervisorevaluation_set.all %}
+                      <tr>
+                        <td>Parametor:</td>
+                        <td>{{work.parameter}}</td>
+                        <td>Score:</td>
+                        <td>{{work.score}}</td>
+
+                      </tr>
+                      {% endfor %}
+                      
+
+
+                     
+                    </tbody>
+                  </table> 
+                   <h4>Supervisor Comment</h4> 
+                {{pdtp.supervisorcomment.comment }}
+                   
+            </div>
+        </div>
+        </div>
+
+
+
+         <div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#additional">Trainings and Certifications Reports
+                    </a>
+                </h4>
+            </div>
+              <div id="additional" class="panel-collapse collapse ">
+                <div class="panel-body">
+                   <h4>Tainingsv and Certifications </h4>
+                  <table class="table">
+                    {% if pdtp.trainingapplication_set.all %}
+                    <thead>
+                      <th>Certification Body</th>
+                  <th>Category</th>
+                  <th>Mode</th>
+                  <th>Course</th>
+                  <th>Status</th>
+                  <th>Certificate</th>
+                  <th>Certificate No</th>
+                    </thead>
+                    <tbody>
+                      {% for work in pdtp.training_set.all %}
+                      <tr>
+                    
+                  <td>{{work.institution}}</td>
+                  <td>{{work.course.category}}</td>
+                  <td>{{work.mode}}</td>
+                  <td>{{work.course}}</td>
+                  <td>{{work.status}}</td>
+                  <td>{{work.cert}}</td>
+                  <td>{{work.cert_no}}</td>
+                      
+                      </tr>
+                    {% endfor %}
+                      {% else %}
+                      Intern has not submitted this data
+                      {% endif %}
+                      <tr>
+                    </tbody>
+                  </table>                     
+            </div>
+        </div>
+        </div>
+
+<div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#flagship">Mentorship Reports
+                    </a>
+                </h4>
+            </div>
+              <div id="flagship" class="panel-collapse collapse ">
+                <h4 style="color: green">Self awareness and personal branding</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ pdtp.mentorshipinternreport.awareness_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{ pdtp.mentorshipinternreport.awareness_impact }}
+        </div>
+      </div>
+       <h4 style="color: green">Life goals and career development</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{  pdtp.mentorshipinternreport.goal_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{ pdtp.mentorshipinternreport.goal_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Adaptability and Flexibility</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ pdtp.mentorshipinternreport.adaptability_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{  pdtp.mentorshipinternreport.adaptability_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Confidence and passion</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ pdtp.mentorshipinternreport.confidence_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{  pdtp.mentorshipinternreport.confidence_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Presentation and communication skills</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description(max 300 Characters)</label><br>
+          {{  pdtp.mentorshipinternreport.presentation_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact(max 300 Characters)</label><br>
+           {{  pdtp.mentorshipinternreport.presentation_impact }}
+        </div>
+      </div>
+                <div class="panel-body">
+                   
+                  <table class="table table-user-information">
+                    <tbody>
+                      {% for work in pdtp.mentorevaluation_set.all %}
+                      <tr>
+                        <td>Parametor:</td>
+                        <td>{{work.parameter}}</td>
+                        <td>Score:</td>
+                        <td>{{work.score}}</td>
+
+                      </tr>
+                      {% endfor %}
+                      
+
+
+                     
+                    </tbody>
+                  </table> 
+                   <h4>Mentor's Comment</h4> 
+                {{pdtp.mentorcomment.comment }}
+                              
+            </div>
+        </div>
+        </div>
+
+
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" class="accordion-toggle" data-parent="#accordion" href="#innovation">Innovations Reports
+                    </a>
+                </h4>
+            </div>
+              <div id="innovation" class="panel-collapse collapse ">
+                <div class="panel-body">
+                  <table class="table table-user-information">
+                    <tbody>
+                      
+                      <tr>
+                        <td>Initiative:</td>
+                        <td>{{pdtp.innovationevaluation.initiative}}</td>
+
+                        <td>Screening:</td>
+                        <td>{{pdtp.innovationevaluation.presentation}}</td>
+                        
+                        <td>First Evaluation:</td>
+                        <td>{{pdtp.innovationevaluation.evaluation}}</td>
+                        <td>Second Evaluation:</td>
+                        <td>{{pdtp.innovationevaluation.final}}</td>
+
+                         <td>Total score(20):</td>
+                        <td>{{pdtp.innovationevaluation.total}}</td>
+
+                      </tr>
+                     
+</tbody>
+</table>
+             
+            </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+    <!--  -->
+{% endblock %}
+{% block tables_js_script %}
+  
+  
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Update Event</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title">Update Event</h3>
+            {% endblock %}
+{% block content %}
+{{ form.media }}
+ 
+
+    <div class="container">
+    <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-9">
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+{% bootstrap_form form %}
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" >
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+    <!-- /.content -->{% endblock %}
+ {% block tables_js_script %}
+<script type="text/javascript">
+        tinyMCE.init({
+                mode: "textareas",
+                theme: "simple"
+        });
+</script>
+{% endblock %}

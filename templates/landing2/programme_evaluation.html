@@ -1,0 +1,88 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block content %}
+
+      <!-- ================ -->
+      <div class="banner dark-translucent-bg" style="background-image:url('/static/slide4a.jpg'); background-position: 50% 27%;">
+        <!-- breadcrumb start -->
+        <!-- ================ -->
+        
+        <!-- breadcrumb end -->
+        <div class="container">
+          <div class="row justify-content-lg-center">
+            <div class="col-lg-8 text-center pv-20">
+              <h3 class="title logo-font hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 40px"><span class="text-default"style="color: red" >Programme</span> Evaluation.</h3>
+              <div class="separator hc-element-invisible mt-10" data-animation-effect="fadeIn" data-effect-delay="100"></div>
+              <p class="text-center hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 20px"> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- banner end -->
+
+      <!-- main-container start -->
+      <!-- ================ -->
+      <section class="main-container padding-bottom-clear" style="margin-top: 40px;">
+
+        <div class="container">
+          <div class="row">
+
+            <!-- main start -->
+            <!-- ================ -->
+            <div class="main col-12">
+             
+              <div class="separator-2"></div>
+              <div class="row">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-8">
+                        {% if messages %}
+      <ul>
+  {% for message in messages %}
+    <div class="alert alert-success ">
+    <p>{{message}}</p>
+     </div>
+    
+  {% endfor %}
+      </ul>
+    {% endif %}
+   
+
+                <form action="." method="post">
+                  {% csrf_token %}
+                 
+                 
+                  <div class="row">
+                     <div class="col-md-12">
+            <h3>  Digitalent Programme Evaluation</h3>
+<p>The Presidential Digital Talent Programme (PDTP) is a collaboration between the public and private sectors that takes fresh and qualified ICT graduates through an internship programme designed to build their ICT capabilities, ready for the ICT market. We kindly request for your feedback, this will help improve the programme for future cohorts. Any feedback given will be handled with utmost anonymity and professional care. Thank you.</p>
+               
+                   {% bootstrap_form form %}
+                
+                
+                  <input  type="submit"  value="Send" class="button btn btn-success  btn-sm" style="float: right; text-align:right;color: white">
+                  </div>
+                </div>
+              </div>
+                </form>
+               
+  
+            </div>
+            <!-- main end -->
+
+          </div>
+
+
+        </div>
+
+        
+
+       
+        <!-- section end -->
+
+      </section>
+      <!-- main-container end -->
+
+    
+{% endblock %}

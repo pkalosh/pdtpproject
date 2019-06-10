@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block content %}
+   {% block top_section %}
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Management Portal</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                        
+                        <ol class="breadcrumb">
+                           {% include 'secretariat/links.html' %}
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                 {% endblock %}
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- Different data widgets -->
+                <!-- ============================================================== -->
+                 <!-- .row -->
+                 <div class="white-box">
+    <div class="row">
+
+ <div class="col-md-1 col-sm-1 col-xs-4">
+  <!--
+<a href="" class="button btn btn-primary btn-sm"  onclick="window.history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+-->
+
+</div>
+<div class="col-md-10">
+
+</div>
+   </div>
+ <div class="row">
+ <div class="col-md-2">
+   <a href="{% url 'public_sector' year %}" class="button btn btn-sm btn-primary"> Public Sector</a> 
+ </div>
+  <div class="col-md-2">
+   <a href="{% url 'private_sector' year %}" class="button btn btn-sm btn-primary"> Private Sector</a> 
+ </div>
+
+  <div class="col-md-3" style="margin-left: 6px;">
+ 
+    <a href="{% url 'interns_pending_confirmation' year %}" class="button btn btn-sm btn-primary">Pending Confirmation </a> 
+
+ </div>
+  <div class="col-md-2" style="margin-left: -35px;">
+   <a href="{% url 'secretariat_assign_supervisor' year %}" class="button btn btn-sm btn-primary">Assign Supervisors </a> 
+ </div>
+ <div class="col-md-2" style="margin-left: -35px;">
+ 
+    <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+</div>
+ <table id="example1" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Organization</th>
+                  <th>Private/Public</th>
+                  <th>PDTP Name</th>
+                  <th>PDTP Skills</th>
+                  <th>Email</th>
+                  <th>cell</th>
+                  <th>Date Attached</th>
+                  <th> Completion Date</th>
+                  
+                   <th>Reattach</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for deployment in deployments %}
+                
+                <tr>
+                  <td>{{deployment.organization}}</td>
+                  <td>{{deployment.sector}}</td>
+                  <td>{{deployment.pdtp.last_name}} {{deployment.pdtp.first_name}}</td>
+                  <td>{{deployment.pdtp.userprofile.area_of_specialization}}</td>
+                  <td>{{deployment.pdtp}}</td>
+                  <td>{{deployment.pdtp.userprofile.phone_number}}</td>
+                  <td>{{deployment.date_confirmed}}</td>
+                  <td>{{deployment.completion_date}}</td>
+                  <td><a href="{% url 'redeploy' year  deployment.pdtp.pk deployment.organization.id %}" class="button btn-primary btn btn-sm"> Re-attach</a></td>
+                  
+                  
+                  
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+
+
+
+
+  
+
+
+<script>
+$('.like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'deactivate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$('.activate').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+
+<script>
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [ 3] }
+        ]
+    } );
+} );
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+            {% block content %}
+            {% block top_section %}
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Management Portal</h4> </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12"> 
+                        
+                        <ol class="breadcrumb">
+                            {% include 'secretariat/links.html' %}
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                 {% endblock %}
+                <!-- /.row -->
+                <!-- ============================================================== -->
+                <!-- Different data widgets -->
+                <!-- ============================================================== -->
+                 <!-- .row -->
+                 <div class="white-box">
+               
+            
+ <div class="row">
+ <div class="col-md-1 col-sm-1 col-xs-4">
+   <a href="{% url 'add_pdtp' %}" class="button btn btn-sm btn-primary">Add PDTP</a> 
+ </div>
+ <div class="col-md-1 col-sm-1 col-xs-4">
+  <!--
+<a href="" class="button btn btn-primary btn-sm"  onclick="window.history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+-->
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+<div class="col-md-10">
+
+</div>
+   </div>                          
+<div class="scrollable">
+                                            <div class="table-responsive">
+                                                <table id="example1" class="table m-t-30 table-hover contact-list" data-page-size="10">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Name</th>
+                  <th>PDTP ID</th>
+               
+                  <th>Gender</th>
+                  <th>ID/Passport No.</th>
+                  <th>Email</th>
+                  <th>Phone No.</th>
+                  <th>Postal Address</th>
+                  <th>Nationality</th>
+                   <th>DOB</th>
+
+                  <th>County of Birth</th>
+                  <th>PDTP Skills</th>
+                  <th>Marital Status</th>
+                  <th>Is Active</th>
+                  <th>Debriefed?</th>
+                  <th style="text-align:  right;">Profile</th>
+                  <th style="text-align;"> Performance</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+              {% for p in pdtps %}
+                
+                <tr>
+                  
+                  <td>
+                  
+            {% if p.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ p.picture.url }}" height=40px width="40px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=40px width="40px" class="img-rounded zoom"> 
+            {% endif %} 
+
+                  {{p.user.first_name}} {{p.user.last_name}}</td>
+<td>{{p.ref_no}}</td>
+                  <td>{{p.gender}}</td>
+                  <td>{{p.id_no}}</td>
+                  <td>{{p.user.email}}</td>
+                  <td>{{p.phone_number}}</td>
+                  <td>{{p.postal.address}}</td>
+                  <td>{{p.nationality}}</td>
+                  <td>{{p.date_of_birth}}</td>
+                  <td>{{p.county_of_birth}}</td>
+                  <td> {{p.area_of_specialization}}</td>
+                  <td>{{p.marital_status}}</td>
+                  <td>
+
+
+                  
+                  {% if p.user.pdtpexitrequest.approved_by_secretariat %}
+                  No
+                  {% else %}
+                  Yes
+                  {% endif %}</td>
+                  
+                  {% if p.user.pdtpexitrequest %}
+                  <td>{% if p.user.pdtpexitrequest.debriefed_by_secretariat %}
+                  <a href="{% url 'debrief_results' p.year p.user.id  %}?from={{ request.path|urlencode }}">Debriefed/View Session</a>
+                  {% else %}
+                  <a href="">Debrief</a>
+                  </td>
+
+                  {% endif %}
+                  {% else %}
+                  <td>Active</td>
+                  {% endif %}
+                  <td><a data-toggle="modal" href="{% url 'pdtp_profile' year p.user.id %}"><span class="btn btn-sm btn-primary" style="float: right;"><i class="ti-user"></i></span></a></td>
+
+                  <td><a data-toggle="modal" href="{% url 'pdtp_performance' year p.user.id %}"><span class="btn btn-sm btn-primary" style="float: right;"><i class="ti-info"></i></span></a></td>
+                  
+                </tr> 
+               
+                {% endfor %}
+                                                    </tbody>
+                                                    
+                                                </table>
+                                            </div>
+                             </div>
+                             </div>
+                         </div>           
+                    </div>
+                {% endblock %}
+        
+            
+         {% block tables_js_script %}
+         <script>
+
+$(document).ready(function() {
+    $('#example1').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [  25, 50,100,150, -1 ],
+            [  '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+            'pageLength',
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [3, 4,5,6,7,8,9,11,12,13] }
+        ]
+    } );
+} );
+</script>
+
+{% endblock %}

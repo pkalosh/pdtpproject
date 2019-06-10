@@ -1,0 +1,76 @@
+{% extends 'base2.html' %}
+{% load staticfiles %}
+{% block content %}
+   <div class="alert alert-info">
+                        <strong>Note:</strong> This Portal is still under Construction. Contact the ICT Authority to request for PDTP Graduate Experts .
+                      </div>
+
+
+
+   <div class="row">
+                    <div class="col-md-4 col-xs-12">
+                        <div class="white-box">
+                            <div class="user-bg"> 
+                                <div class="overlay-box" style="background-color: white">
+                                    <div class="user-content">
+                                        <a href="javascript:void(0)">{% if expert.picture %}
+                                                    <img src="{{ MEDIA_URL }}{{expert.picture.url}}" class="thumb-lg img-circle" style="height: 100px; width: 100px;"/>
+                                                    {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" class="thumb-lg img-circle" style="height: 100px; width: 100px;" > 
+            {% endif %}</a>
+                                        <h4 class="text-white">{{expert.last_name}} {{expert.first_name}}</h4>
+                                        <h5 class="text-white">{{expert.area_of_specialization}}</h5> </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-8 col-xs-12">
+                        <div class="white-box">
+                            <ul class="nav nav-tabs tabs customtab">
+                                <li class="active tab">
+                                    <a href="#home" data-toggle="tab"> <span class="visible-xs"><i class="fa fa-home"></i></span> <span class="hidden-xs">Profile</span> </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#profile" data-toggle="tab"> <span class="visible-xs"><i class="fa fa-user"></i></span> <span class="hidden-xs">Education</span> </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#messages" data-toggle="tab" aria-expanded="true"> <span class="visible-xs"><i class="fa fa-envelope-o"></i></span> <span class="hidden-xs">Projects</span> </a>
+                                </li>
+                                <li class="tab">
+                                    <a href="#settings" data-toggle="tab" aria-expanded="false"> <span class="visible-xs"><i class="fa fa-cog"></i></span> <span class="hidden-xs">CV</span> </a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="home">
+                                    <div class="steamline">
+                                        
+                                       
+                                        <div class="sl-item">
+                                           
+                                            {{expert.bio|safe}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="profile">
+                                   <h3>Under development</h3>
+                                    <hr>
+                                   
+                                    
+                                </div>
+                                <div class="tab-pane" id="messages">
+                                    <div class="steamline">
+                                        
+                                        <h3>Under development</h3> 
+                                       
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="settings">
+                                    <h3>Under development</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+{% endblock %}

@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block top_title %}
+{{year }} PDTPS LIST
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTPS</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-2">
+              <h3 class="box-title button btn btn-red">{{year}} PDTP COHORTS
+</h3>
+</div>
+<div class="col-md-10">
+{% include 'secretariat/links.html' %}
+              </div>
+              </div>
+            {% endblock %}
+
+
+
+
+{% block content %}
+ <div class="row">
+ <div class="col-md-1">
+   <a href="{% url 'add_pdtp' %}" class="button btn btn-sm btn-primary">Add PDTP</a> 
+ </div>
+ <div class="col-md-1">
+  <!--
+<a href="" class="button btn btn-primary btn-sm"  onclick="window.history.back()"><span class="glyphicon glyphicon-chevron-left"></span> Back
+        </a>
+-->
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+
+</div>
+    <div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                   <th>Name</th>
+                  <th>PDTP ID</th>
+               
+                  <th>Gender</th>
+                  <th>ID/Passport No.</th>
+
+                  <th>Email</th>
+                  <th>Phone No.</th>
+                  <th>Postal Address</th>
+                  <th>Nationality</th>
+                   <th>DOB</th>
+
+                  <th>County of Birth</th>
+                  <th>PDTP Skills</th>
+                   <th>Course.</th>
+                  <th>Marital Status</th>
+                  <th>Is Active</th>
+                  <th>Debriefed?</th>
+                  <th>Profile</th>
+
+                  <th>Performance</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in pdtps %}
+                
+                <tr>
+                  
+                  <td>
+                  
+            {% if p.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ p.picture.url }}" height=40px width="40px" class="img-rounded zoom"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=40px width="40px" class="img-rounded zoom"> 
+            {% endif %} 
+
+                  {{p.user.first_name}} {{p.user.last_name}}</td>
+<td>{{p.ref_no}}</td>
+                  <td>{{p.gender}}</td>
+                  <td>{{p.id_no}}</td>
+                  <td>{{p.user.email}}</td>
+                  <td>{{p.phone_number}}</td>
+                  <td>{{p.postal.address}}</td>
+                  <td>{{p.nationality}}</td>
+                  <td>{{p.date_of_birth}}</td>
+                  <td>{{p.county_of_birth}}</td>
+                  <td> {{p.speciality}}</td>
+                  <td> {% if p.user.academicdetail_set.all %} {% for acad in  p.user.academicdetail_set.all %}{{acad.course_name}} {% endfor %}
+                  {% else %} Not Updated {% endif %}</td>
+                  <td>{{p.marital_status}}</td>
+                  <td>
+
+
+                  
+                  {% if p.active == True %}
+                  Active
+                  {% else %}
+                  Exited
+                  {% endif %}</td>
+                  
+                  {% if p.user.pdtpexitrequest %}
+                  <td>{% if p.user.pdtpexitrequest.debriefed_by_secretariat %}
+                  <a href="{% url 'debrief_results' p.year p.user.id  %}?from={{ request.path|urlencode }}">Debriefed/View Session</a>
+                  {% else %}
+                  <a href="">Debrief</a>
+                  </td>
+
+                  {% endif %}
+                  {% else %}
+                  <td>Active</td>
+                  {% endif %}
+                  <td><a data-toggle="modal" href="{% url 'pdtp_profile' year p.user.id %}"><span class="btn btn-sm btn-success">Full Profile</span></a></td>
+
+                  <td><a data-toggle="modal" href="{% url 'pdtp_performance' year p.user.id %}"><span class="btn btn-sm btn-success">Performance</span></a></td>
+                  
+                </tr>
+               
+                {% endfor %}
+               </tbody>
+  </table>
+ 
+ </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  
+
+
+<script>
+$('.like').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'deactivate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$('.activate').click(function(){
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [  25, 50,100,150, -1 ],
+            [  '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+            'pageLength',
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [3, 4,6,7,8,9,11,12,13,14] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

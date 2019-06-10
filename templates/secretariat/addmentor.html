@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+       <li><a href="{% url 'mentors' %}">Mentors</a></li>
+        <li><a href="#">Add  Mentor</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+{% block content %}
+   
+<form  method="POST" action="." class="form">
+ {% csrf_token %}
+ <div class="container">
+ <div class="row">
+<h3>Mentor's Person Details</h3>
+<div class="col-md-3">
+{% bootstrap_field uform.last_name %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field uform.first_name %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.position %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.title %}
+</div>
+<div class="col-md-2">
+{% bootstrap_field sform.honors  %}
+</div>
+</div>
+<div class="row">
+<div class="col-md-3">
+{% bootstrap_field uform.email  %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field cform.alternate_email  %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field cform.phone_number  %}
+</div>
+<div class="col-md-3">
+{% bootstrap_field cform.alternate_cell  %}
+</div>
+</div>
+
+
+
+
+ 
+ <div class="row">
+ <h3>Mentor's Organization Details</h3>
+ <h3>Organization Details</h3>
+ <div class="col-md-4">
+{% bootstrap_field form.category %}
+</div>
+<div class="col-md-4">
+{% bootstrap_field form.organization %}
+</div>
+<div class="col-md-4">
+{% bootstrap_field form.location %}
+</div>
+
+</div>
+ <div class="row">
+ 
+<div class="col-md-4">
+{% bootstrap_field form.county %}
+</div>
+<div class="col-md-4">
+{% bootstrap_field form.town %}
+</div>
+
+</div>
+
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Add
+    </button>
+  {% endbuttons %}
+</form>
+    <!-- /.content -->{% endblock %}

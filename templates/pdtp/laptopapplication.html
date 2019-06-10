@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3%}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+
+    {% endblock %}
+    {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title  btn-red">LAPTOP APPLICATION
+</h3>
+</div>
+
+              </div>
+            {% endblock %}
+
+{% block content %}
+ <div class="row">
+ 
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-sm btn-success" type="button" value="Back" />
+</div>
+
+</div>
+
+
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+  <h4 style="color: red;"><strong>PRESIDENTIAL DIGITALENT LAPTOP APPLICATION FORM</strong></h4>
+{% if laptop %}
+<hr style="background-color: red; height: 1px; border: 0; ">
+<form  method="POST" action="" class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+ <br>
+
+
+ 
+
+            <label>Laptop Name:</label>
+            <input type="text" class="form-control" name="name" value="{{ laptop.laptop_name|safe}}" readonly>
+
+           </textarea > 
+           <label>RAM size* </label>
+            <input type="text" class="form-control" name="RAM" value="{{ laptop.RAM|safe}}" readonly>
+           <label>Hard Disk Size. * </label>
+           <input type="text" class="form-control" name="HDD" value="{{ laptop.HDD|safe}}" readonly>
+
+           <label>Processor Speed* </label>
+           <input type="text" class="form-control" name="speed" value="{{ laptop.Processor_Speed|safe}}" readonly><br>
+           
+           <label>Processor</label>
+           <input type="text" class="form-control" name="cores" value="{{ laptop.Cores|safe}}" readonly><br>
+                     
+           <label>Price</label>
+           <input type="text" class="form-control" name="price" value="{{ laptop.price|safe}}" readonly><br>
+           <label>Screen Resolution</label>
+           <input type="text" class="form-control" name="resolutions" value="{{ laptop.screen_resolution|safe}}" readonly><br>
+           <label>Other Features</label>
+           <textarea class="form-control" name="others" value="{{ laptop.other_features|safe}}" readonly>{{ laptop.other_features|safe}}</textarea>  <br>
+
+           <label>Cohort Year</label>
+           <select class="form-control"  name='yeah'>
+           <option>Select your Cohort Year</option>
+           {% for y in year %}          
+           <option>{{ y.year }}</option>
+           {% endfor %}
+          
+           </select>  <br>
+          
+           
+           {% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" style="float: center;">
+     submit application form
+      </button>
+  {% endbuttons %}
+           </div>
+           
+           
+           
+
+
+             
+
+
+</form>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+{% endif %}
+{% endblock %}
+

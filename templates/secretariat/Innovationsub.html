@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        INNOVATIONS SUBMITTED
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Innovations
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+
+{% block content %}
+
+<br>
+{% if innovations %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Innovation</th>
+               
+                  <th>Industry</th>
+                  <th>Innovators & Roles</th>
+                  <th>Need</th>
+                  <th>Option</th>
+                  <th>Market Potential</th>
+                
+                  <th>Business Model</th>
+                  <th>Feasibility</th>
+                  <th>Relevance</th>
+                  <th>How it Works</th>
+                  <th>Relevant Info</th>
+                  <th>Bibliography</th>
+                  <th>Appendices</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for innovation in innovations %}
+                
+                <tr>
+                  <td>{{innovation.pdtp.last_name|safe}} {{innovation.pdtp.first_name|safe}}</td>
+                  <td>{{innovation.innovation_name|safe}}</td>
+                  <td>{{innovation.industry|safe}}</td>
+                  <td>{{innovation.innovators_roles|safe}}</td>
+                  <td>{{innovation.need|safe}}</td>
+                  <td>{{innovation.option|safe}}</td>
+                  <td>{{innovation.market_potential|safe}}</td>
+                  <td>{{innovation.business_model|safe}}</td>
+                  <td>{{innovation.feasiblity|safe}}</td>
+                  <td>{{innovation.relevance|safe}}</td>
+                  <td>{{innovation.how_it_works|safe }}</td>
+                  <td>{{innovation.relevant_information|safe}}</td>
+                  <td>{{innovation.bibliography|safe}}</td>
+                  <td>{{innovation.appendices|safe}}</td> 
+                 
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<h3>No intern has submitted Innovation </h3>
+{% endif %}
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [1,6] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

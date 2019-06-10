@@ -1,0 +1,265 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+{% block content %}
+<style type="text/css">
+  .card {position: relative; border-radius: 3px; background-color: #fff;color: #4f5256;border: 1px solid #f2f2f2;margin-bottom: 16px;background:#fff;}
+.card-header{ padding: 16px;margin:0px;}
+.card-body {position: relative; padding: 16px;}
+
+.gaadiex-list {list-style-type: none; margin: 0;padding: 0;}
+.gaadiex-list>.gaadiex-list-item {padding: 0 22px;}
+.gaadiex-list-item-img  {
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+.gaadiex-list-item i  {
+    float: left;
+    font-size:48px;
+    width: 100px;
+    height: 100px;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+.border-b-1 {border-bottom: 1px solid rgba(162,162,162,.16);}
+</style>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 ">
+      <div class="white-box">
+          <div class="row">
+
+       <form id="searchform" action="{% url 'experts' %}" method="get" accept-charset="utf-8">
+
+
+    
+          <div class="row">
+            <div class="col-md-3 col-sm-12 col-xs-12">
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+
+          
+
+            <select class="form-control" onchange="this.form.submit()" id="searchbox" name="q"  required>
+
+              <option selected disabled   value="">Filter by skill type</option>
+               {% for t in types %}
+                 <option value="{{t.skill_type}}">{{t.skill_type}}</option>
+                  {% endfor %}
+            </select>
+            </div>
+
+        <div class="col-md-1 col-sm-12 col-xs-12">
+          <input type="submit"  class="btn btn-primary" value="Search">
+        </div>
+      </div>
+      </form>
+  
+    </div>   
+    </div>
+   </div>
+ </div>
+ <div class="white-box">
+    
+    <div class="card-header">
+    {% if skill %}
+    <h4>{{skill.skill_type}}</h4>
+    {% else %}
+      <h4>Featured Experts</h4>
+      {% endif %}
+    </div>
+</div>
+
+
+ <div class="white-box">
+    
+<div class="row">
+    <div class="card">
+      <div class="row">
+         {% for expert in experts %}
+         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+
+          <div class="gaadiex-list" style="min-height: 80px; max-height: 80px">
+            <div class="gaadiex-list-item">
+              
+              <div class="gaadiex-list-item-text">
+                <h5><a href="#">{{expert.user.first_name|title}} {{expert.user.last_name|title}}</a></h5>
+                <h6>{{expert.title}}</h6>
+               <!--  {{expert.bio|safe|truncatechars:50}} -->
+                 <p>
+                 <a class="p-2 fa-sm fb-ic" href="#" data-toggle="modal" data-target="#expert{{expert.id}}">
+                 
+          <span style="color: green;"> PROFILE</span>
+        </a>
+        <a class="p-2 fa-lg fb-ic" >
+          |
+        </a>
+       
+        <a class="p-2 fa-sm tw-ic" href="#contact{{expert.id}}" data-toggle="modal" >
+          <span  style="color: green; "> CONTACT</span>
+        </a>
+      </p>
+              </div>
+            </div>
+                
+        </div>
+
+    </div>
+
+        <div class="modal fade" id="expert{{expert.id}}" role="dialog">
+          <div class="modal-dialog">
+          
+                       <div class="modal-content">
+              <div class="modal-header" style="background-color: green; color: white;font-weight: bold;">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title" style="color: white">{{expert.user.first_name|upper}} {{expert.user.last_name|upper}}'S PROFILE</h4>
+              </div>
+              <div class="modal-body">
+                <h5 class="modal-title" style="color: green;font-weight: bold;">Bio</h5>
+            {{expert.bio|safe}}
+            {% if expert.user.academicdetail_set.all %}
+            <div class="table-responsive">
+          <table class="table">
+            <h5 class="modal-title" style="color: green;font-weight: bold;">Education</h5>
+            <thead>
+                <th  style="background-color: #ccffcc; color: green">Qualitfication</th>
+                  <th  style="background-color: #ccffcc; color: green">Course</th>
+            </thead>
+              <tbody>
+                
+                {% for ed in  expert.user.academicdetail_set.all %}
+                  <tr><td>{{ed.academic_level}}</td> <td>{{ed.course_name}}</td>
+                 </tr>
+                  {% endfor %}
+                 
+                 
+              </tbody>
+          </table>
+        </div>
+          {% endif %}
+          {% if expert.user.skill_set.all %}
+               <h5 class="modal-title" style="color: green;font-weight: bold;">Skills</h5>
+          <div class="table-responsive">
+          <table class="table">
+            <thead style="background-color: #b3e6cc; color: white">
+                <th  style="background-color: #ccffcc; color: green">Type</th>
+                 <th  style="background-color: #ccffcc; color: green">Level</th>
+                  <th  style="background-color: #ccffcc; color: green">Skill</th>
+                  
+            </thead>
+              <tbody>
+              
+                {% for ed in  expert.user.skill_set.all %}
+                  <tr><td>{{ed.skill_type}}</td> <td>{{ed.skill_level}}</td>
+                  <td>{{ed.skill}}</td>
+             </tr>
+                  {% endfor %}
+                
+              </tbody>
+          </table>
+        </div>
+           {% endif %}
+           {% if expert.user.project_set.all %}
+           <div class="table-responsive">
+             <table class="table">
+            
+         <h5 class="modal-title" style="color: green;font-weight: bold;">Projects Done</h5>
+            <thead>
+                <th  style="background-color: #ccffcc; color: green">Year</th>
+                 <th  style="background-color: #ccffcc; color: green">Project</th>
+                  <th  style="background-color: #ccffcc; color: green">Description</th>
+                  
+            </thead>
+              <tbody>
+               
+                {% for ed in  expert.user.project_set.all %}
+                  <tr><td>{{ed.year}}</td> <td>{{ed.project_name}}</td>
+                  <td>{{ed.project_description}}</td>
+             </tr>
+                  {% endfor %}
+                
+              </tbody>
+          </table>
+        </div>
+           {% endif %}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+          </div>
+         </div>
+
+
+         
+        
+
+         <div class="modal fade" id="contact{{expert.id}}" role="dialog">
+          <div class="modal-dialog">
+          
+
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                 <h5 class="modal-title" style="color: green !important;"> SEND AN EMAIL TO {{expert.user.first_name|upper}} {{expert.user.last_name|upper}}</h5>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="{% url 'send_message' expert.user.id %}">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label for="staticEmail" class="col-form-label">Your Email Address</label>
+                      <input type="email" name="email" class="form-control" required id="staticEmail" placeholder="email@example.com">
+                  
+                  </div>
+                  <div class="form-group">
+                    <label for="staticEmail">Message</label>
+                   
+                      <textarea name="message" class="form-control"></textarea>
+                    
+                  </div>
+               
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary" >Send</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+            </div>
+            
+          </div>
+      
+         {% endfor %}
+      </div>
+      </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-6">
+    <ul class="pagination pagination-md">
+ 
+        {% if experts.has_previous %}
+           <li> <a href="?page={{ nes.previous_page_number }}"  >Previous</a></li>
+
+        {% endif %}
+{% for num in experts.paginator.page_range %}
+  {% ifequal num experts.number %}
+    <li><span class="current" style="background-color:#03a9f4; color: white;"><b>{{ num }}</b></span></li>
+  {% else %}
+   <li> <a href="?page={{ num }}"> {{ num }}</a></li>
+  {% endifequal %} 
+{% endfor %}
+{% if experts.has_next %}
+           <li> <a href="?page={{ experts.next_page_number }}">Next </a></li>
+        {% endif %}
+        </ul>
+  </div>
+
+</div>
+{% endblock %}

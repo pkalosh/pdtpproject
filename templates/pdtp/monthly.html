@@ -1,0 +1,66 @@
+
+{% load staticfiles %}
+<style type="text/css">
+ #line{
+  color:#99CC99;
+
+  } 
+</style>
+<form action="" method="POST" style="padding-left: 20px;">
+<span class="logo-mini"><img src="{% static 'images/logo2.png' %}" height="55" width="150" alt="PDT App"></span>
+<h3 style="text-align: center; color: red">PRESIDENTIAL DIGITALENT
+ <h2 style="text-align: center;color: green">Monthly
+Report</h2>
+ {% for report in report %}
+ <div class="container form-control ">
+   <div class="row">
+   <div class="col-md-3">
+     
+   </div>
+   <div class="col-md-6">
+   <div class="form-group">
+    <label style="font-weight: bold">Name:</label>
+    <strong>{{ report.pdtp.first_name }} {{ report.pdtp.last_name }}</strong></span>
+  </div>
+<hr id="line" />
+  <div class="form-group">
+    <label style="font-weight: bold ; color: green">Project Name:</label><br>
+    <span>{{report.project_name}}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Project Name:</label><br>
+    <span>{{report.project_name}}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Task:</label><br>
+    <span>{{report.task}}</span>
+  </div><br>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Resources:</label><br>
+    <span>{{report.resources }}</span>
+  </div><br>
+  <div class="form-group">
+    <label style="font-weight: bold; color: green">Project Impact :</label><br>
+    <span>{{report.expected_impact }}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">Start Date:</label><br>
+    <span>{{report.start_date }}</span>
+  </div><br>
+   <div class="form-group">
+    <label style="font-weight: bold; color: green">End Date  :</label><br>
+    <span>{{report.end_date }}</span>
+  </div>
+     
+   </div>
+   <div class="col-md-3">
+     
+   </div>
+     
+   </div>
+ </div>
+
+  
+  {% endfor %}
+ 
+</form>

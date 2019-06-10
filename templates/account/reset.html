@@ -1,0 +1,38 @@
+{% extends "unique/b.html" %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+{% load i18n %}
+{% block body_block %}
+<div class="container">
+<div class="row">
+<div class="col-sm-6 col-sm-offset-3">
+ {% block messsages %}    
+    
+    {% if messages %}
+    
+      <ul>
+	{% for message in messages %}
+	
+    <div class="alert alert-success ">
+    <p>{{message}}</p>
+     </div>
+    
+	{% endfor %}
+      </ul>
+    {% endif %}
+    
+  {% endblock %}{# end messages block section #}
+<form method="post" role="form" method="post" action="{% url 'resetpassword' %}" >
+    {% csrf_token %}
+{% bootstrap_form form %}
+<input type="submit" class="col-xs-12 btn btn-primary btn-load btn-lg" data-loading-text="Verifying Email..." value="Submit Email">
+</form>
+</div><!--/col-sm-6-->
+</div><!--/row-->
+</div>
+{% endblock %}

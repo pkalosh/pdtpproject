@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        Open Quarter Reports
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Quarters Open
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-8">
+              <h3 class="box-title  btn-red">Submit Reports for the following Quarters/Phases
+</h3>
+</div>
+
+              </div>
+            {% endblock %}
+
+{% block content %}
+ <div class="row">
+ 
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-sm btn-success" type="button" value="Back" />
+</div>
+
+</div>
+{% if quarters %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Qaurter /Phase</th>
+                  <th>Status </th>
+                  <th>year </th>
+
+                  
+                  
+                  <th>Submit Report</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for cours in quarters %}
+                
+                <tr>
+                  <td>{{cours.quater}}</td>
+                  <td>{{cours.status}}</td>
+                  <td>{{cours.year}}</td>
+                  
+                 
+                 
+                 <td><a href="{% url 'quarterly_reports' cours.id %}" class="btn btn-sm btn-success" >Submit Report</a></td>  
+                  
+                  
+                  
+                 
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<h3 style="text-decoration-color: blue">Contact DigiTalent secretariat for updates on active Trainings/Certifications </h3>
+{% endif %}
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

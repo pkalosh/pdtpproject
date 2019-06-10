@@ -1,0 +1,14 @@
+
+<p>Dear {{rec}}</p>
+<p><strong>{{subject}}</strong></p>
+<p>
+{{message}}
+</p><p>
+your Supervisor has evaluated you in the portal.
+Kindly login to see your results.
+<p>
+Best Regards,<br>
+{{first_name}} {{last_name}}<br>
+</p>
+
+

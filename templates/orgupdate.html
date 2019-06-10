@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block top_section %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Update</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+              <h3 class="box-title btn-red">Update {{organization}}'s Details</h3> <br>
+              <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+            {% endblock %}
+{% block content %}
+   
+<form  method="POST" action="." class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+<div class="row">
+ <h3>Organization Details</h3>
+ <div class="col-md-4">
+{% bootstrap_field form.category %}
+</div>
+<div class="col-md-4">
+{% bootstrap_field form.organization %}
+</div>
+<div class="col-md-4">
+{% bootstrap_field form.location %}
+</div>
+
+</div>
+ <div class="row">
+ <div class="col-md-4">
+{% bootstrap_field form.logo %}
+</div>
+<div class="col-md-4">
+{% bootstrap_field form.county %}
+</div>
+<div class="col-md-4">
+{% bootstrap_field form.town %}
+</div>
+
+</div>
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" >
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+    <!-- /.content -->{% endblock %}

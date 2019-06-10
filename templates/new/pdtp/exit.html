@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+     
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Exit Request</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+{% block content %}
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+Thank you for taking part in the PDTP Internship program. 
+Please answer the questions as honestly as possible. 
+We thank you for your thoughtful input and welcome any comments you might have.
+The information you provide us will assist with future decisions.
+All of the information that you provide will be confidential
+<h4>NOTE:</h4>
+<ul>
+<li>Your request will be sent to both your supervisor and the secretariat for their approval</li>
+<li>You are supposed to give a one month notice</li>
+</ul>
+
+<p><b>The following questions pertain to your internship experience. 
+Please Check Yes or No</b></p>
+<form  method="POST" action="{% if from %}?next={{ from }}{% endif %}" class="form">
+ {% csrf_token %}
+ <label>Why are you leaving? If job opportunity ,which one:?</label><br>
+    <input type="text" name="reason" class="form-control" required />
+ <p>1) Did your internship turn out to be as you expected?</p>
+    <label class="radio-inline">
+      <input type="radio" name="turn_out" value="Yes">Yes
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="turn_out" value="No">No
+    </label>
+  <p>2) Did you receive enough training to do DLP assignment effectively?</p>
+ 
+    <label class="radio-inline">
+      <input type="radio" name="training" value="Yes">Yes
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="training" value="No">No
+    </label>
+   <p>3) Did you receive sufficient feedback on your performance?	</p>
+    <label class="radio-inline">
+      <input type="radio" name="feedback" value="Yes">Yes
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="feedback" value="No">No
+    </label>
+   <p>4) Would you consider working again for ICT Authority in the future?	</p>
+    <label class="radio-inline">
+      <input type="radio" name="work" value="Yes">Yes
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="work" value="No">No
+    </label>
+   <p> 5) Would you recommend this this program to a friend or collegue?	</p>
+    <label class="radio-inline">
+      <input type="radio" name="recommend" value="Yes">Yes
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="recommend" value="No">No
+    </label>
+<p><b>On a scale of 1-5 please rate your experience in the internship program with 
+5 meaning that you strongly agree and 1 meaning that you strongly disagree. 
+Please check  the number to indicate your response.</b></p>
+<p>1)This internship has helped me to develop skills to solve problems.</p>
+<label class="radio-inline">
+      <input type="radio" name="skills" value="1">1
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="skills" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="skills" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="skills" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="skills" value="5">5
+    </label>
+    <p>2)This internship has helped me to develop interviewing skills..</p>
+<label class="radio-inline">
+      <input type="radio" name="interview_skills" value="1">1
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="interview_skills" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="interview_skills" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="interview_skills" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="interview_skills" value="5">5
+    </label>
+    <p>3)Has the DLP program helped you to improve communication skills..</p>
+<label class="radio-inline">
+      <input type="radio" name="dlp_skills" value="1">1
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="dlp_skills" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="dlp_skills" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="dlp_skills" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="dlp_skills" value="5">5
+    </label>
+    <p>4)This internship has helped me to develop professional competence</p>
+<label class="radio-inline">
+      <input type="radio" name="professional" value="1">1
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="professional" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="professional" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="professional" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="professional" value="5">5
+    </label>
+    <p>5)I anticipate career advancement as a result of completing this</p>
+<label class="radio-inline">
+      <input type="radio" name="anticipate" value="1">1
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="anticipate" value="2">2
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="anticipate" value="3">3
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="anticipate" value="4">4
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="anticipate" value="5">5
+    </label>
+    <p><b>Short answer:</b></p>
+    <label>What was most satisfying about the DLP and/or internship experience? </label><br>
+    <input type="text" name="satisfying" class="form-control" required/>
+
+    <label>What was least satisfying about the DLP and/or internship experience?</label><br>
+    <input type="text" name="unsatisfying" class="form-control" required/>
+    <label>What suggestions do you have to help improve the overall program and experience?</label><br>
+    <input type="text" name="suggestion" class="form-control" required />
+    
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" style="float: right;">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Submit
+      </button>
+  {% endbuttons %}
+
+</form>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+{% endblock %}

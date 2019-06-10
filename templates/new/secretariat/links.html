@@ -1,0 +1,22 @@
+<h3 class="box-title" style="float: right;">
+ 
+{% for group in user.groups.all %}
+ {% if group.name == 'FINANCE OFFICERS' %}
+ 
+<a href="{% url 'bank_details' year %}" class="button btn btn-sm btn-success">Bank Details</a>  | <a href="" class="button btn btn-sm btn-success">Payments</a> |
+{% endif %}
+               {% if group.name == 'MENTORSHIP OFFICERS' %}  <a href="{% url 'mentorship_assignment' year %}" class="button btn btn-sm btn-success">Mentors Assignments</a>  {% endif %} {% if group.name == 'DEPLOYMENT OFFICERS' %} <a href="{% url 'deployments' year %}" class="button btn btn-sm btn-success">PDTP Attachments</a> {% endif%} 
+
+              {% if group.name == 'TRAININGS OFFICER' %}
+ <a href="{% url 'trainings' year %}" class="button btn btn-sm btn-success">Trainings</a> 
+ {% endif %}
+ {% if group.name == 'INNOVATIONS OFFICER' %}
+ <a href="{% url 'innovations' year %}" class="button btn btn-sm btn-success">Innovations</a> 
+ {% endif %}
+{% endfor %}
+
+{% if user.userprofile.user_category == "ADMINISTRATION" %}
+ <a href="{% url 'pdtps_performance' year %}" onClick="alert('Event viewer not responding. Clear your browser's history and try again')" class="button btn btn-sm btn-success">PDTPs Performance</a> </h3>
+{% endif %}
+
+

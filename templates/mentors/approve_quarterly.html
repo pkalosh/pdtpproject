@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Quarterly Reports</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+               <div class="col-md-2">
+ 
+    <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+     <div class="col-md-3">
+             <h3 class="box-title button btn btn-red">Approve Interns' Quarterly Report</h3>
+</div>
+<div class="col-md-4">
+
+              </div>
+              </div>
+            {% endblock %}
+
+           {% block content %}
+           
+           
+           <div class="table-responsive">
+           <table class="table">
+           	<thead>
+           	<tr>
+           		<th>Intern</th>
+           		<th>Date Submitted</th>
+           		<th>Approve</th>
+              <th></th>
+           		</tr>
+           	</thead>
+           	<tbody>
+           	{% for quarter in report %}
+           		<tr>
+           			<td>{{quarter.pdtp.last_name}} {{quarter.pdtp.first_name}}</td>
+                 <td>{% if quarter.date_approved %}
+                {{ quarter.date_approved }} {% else%}Not yet approved{% endif %}</td>
+           			{% if quarter.comments %}
+                <td><a href="#" class="button btn btn-sm btn-primary"> Approved</a></td>
+                {% else %}
+
+           			<td><a href="{% url 'approve_reports_quarterly' quarter.id %}" class="button btn btn-sm btn-primary"> Approve</a></td>
+                {% endif %}
+               
+           		</tr>
+
+           
+</div>
+           		{% endfor %}
+           	</tbody>
+           </table>
+           </div>
+         
+           {% endblock %}

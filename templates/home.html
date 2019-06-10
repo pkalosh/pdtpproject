@@ -1,0 +1,297 @@
+{% extends 'base2.html' %}
+{% load staticfiles %}
+{% block content %}
+<!--
+   <div class="alert alert-info">
+                        <strong>Note:</strong> This Portal is still under Construction. Contact the ICT Authority to request for PDTP Graduate Experts .
+                      </div>
+                  -->
+                <div class="row " style="padding-top:10px;">
+                    <div class="col-sm-12 hidden-xs hidden-sm">
+                        <div class="white-box">
+                             <div class="row row-in">
+                                 {% for skill in skills %}
+                                  <div class="col-lg-3 col-sm-6 row-in-br">
+                                    <ul class="col-in">
+{% if skill.speciality %}
+                                            <a href="{% url 'expert_by_skills' skill.id skill.slug %}">
+{% endif %}
+                                            <li>
+                                                <span class="circle circle-md bg-success"><i class=" ti-world"></i></span>
+                                            </li>
+                                            
+                                            <li class="col-middle">
+                                                <h4>{{skill.speciality}}</h4>
+                                                <div class="progress">
+                                                  
+                                                </div>
+                                            </li>
+                                          </a>  
+                                    </ul>
+                                  </div>
+                                  {% endfor %}
+                                  
+                                </div>   
+                        </div>
+                    </div>
+<form action="{% url 'index' %}" method="post" class="hidden-md hidden-lg">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-8">
+ <div class="form-group">
+  <label for="sel1">Specialization:</label>
+  <select class="form-control" id="sel1" name="options">
+    <option selected disabled>Select area of specialization</option>
+    {% for option in skills %}
+    <option value="{{option.id}}" >{{option}}</option>
+    {% endfor %}
+  </select>
+</div>
+</div>
+<div class="col-md-4 col-sm-4 col-xs-4" style="padding-top: 25px";>
+    <input type="submit" class="button btn btn-info btn-primary" >
+</div>
+</div>
+</form>
+                </div>
+                   
+                            <div class="white-box">
+                                {% if speciality %}
+                                <h4>{{speciality}} Experts</h4>
+                                {% else %}
+                            <h4>Featured Experts</h4>
+                            {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="team-section text-center my-5">
+
+  
+  <!-- Grid row -->
+  <div class="row infinite-container">
+    
+    <!-- Grid column -->
+    {% for expert in experts %}
+    <div class="col-lg-3 col-md-3 mb-lg-0 mb-5 infinite-item">
+      <div class="well">
+      <div class="media-body">
+      <div class="avatar mx-auto">
+        {% if expert.picture %}
+        <img src="{{ MEDIA_URL }}{{expert.picture.url}}" style="width: 180px; height: 180px;" class="rounded-circle z-depth-1" alt="" />
+         {% else %}
+         <img src="{% static 'images/user.png' %}" style="width: 180px; height: 180px;"  class="rounded-circle z-depth-1" alt="" />
+         {% endif %}
+
+      </div>
+      <h5 class="font-weight-bold mt-4 mb-3">{{expert.user.first_name|title}} {{expert.user.last_name|title}}</h5>
+      <p class="text-uppercase blue-text"><strong>{{expert.title|truncatechars:26}}</strong></p>
+      <span class="grey-text">{{expert.bio|safe|truncatechars:96}}.</span>
+      <ul class="list-unstyled mb-0" style="font-size: 9px;">
+        <!-- Facebook -->
+        <a class="p-2 fa-lg fb-ic" href="#" data-toggle="modal" data-target="#expert{{expert.id}}">
+          <span style="color: green; font-weight: bold;"> PROFILE</span>
+        </a>
+        <a class="p-2 fa-lg fb-ic" >
+          |
+        </a>
+        <!-- Twitter -->
+        <a class="p-2 fa-lg tw-ic" href="#contact{{expert.id}}" data-toggle="modal" >
+          <span  style="color: green; font-weight: bold;"> CONTACT</span>
+        </a>
+        <!-- Instagram -->
+        <!-- <a class="p-2 fa-lg ins-ic">
+          <i class="fa  fa-gears blue-text"> </i>
+        </a>
+        <a class="p-2 fa-lg ins-ic">
+          <i class="fa fa-database blue-text"> </i>
+        </a>
+        <a class="p-2 fa-lg ins-ic">
+          <i class="fa fa-envelope blue-text"> </i>
+        </a> -->
+      </ul>
+    </div>
+  </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="contact{{expert.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h5 class="modal-title" style="color: green !important;"> SEND AN EMAIL TO {{expert.user.first_name|upper}} {{expert.user.last_name|upper}}</h5>
+        </div>
+        <div class="modal-body" style="text-align: left;">
+          <form method="post" action="{% url 'send_message' expert.user.id %}">
+            {% csrf_token %}
+          <div class="form-group">
+            <label for="staticEmail" class="col-form-label">Your Email Address</label>
+              <input type="email" name="email" class="form-control" id="staticEmail" placeholder="email@example.com">
+          
+          </div>
+          <div class="form-group">
+            <label for="staticEmail">Message</label>
+           
+              <textarea name="message" class="form-control"></textarea>
+            
+          </div>
+       
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" >Send</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+         </form>
+      </div>
+      
+    </div>
+  </div>
+
+   <div class="modal fade" id="expert{{expert.id}}" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: green; color: white;font-weight: bold;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title" style="color: white">{{expert.user.first_name|upper}} {{expert.user.last_name|upper}}'S PROFILE</h4>
+        </div>
+        <div class="modal-body" style="text-align: left;">
+          <h5 class="modal-title" style="color: green;font-weight: bold;">Bio</h5>
+          {{expert.bio|safe}}
+          {% if expert.user.academicdetail_set.all %}
+          <table class="table">
+            <h5 class="modal-title" style="color: green;font-weight: bold;">Education</h5>
+            <thead>
+                <th  style="background-color: #ccffcc; color: green">Qualitfication</th>
+                  <th  style="background-color: #ccffcc; color: green">Course</th>
+            </thead>
+              <tbody>
+                
+                {% for ed in  expert.user.academicdetail_set.all %}
+                  <tr><td>{{ed.academic_level}}</td> <td>{{ed.course_name}}</td>
+                 </tr>
+                  {% endfor %}
+                 
+                 
+              </tbody>
+          </table>
+        {% endif %}
+        {% if expert.user.skill_set.all %}
+             <h5 class="modal-title" style="color: green;font-weight: bold;">Skills</h5>
+
+        <table class="table">
+            <thead style="background-color: #b3e6cc; color: white">
+                <th  style="background-color: #ccffcc; color: green">Type</th>
+                 <th  style="background-color: #ccffcc; color: green">Level</th>
+                  <th  style="background-color: #ccffcc; color: green">Skill</th>
+                  
+            </thead>
+              <tbody>
+              
+                {% for ed in  expert.user.skill_set.all %}
+                  <tr><td>{{ed.skill_type}}</td> <td>{{ed.skill_level}}</td>
+                  <td>{{ed.skill}}</td>
+             </tr>
+                  {% endfor %}
+                
+              </tbody>
+          </table>
+           {% endif %}
+
+ {% if expert.user.project_set.all %}
+             <table class="table">
+            
+         <h5 class="modal-title" style="color: green;font-weight: bold;">Projects Done</h5>
+            <thead>
+                <th  style="background-color: #ccffcc; color: green">Year</th>
+                 <th  style="background-color: #ccffcc; color: green">Project</th>
+                  <th  style="background-color: #ccffcc; color: green">Description</th>
+                  
+            </thead>
+              <tbody>
+               
+                {% for ed in  expert.user.project_set.all %}
+                  <tr><td>{{ed.year}}</td> <td>{{ed.project_name}}</td>
+                  <td>{{ed.project_description}}</td>
+             </tr>
+                  {% endfor %}
+                
+              </tbody>
+          </table>
+           {% endif %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+    {% endfor %}
+  
+  
+
+  </div>
+  <!-- Grid row -->
+
+</section>
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+   <!--  {% if experts.has_next %}
+    <a class="infinite-more-link" href="?page={{ experts.next_page_number }}">More</a>
+  {% endif %} -->
+
+
+<ul class="pagination pagination-md">
+ 
+        {% if experts.has_previous %}
+           <li> <a href="?page={{ experts.previous_page_number }}"  >Previous</a></li>
+
+        {% endif %}
+{% for num in experts.paginator.page_range %}
+  {% ifequal num experts.number %}
+    <li><span class="current" style="background-color:#03a9f4; color: white;"><b>{{ num }}</b></span></li>
+  {% else %}
+   <li> <a href="?page={{ num }}"> {{ num }}</a></li>
+  {% endifequal %} 
+{% endfor %}
+{% if experts.has_next %}
+           <li> <a href="?page={{ experts.next_page_number }}">Next </a></li>
+        {% endif %}
+        </ul>
+  <div class="loading" style="display: none;">
+    Loading...
+  </div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/infinity/0.2.2/infinity.min.js"></script>
+  <script>
+    function infiniteExample() {
+      var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0]
+      })
+    }
+  </script>
+</div>
+</div>
+{% endblock %}

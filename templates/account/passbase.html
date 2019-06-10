@@ -1,0 +1,57 @@
+
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% load i18n %}
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+<body>
+{% block message_js %}
+    <!-- this makes message to auto dissappear after few seconds -->
+    <script type="text/javascript">
+
+    window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    
+
+    </script>
+{% endblock %}
+    <section id="about-us">
+        <div class="container">
+<div class="row">
+<div class="col-md-2">
+</div>
+
+<div class="col-md-8" style="text-align:center;">
+<div class="well" style="background-color:white; margin-top: 100px;">
+{% block content %}
+
+
+{% endblock %}
+</div>
+
+
+</div>	
+		
+</div>
+
+
+  </div>
+	
+	
+	
+	
+
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+
+</div>
+</di>
+</section><!--/about-us-->
+
+  

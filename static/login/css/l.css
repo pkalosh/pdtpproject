@@ -1,0 +1,10 @@
+.ali:nth-child(n+12) {
+    display:none;
+}
+.ali {
+    border: 1px solid #aaa;
+}
+spa {
+    cursor: pointer;
+    color: #f00;
+}

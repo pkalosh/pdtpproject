@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Work Plans
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+              
+
+</div>
+<div class="col-md-7">
+              </div>
+              </div>
+            {% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+ <div class="col-md-1">
+   <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+ </div>
+ <div class="col-md-6">
+ <form method="post" action=".">
+ {% csrf_token %}
+ <label for="from">From</label>
+ <input type="text" id="from" name="startdate" required>
+ <label for="from">To</label>
+ <input type="text" id="to" name="enddate"   required>
+ <input type="submit" value="Query" class="button btn btn-sm btn-primary">
+ </form>
+ </div>
+</div>
+
+<!-- Modal -->
+
+
+{% if  plans %}
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover" class="display" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                   <th>Intern</th>
+                  <th>Project</th>
+               
+                  <th>Date Submitted</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Task</th>
+                  <th>Resources/Input</th>
+                
+                  <th>outputs</th>
+                  <th>Expected Impact</th>
+                  <th>Status</th>
+                  <th>Approved by Supervisor</th>
+                  <th>Supervisor</th>
+                  <th>Date Approved</th>
+                  <th>Supervisor's Comment</th>
+                  <th>Organization</th>
+                </tr>
+                </thead>
+                <tbody>
+{% for plan in plans %}
+<tr class="danger">
+	<td>{{plan.pdtp.last_name}} {{plan.pdtp.first_name}}</td>
+	<td>{{plan.project_name}}</td>
+	<td>{{plan.date_submitted}}</td>
+	<td>{{plan.start_date}}</td>
+	<td>{{plan.end_date}}</td>
+	<td>{{plan.task}}</td>
+	<td>{{plan.resources}}</td>
+  <td>{{plan.outputs}}</td>
+  <td>{{plan.expected_impact}}</td>
+  <td>{{plan.status}}</td>
+  <td>{{plan.approved_by_supervisor }}</td>
+  <td>{{plan.supervisor}}</td>
+  <td>{{plan.date_approved}}</td>
+  <td>{{plan.supervisor_comment}}</td>
+  <td>{{plan.organization}}</td>	
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<h3>No intern has supbmitted a workplan for the specified period</h3>
+{% endif %}
+{% endblock %}
+
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 10, 25, 50,100,150, -1 ],
+            [ '10 rows', '25 rows', '50 rows','100 rows','150 rows', 'Show all' ]
+        ],
+        buttons: [
+            'pageLength',
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [2,3,4,5,7,10,11,12,13,14] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+ 
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+
+
+
+      <script>
+  $(function(){
+        $("#to").datepicker({ dateFormat: 'yy-mm-dd' });
+        $("#from").datepicker({ dateFormat: 'yy-mm-dd' }).bind("change",function(){
+            var minValue = $(this).val();
+            minValue = $.datepicker.parseDate("yy-mm-dd", minValue);
+            minValue.setDate(minValue.getDate()+1);
+            $("#to").datepicker( "option", "minDate", minValue );
+        })
+    });
+  </script>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Attachments</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+     {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title button btn btn-red">Attach PDTPS to {{organization}}
+</div>
+<div class="col-md-7">
+{% include 'secretariat/links.html' %}
+              </div>
+              </div>
+            {% endblock %}
+{% block content %}
+
+ <div class="row">
+ <div class="col-md-2">
+   <a href="{% url 'private_sector' year %}" class="button btn btn-sm btn-primary">Select Another Company</a> 
+ </div>
+  <div class="col-md-1">
+  
+ </div>
+</div>
+                <!-- Using data attributes -->
+    <form  method="POST" action="." class="form">
+ {% csrf_token %}
+                <select class="form-control" name="pdtps" data-selectr-opts='{ "title": "Pick PDTPs to deploy  at {{organization}} (max 15)", "placeholder": "Search PDTPs", "maxSelection": 15 }'  multiple>
+
+                {% for p in pdtps %}
+
+                    <option   value="{{p.user}}">{{p.user.last_name}} {{p.user.first_name}}  -{{p.area_of_specialization}}</option>
+                    {% endfor %}
+                </select>
+            
+        
+{% buttons %}
+    <button type="submit" class="button btn btn-primary btn-sm" >
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Attach Selected
+    </button>
+  {% endbuttons %}
+</form>
+
+
+
+    <!-- /.content -->{% endblock %}
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+
+
+           
+
+        <script src="{% static 'selector/selectr.js' %}"></script>
+<script>
+            $(document).ready(function () {
+                $("select").selectr({
+                    title: 'What would you like to drink?',
+                    placeholder: 'Search beverages'
+                });
+            });
+        </script>
+        <script type="text/javascript">
+  $(document).ready(function() {
+     $('#ddlCars').multiselect();
+      $('#ddlCars1').multiselect({ 
+         numberDisplayed: 2,
+          
+     });
+       $('#ddlCars2').multiselect({ 
+         includeSelectAllOption: true,
+           enableFiltering:true         
+           
+     });
+        $('#ddlCars3').multiselect({  
+           nonSelectedText :'Select Cars'
+           
+     });
+});
+</script>
+{% endblock %}

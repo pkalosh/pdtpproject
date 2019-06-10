@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+
+    {% endblock %}
+    {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-8">
+              <h3 class="box-title  btn-red">Laptops Available for Procurement
+</h3>
+</div>
+
+              </div>
+            {% endblock %}
+
+{% block content %}
+ <div class="row">
+ 
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-sm btn-success" type="button" value="Back" />
+</div>
+
+</div>
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Laptop Name</th>
+                  <th>RAM Size</th>
+                  <th>Hard Disk Size</th>
+                  <th>MAC</th>
+                  <th>Serial Number</th>
+                  <th>Processor Speed</th>
+                  <th>Cores</th>
+                  <th>Order</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in laptops %}
+                
+                <tr>
+                  
+                  <td>{{order.laptop_name}}</td>
+                  <td>{{order.RAM|safe}}</td>
+                  <td>{{order.HDD}}</td>
+                  <td>{{order.MAC}}</td>
+                  <td>{{order.serial_no}}</td>
+                  <td>{{order.Processor_Speed}}</td>
+                  <td>{{order.Cores}}</td>
+                  <td><a href="{%url 'apply_for_laptop' order.id %}" class="btn btn-sm btn-success">place order</td>
+                
+                </tr>
+               {% endfor %}
+</table>
+</div>
+
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+        columnDefs: [
+            { "visible": false, "targets": [4,5] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

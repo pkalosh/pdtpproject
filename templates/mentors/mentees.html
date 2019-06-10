@@ -1,0 +1,370 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+       <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">PDTP Evaluation</a></li>
+       
+      </ol>
+    </section>
+    <style>
+* {box-sizing: border-box}
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 30%;
+ 
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    
+    width: 70%;
+    border-left: none;
+   
+}
+</style>
+    {% endblock %}
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+             <h3 class="box-title button btn btn-red"> MY MENTEE(S)</h3>
+</div>
+<div class="col-md-7" style="text-align: right;">
+ {% for c in user.supervisor_set.all %} {% if c.is_contact_person %}
+{{c.organization}} 
+<br>Contact Person :<a href="">{{c.supervisor}}</a> {% endif %}{% endfor %}
+
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+
+ {% if mentees %}
+
+<div class="tab">
+  {% for mentee  in mentees %}
+  <button class="tablinks" onclick="openCity(event, 'm{{mentee.id}}')" id="defaultOpen">{{mentee.mentee.last_name}}  {{mentee.mentee.first_name}}</button>
+  {% endfor %}
+</div>
+  {% for mentee  in mentees %}
+<div id="m{{mentee.id}}" class="tabcontent">
+  <div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c{{mentee.id}}">
+          Bio
+        </a>
+      </h4>
+    </div>
+    <div id="c{{mentee.id}}" class="panel-collapse collapse in">
+      <div class="panel-body">
+        <div class="row">
+        <div class="col-md-4">
+          
+          {% if mentee.mentee.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{ mentee.mentee.userprofile.picture.url }}" height=160px width="160px" class="img-rounded"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=160px width="160px" class="img-rounded"> 
+            {% endif %} 
+            </div>
+            <div class="col-md-8">
+            {{mentee.mentee.userprofile.bio|safe}}
+            <br>
+            <a href="{% url 'report' mentee.mentee.id  %}" class="button btn btn-sm btn-primary" style="float:right;">Contact Intern</a>
+            </div>
+            </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c2{{mentee.id}}">
+          Personal Details
+        </a>
+      </h4>
+    </div>
+    <div id="c2{{mentee.id}}" class="panel-collapse collapse">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-6">
+         Full Name:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.last_name}} {{mentee.mentee.first_name}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Gender:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.gender}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date of Birth:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.date_of_birth}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Marital Status:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.marital_status}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+         Phone Number:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.phone_number}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Email:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.email}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Area of Specialization:
+          </div>
+          <div class="col-md-6">
+          {{mentee.mentee.userprofile.area_of_specialization}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">Facebook Link:</div>
+          <div class="col-md-6">
+          {{mentee.userprofile.facebook}}
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+          Twitter Link:</div>
+          <div class="col-md-6">
+            {{mentee.userprofile.twitter}}
+          </div>
+        </div>
+          <div class="row">
+            <div class="col-md-6">
+              Linkedin Link:
+            </div>
+            <div class="col-md-6">{{mentee.userprofile.linkedin}}
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c3{{mentee.id}}">
+          Academic Details
+        </a>
+      </h4>
+    </div>
+    <div id="c3{{mentee.id}}" class="panel-collapse collapse">
+      <div class="panel-body">
+       {% for academic in mentee.mentee.academicdetail_set.all %}
+          <div class="row">
+          <div class="col-md-3">
+          {{ academic.academic_level}}
+          </div>
+          <div class="col-md-3">
+          {{academic.course_name}}
+          </div>
+          <div class="col-md-3">
+          {{academic.higher_institution_attended}}
+          </div>
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#c4{{mentee.id}}">
+          Work Stations and Supervisors
+        </a>
+      </h4>
+    </div>
+    <div id="c4{{mentee.id}}" class="panel-collapse collapse">
+      <div class="panel-body">
+       {% for academic in mentee.mentee.internsupervisor_set.all %}
+          <div class="row">
+          <div class="col-md-6">
+          {{ academic.company}}
+          </div>
+          <div class="col-md-4">
+         {{ academic.supervisor}}
+          </div>
+          <div class="col-md-2">
+         <a href="" class="button btn btn-primary btn-sm" >Send Note</a>
+          </div>
+          </div>
+          {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>
+  
+       <div class="modal-content">
+        
+        
+        
+        <div class="modal-footer">
+          <a data-toggle="modal" data-target="#modal{{mentee.mentee.id}}" href="" class="button btn btn-sm btn-primary">Schedule a Meeting</a>  
+           <a href="{% url 'report' mentee.mentee.id  %}" class="button btn btn-sm btn-primary">Mentorship Meetings and Reports</a>{% if mentee.mentee.mentorevaluation_set.all %} <a href="" class="button btn btn-sm btn-success">Intern has been evaluated</a>
+           {% else %}
+           <a href="{% url 'mentor_evaluate' mentee.mentee.id  %}" class="button btn btn-sm btn-primary">Evaluate Mentee</a>
+           {% endif %}
+                         
+        </div>
+      </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal{{mentee.mentee.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{mentee.mentee.last_name}} {{mentee.mentee.first_name}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+         <form  method="POST" action="{% url 'my_mentees' %}" class="form">
+          {% csrf_token %}
+          {{ form.media }}
+          {% bootstrap_form form %}
+        <input type="hidden" class="form-control" name="mentee" value="{{mentee.mentee.id}}">
+         <input type="hidden" class="form-control" name="mentor" value="{{mentee.mentor.id}}">
+
+           <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+          </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+
+<script>
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+     
+
+                      {% else %}
+                      
+                    
+You currently  have no mentee(s)
+                      {% endif %}
+ {% endblock  %}
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

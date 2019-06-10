@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        MONITORING AND EVALUATION REPORTS
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">monitoring and evaluation
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+
+
+{% block content %}
+<div class="row">
+  
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+</div>
+
+</div>
+
+<br>
+
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Intern</th>
+                  <th>Supervisor</th>
+                <th>Organization</th>
+                  <th>Projects</th>
+                  <th>Lesson Learnt</th>
+                  <th>Specific Assignment</th>
+                  <th>Projects are Challenging?</th>
+                  <th>Intern Self Evaluation </th>
+                  <th>Instruction given</th>
+                  <th>Supervisor Availability</th>
+                  <th>Specialization vs Internship</th>
+                  <th>Opportunities for Learning</th>
+                  <th>Readiness for Job</th>
+                  <th>Workers Relationship</th>
+                  <th>Organization Relationship</th>
+                  <th>Internship Expectations</th>
+                  <th>Suggestions on pdtp programme</th>
+                  <th>Recommend organization?</th>
+                  <th>Recommend Best Practices</th>
+                  <th>Innovation Opportunities</th>
+                  <th>No innovation, why?</th>
+                  <th>Mentorship sessions</th>
+                  <th>Mentorship Lesson</th>
+                  <th>Mentorship Challenge</th>
+                  <th>Training Attended</th>
+                  <th>Certification Attained</th>
+                  <th>Suggestions on Job Training</th>
+                  <th>Suggestions on Innovation</th>
+                  <th>Suggestions on  Mentorship</th>
+                  <th>Suggestions on  Training</th>
+                  <th>Commnets Secretariat Support</th>
+                  <th>Challenge Faced in PDTP</th>
+                  <th>Intern Strength</th>
+                  <th>Improvement Areas</th>
+                  <th>View pdf</th>
+                
+                  
+                  
+                </tr>
+                </thead>
+                <tbody>
+                {% for report in mereport %}
+                
+                <tr>
+
+                <td>{{report.pdtp.last_name|safe}} {{report.pdtp.first_name|safe}}</td>
+                <td>{{report.supervisor.last_name|safe}} {{report.supervisor.first_name|safe}}</td>
+                <td>{{report.organization|safe}}</td>
+                <td>{{report.projects|safe}}</td>
+                <td> {{report.lessons_learned_during_internship|safe}}</td>
+                <td> {{report.specific_projects_or_assignments_you_are_given|safe}}</td>
+                <td> {{report.projects_given_are_they_challenging_or_stimulating|safe}}</td>
+                <td> {{report.evaluate_your_experience|safe}}</td>
+                <td> {{report.instruction_and_Directions_given_by_supervisor|safe}}</td>
+                <td> {{report.supervisor_availability|safe}}</td>
+                <td> {{report.field_of_specialization|safe}}</td>
+                <td> {{report.opportunities_for_learning|safe}}</td>
+                <td> {{report.preparedness_to_enter_world_of_work|safe}}</td>
+                <td> {{report.Your_relationship_with_other_workers|safe}}</td>
+                <td> {{report.How_have_you_been_treated_by_the_organization|safe}}</td>
+                <td> {{report.Has_the_attachment_met_your_expectations|safe}}</td>
+                <td> {{report.suggestions_to_improve_the_internship_programme|safe}}</td>
+                <td> {{report.recommend_this_organisation|safe}}</td>
+                <td> {{report.best_practices|safe}}</td>
+                <td> {{report.innovation|safe}}</td>
+                <td> {{report.innovation_reason|safe}}</td>
+                <td> {{report.mentorship_sessions|safe}}</td>
+                <td> {{report.mentorship_lesson_learned|safe}}</td>
+                <td> {{report.mentorship_problem_faced|safe}}</td>
+                <td> {{report.training_attended|safe}}</td>
+                <td> {{report.Certifications_attained|safe}}</td>
+                <td> {{report.suggestion_on_job_training|safe}}</td>
+                <td> {{report.suggestion_innovation|safe}}</td>
+                <td> {{report.suggestion_mentorship|safe}}</td>
+                <td> {{report.suggestion_training|safe}}</td>
+                <td> {{report.comment_icta_secretariat_support|safe}}</td>
+                <td> {{report.challenges_faced|safe}}</td>
+                <td> {{report.intern_strength|safe}}</td>
+                <td> {{report.areas_improvement|safe}}</td>
+                <td><a href="{% url 'me_report' report.id %}" class="btn btn-primary">view pdf</a></td>
+               
+                
+                              
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+       
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            {
+                extend: 'copyHtml5',
+                exportOptions: {
+                    columns: [ 0, ':visible' ]
+                }
+            },
+            {
+                extend: 'excelHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'pdfHtml5',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+
+        ],
+       columnDefs: [
+            { "visible": false, "targets": [2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30] }
+        ]
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

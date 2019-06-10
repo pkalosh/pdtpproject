@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block top_title %}
+{% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+        Training/Certifications
+        <small> <font color="green"><b></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Training
+</h3></a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+    {% block table_title %}
+            
+
+                       <div class="row">
+     <div class="col-md-5">
+              <h3 class="box-title  btn-red">{{year}} TRAININGS AND CERTIFICATIONS
+</h3>
+</div>
+<div class="col-md-7">
+{% include 'secretariat/links.html' %}
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+ <div class="row">
+  {% if user.userprofile.active == True %}
+ <div class="col-md-1">
+ 
+
+   <a href="{% url 'post_training' %}" class="button btn btn-sm btn-sm btn-success">New Training/Certifications</a> 
+ </div>
+ <div class="col-md-1"></div>
+ {% endif %}
+ <div class="col-md-1">
+
+<input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-sm btn-success" type="button" value="Back" />
+</div>
+
+</div>
+<div class="table-responsive">
+ <table id="example" class="table table-bordered table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>Training</th>
+                  <th>Institution</th>
+                  <th>Category</th>
+                  <th>Application status</th>
+                  
+                  <th>Applications</th>
+                  <th>Feedback</th>
+                  <th>Update</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for cours in course %}
+                
+                <tr>
+                  <td>{{cours.course}}</td>
+                  <td>{{cours.institution}}</td>
+                  <td>{{cours.category}}</td>
+                  
+                  <td>{{cours.status}}</td>
+                 
+                 
+                  <td><a href="{% url 'get_applicants' cours.id %}" class="btn btn-sm btn-success" >Training Applications </a></td> 
+                  <td><a href="" class="btn btn-sm btn-success"" >Training Feedback</a></td>
+                  <td><a href="{% url 'update_training' cours.id %}" class="btn btn-sm btn-success" >Update Training</a></td>
+                  
+                 
+                  
+                </tr>
+               {% endfor %}
+</tbody>
+</table>
+</div>
+
+{% endblock %}
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+  
+  {% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css" %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+
+            {
+
+                extend: 'colvis',
+                postfixButtons: [ 'colvisRestore' ]
+            },
+            
+
+        ],
+        
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

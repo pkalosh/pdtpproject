@@ -1,0 +1,87 @@
+{% load staticfiles %}
+{% include 'include/cssscripts.html' %}
+{% block message_js %}
+    <!-- this makes message to auto dissappear after few seconds -->
+    <script type="text/javascript">
+
+    window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 4000);
+    
+
+    </script>
+{% endblock %}
+<body> 
+	<!--top-header-->
+	
+	<!--start-logo-->
+	<!--bottom-header-->
+	<!--bottom-header-->
+	<!--banner-starts-->
+	<div class="container">
+
+		<div class="row">
+		<div class="col-md-9">
+			
+	<div class="bnr" id="home">
+		<div  id="top" class="callbacks_container">
+   
+
+ 
+    
+    {% if messages %}
+	{% for message in messages %}
+	<script>
+         notify('success', "{{message}}");
+    </script>
+    
+	{% endfor %}
+      
+    {% endif %}
+
+			{% block content %}
+			
+{% endblock %}
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	</div>
+		<div class="col-md-3">
+			
+   	</div>
+	</div>
+	<!--banner-ends--> 
+	<!--Slider-Starts-Here-->
+				<script src="{% static "js/responsiveslides.min.js" %}"></script>
+			 <script>
+			    // You can also use "$(window).load(function() {"
+			    $(function () {
+			      // Slideshow 4
+			      $("#slider4").responsiveSlides({
+			        auto: true,
+			        pager: true,
+			        nav: true,
+			        speed: 500,
+			        namespace: "callbacks",
+			        before: function () {
+			          $('.events').append("<li>before event fired.</li>");
+			        },
+			        after: function () {
+			          $('.events').append("<li>after event fired.</li>");
+			        }
+			      });
+			
+			    });
+			  </script>
+			<!--End-slider-script-->
+	
+	
+	</div><!-- end of container class -->
+	<!--footer-starts-->
+	
+	
+	<!--footer-end-->	
+</body>
+</html>

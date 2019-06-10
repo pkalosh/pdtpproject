@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_title %}| {{user.last_name}}  {% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">My Performance</a></li>
+       
+      </ol>
+    </section>
+    {% endblock %}
+
+     {% block table_title %}
+     
+
+              <div class="row">
+     <div class="col-md-5">
+              
+</div>
+<div class="col-md-7">
+
+              </div>
+              </div>
+            {% endblock %}
+
+{% block content %}
+  <div class="panel panel-info">
+            <div class="panel-heading">
+            
+            
+              <h3 class="panel-title">{{user.last_name}} {{user.first_name}} <span class="badge pull-right"> 0</span></h3>
+ 
+            </div>
+            <div class="panel-body">
+        
+              <div class="row">
+                <div class=" col-md-12 col-lg-12 col-sm-12 col-xs-12 "> 
+
+<div class="bs-example">
+    <div class="panel-group" id="accordion">
+     <div class="panel panel-default">
+
+      
+       
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="{% url 'ministry_activities' %}">Ministry Activities and Work Assignment(Public Sector Placement)<span class="badge pull-right">{{user.userprofile.public_evaluation}}</span>
+                    </a>
+                </h4>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="{% url 'private_sector_activities' %}">Private Sector attachment <span class="badge pull-right"> {{user.userprofile.private_evaluation}}</span></a>
+                </h4>
+            </div>
+        </div>
+
+         <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="{% url 'my_trainings' %}">Training and Certification<span class="badge pull-right"> {{user.userprofile.training_evaluation}}</span></a>
+                </h4>
+            </div>
+           
+        </div>
+        <!--
+ <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="">Training (VLearning and Tuor led) and certificate aquired <span class="badge pull-right"> 0</span></a>
+                </h4>
+            </div>
+           
+        </div>
+               
+ <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="#collapseFive"> Certification <span class="badge pull-right"> 0</span></a>
+                </h4>
+            </div>
+        </div>
+      -->
+        <!--
+                <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="#">Buddy Evaluation <span class="badge pull-right"> 0</span></a>
+                </h4>
+            </div>
+           
+        </div>   
+        -->     
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="{% url 'mentorship_performance_feedback' %}">Mentor Evaluation</a> <span class="badge pull-right"> {{user.userprofile.mentor_evaluation}} </span>
+                </h4>
+
+                <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Upload Mentorship Report</h4>
+      </div>
+      <div class="modal-body">
+      <form action="{% url 'my_performance' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+         <div class="modal-footer">
+           <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+      </form>
+      </div>
+     
+    </div>
+
+  </div>
+</div>
+            </div>
+            <div id="collapseSeven" class="panel-collapse collapse">
+                <div class="panel-body">
+                    
+                </div>
+            </div>
+            </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a  href="#">Innovation <span class="badge pull-right">{{user.innovationevaluation.total}} </span></a>
+                </h4>
+            </div>
+            </div>
+    </div>
+</div>
+                  
+                 <!-- <a href="#" class="btn btn-primary">My Sales Performance</a>
+                  <a href="#" class="btn btn-primary">Team Sales Performance</a>
+
+
+                  -->
+
+
+                      
+                </div>
+              </div>
+               </div>
+                 
+
+
+
+
+
+
+
+<script>
+$('.upload').click(function(e){
+      e.preventDefault();
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+           {% endblock  %}
+
+{% block tables_js_script %}
+  <!-- DataTables -->
+ <link rel="stylesheet" href="{% static 'plugins/datatables/dataTables.bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'rescripts/jquery.dataTables.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'rescripts/buttons.dataTables.min.css' %}"> 
+
+<script type="text/javascript" src="{% static 'rescripts/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'rescripts/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'rescripts/buttons.colVis.min.js' %}"></script>
+<script src="{% static 'rescripts/buttons.flash.min.js' %}"></script> 
+<script src="{% static 'rescripts/jszip.min.js' %}"></script> 
+<script src="{% static 'rescripts/build/pdfmake.min.js' %}"></script> 
+<script src="{% static 'rescripts/vfs_fonts.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.html5.min.js' %}"></script> 
+<script src="{% static 'rescripts/buttons.print.min.js' %}"></script> 
+<script>
+
+$(document).ready(function() {
+    $('#example').DataTable( {
+        dom: 'Bfrtip',
+    } );
+} );
+</script>
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
+
+{% endblock %}

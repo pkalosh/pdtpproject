@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+     
+
+{% block content %}
+<div class="row">
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+
+     
+        <div class="modal-body" style="border-color: green;">
+        <h2 style="color: green;">My Program Exit Request Status</h2>
+        {% if status %}
+        {% for status in status %}
+          <div class="row">
+          <div class="col-md-6">
+         Request Text:
+          </div>
+          <div class="col-md-6">
+          {{status.exit_request}}
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+          Date Submitted:
+          </div>
+          <div class="col-md-6">
+          {{status.date_of_request}}
+          </div>
+          </div>
+          {% if status.approved_by_supervisor == True %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Supervisor:
+          </div>
+          <div class="col-md-6">
+          Yes
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+       Date Approved By Supervisor
+          </div>
+          <div class="col-md-6">
+          {{status.date_approved_by_supervisor}}
+          </div>
+          </div>
+          {% else %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Supervisor:
+          </div>
+          <div class="col-md-6">
+          Not Yet
+          </div>
+          </div>
+          {% endif %}
+           {% if status.approved_by_secretariat == True %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Secretariat:
+          </div>
+          <div class="col-md-6">
+          Yes
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-md-6">
+       Date Approved By SSecretariat
+          </div>
+          <div class="col-md-6">
+          {{status.date_approved_by_secretariat}}
+          </div>
+          </div>
+          {% else %}
+          <div class="row">
+          <div class="col-md-6">
+          Approved By Secretariat:
+          </div>
+          <div class="col-md-6">
+          Not Yet
+          </div>
+          </div>
+          {% endif %}
+          
+          
+        </div>
+        {% endfor %}
+        {% endif %}
+</div>
+<div class="col-md-2">
+</div>
+{% endblock %}

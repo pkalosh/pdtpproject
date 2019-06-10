@@ -1,0 +1,14 @@
+
+<p>Dear {{rec}}</p>
+<p><strong>{{subject}}</strong></p>
+<p>
+{{message}}
+</p><p>
+Kindly logon to the <a href="http://pdtpportal.icta.go.ke/">PDTP PORTAL</a> then click on sceretariat communications link for  more</p>
+
+<p>
+Best Regards,<br>
+{{first_name}} {{last_name}}<br>
+</p>
+
+

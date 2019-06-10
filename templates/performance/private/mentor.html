@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block top_title %}| {{user.last_name}}  {% endblock %}
+{% block top_section %}
+{% block tables_css %}
+<!-- DataTables -->
+
+{% endblock %}
+<section class="content-header">
+      <h1>
+         {{user.userprofile.user_category}} PORTAL
+        <small> <font color="green"><b>You are here >></b></font></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#">Evaluate Intern</a></li>
+       
+      </ol>
+    </section>
+
+    {% endblock %}
+
+     {% block table_title %}
+   
+            {% endblock %}
+
+{% block content %}
+ <input action="action" onclick="window.history.go(-1); return false;" class="button btn btn-primary btn-sm" type="button" value="Back" />
+<h3>{{pdtp.last_name|title}} {{pdtp.first_name|title}}'s' Mentorship Report</h3>
+
+<h4 style="color: green">Self awareness and personal branding</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ pdtp.mentorshipinternreport.awareness_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{ pdtp.mentorshipinternreport.awareness_impact }}
+        </div>
+      </div>
+       <h4 style="color: green">Life goals and career development</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{  pdtp.mentorshipinternreport.goal_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{ pdtp.mentorshipinternreport.goal_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Adaptability and Flexibility</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ pdtp.mentorshipinternreport.adaptability_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{  pdtp.mentorshipinternreport.adaptability_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Confidence and passion</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{ pdtp.mentorshipinternreport.confidence_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{  pdtp.mentorshipinternreport.confidence_impact }}
+        </div>
+      </div>
+      <h4 style="color: green">Presentation and communication skills</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Description</label><br>
+          {{  pdtp.mentorshipinternreport.presentation_description }}
+        </div>
+        <div class="col-md-6">
+          <label>Impact</label><br>
+           {{  pdtp.mentorshipinternreport.presentation_impact }}
+        </div>
+      </div>
+<div class="row">
+ <!--  <div class="col-md-2">
+  </div> -->
+<div class="col-md-8">
+<h3>Evaluate the intern</h3>
+<form method="post" action=".">
+  {% csrf_token %} 
+  <table class="table">
+{% bootstrap_form form %}
+{% for p in parameters %}
+
+<p>
+    <tr>
+      <td>
+  <strong>{{forloop.counter}}. {{p.parameter}} :</strong> 
+  </td>
+  <td>  
+  <label class="radio-inline">
+      <input type="radio" name={{p.id}} value="1" required>Poor 
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name={{p.id}} value="2" required>Fair
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{p.id}}" value="3" required>Average
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{p.id}}" value="4" required>Good
+    </label>
+    <label class="radio-inline">
+      <input type="radio" name="{{p.id}}" value="5" required>Excellent
+    </label>
+  </td>
+</tr>
+</p>
+{% endfor %}
+
+</table>
+{% bootstrap_form eform %}
+<input type="submit" name="" class="btn btn-primary" style="float: right;">
+</form>
+</div>
+{% endblock %}
+
+{% block tables_js_script %}
+  
+  
+{% endblock %}

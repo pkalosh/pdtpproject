@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block content %}
+  <div class="panel panel-info">
+            <div class="panel-heading">
+            
+            
+              <h3 class="panel-title">{{user.last_name}} {{user.first_name}}</h3>
+ 
+            </div>
+            <div class="panel-body">
+              <div class="row">
+              
+                <div class="col-md-3 col-lg-3 " align="center">
+               {% if user.userprofile.picture %}
+              <img alt="User Pic" src="{{ MEDIA_URL }}{{user.userprofile.picture.url}}" height=300px width="300px" class="img-rounded img-responsive"> 
+            {% else %} <img alt="User Pic" src="{% static 'images/user.png' %}" height=300px width="300px" class="img-circle img-responsive"> 
+            {% endif %} <br>
+            <button class="button btn btn-sm btn-primary" data-toggle="modal" data-target="#myModal">Change Picture</button>
+            </div>
+                           
+              
+                <div class=" col-md-9 col-lg-9 "> 
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Name:</td>
+                        <td>{{user.first_name}} {{user.last_name}}</td>
+                      </tr>
+                      <tr>
+                        <td>ID Number:</td>
+                        <td>{{user.userprofile.id_no}}</td>
+                      </tr>
+                   
+                         <tr>
+                             <tr>
+                        <td>Phone Number:</td>
+                        <td>{{user.userprofile.phone_number}}</td>
+                      </tr>
+                        <tr>
+                        <td>Email Address:</td>
+                        <td>{{user.email}}</td>
+                      </tr> 
+                      </tr>
+                     
+                    </tbody>
+                  </table>
+                 <!-- <a href="#" class="btn btn-primary">My Sales Performance</a>
+                  <a href="#" class="btn btn-primary">Team Sales Performance</a>
+                  -->
+                </div>
+              </div>
+              <span class="hidden-xs hidden-sm pull-right" style="margin-top:-20px;">
+                            <a  data-toggle="modal" data-target="#profile" data-original-title="Edit Profile" data-toggle="modal" type="button" class="btn btn-sm btn-primary ">Update Profile</a>
+                          
+                        </span>
+               </div>
+
+               <span class="hidden-xl hidden-lg hidden-md center-block" style="margin-top:-20px;">
+                            <a  data-toggle="modal" data-target="#profile" data-original-title="Edit Profile" data-toggle="modal" type="button" class="btn btn-sm btn-primary center-block">Update Profile</a>
+                          
+                        </span>
+               </div>
+
+               
+               <!--
+                <div class="panel-footer">
+                        <a data-original-title="Change Email" data-toggle="modal" data-target="#email" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+                        <span class="pull-right">
+                            <a  data-toggle="modal" data-target="#profile" data-original-title="Edit Profile" data-toggle="modal" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                          
+                        </span>
+                    </div>
+
+                  
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Update your Profile Picture</h4>
+      </div>
+      <div class="modal-body">
+          <form  method="POST" action="{% url 'upload_photo' user.id %}?from={{ request.path|urlencode }}" class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+
+{% bootstrap_form form %}
+{% buttons %}
+    <button type="submit" class="btn btn-theme btn-sm btn-primary">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="profile" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Update your Profile</h4>
+      </div>
+      <div class="modal-body">
+          <form  method="POST" action="{% url 'management_profile' %}?from={{ request.path|urlencode }}" class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+ {% bootstrap_form uform %}
+{% bootstrap_form pform %}
+{% buttons %}
+    <button type="submit" class="btn btn-theme btn-sm btn-primary">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="email" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Change Your Email</h4>
+        <b>NOTE:</b> You will use this new email for your  next login 
+      </div>
+      <div class="modal-body">
+          <form  method="POST" id="passwordForm" action="{% url 'new_email' %}?from={{ request.path|urlencode }}" onsubmit="return myFunction() class="form" enctype="multipart/form-data">
+ {% csrf_token %}
+ <div class="form-group">
+        <label for="inputPassword">Type Your new Email</label>
+        <input type="email" class="form-control" id="password" name="password" placeholder="New Email" required>
+    </div>
+            
+        
+           <div class="form-group">
+        <label for="confirm_password">Confirm Email</label>
+        <input type="email" class="form-control" id="password2"  name=password2" placeholder="Confirm Email" onkeyup="checkPass(); return false;" required>
+            <span id="confirmMessage" class="confirmMessage"></span>
+    </div>
+{% buttons %}
+    <button type="submit" class="btn btn-theme btn-sm btn-primary">
+      {% bootstrap_icon "glyphicon glyphicon-hand-up" %} Update
+    </button>
+  {% endbuttons %}
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+        
+        <script>
+function myFunction() {
+    var password = document.getElementById("password").value;
+    var password2 = document.getElementById("password2").value;
+    var ok = true;
+    if (password != password2) {
+        //alert("Passwords Do not match");
+        document.getElementById("password").style.borderColor = "#E34234";
+        document.getElementById("password2").style.borderColor = "#E34234";
+        ok = false;
+       
+    }
+    else {
+        
+    }
+    return ok;
+}
+ function checkPass()
+{
+    //Store the password field objects into variables ...
+    var password = document.getElementById('password');
+    var password2 = document.getElementById('password2');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc66";
+    var badColor = "#ff6666";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(password.value == password2.value){
+        //The passwords match. 
+        //Set the color to the good color and inform
+        //the user that they have entered the correct password 
+        password2.style.backgroundColor = goodColor;
+        message.style.color = goodColor;
+        message.innerHTML = "Emails Match!"
+    }else{
+        //The passwords do not match.
+        //Set the color to the bad color and
+        //notify the user.
+        password2.style.backgroundColor = badColor;
+        message.style.color = badColor;
+        message.innerHTML = "Emails Do Not Match!"
+    }
+}  
+
+
+<script>
+$('.activate').click(function(e){
+      e.preventDefault();
+      $.ajax({
+               type: "POST",
+               url: "{% url 'activate' %}",
+               data: {'id': $(this).attr('name'), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+               dataType: "json",
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+
+<script>
+$(document).on('submit', '.form', function(){
+      e.preventDefault();
+      $.ajax({
+                type: $(this).attr('method'), 
+                url: {% url 'activate' %}, 
+                data:{$(this).serialize(), 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                context: this,
+               success: function(response) {
+                      notify('success', response.message);
+                },
+                error: function(rs, e) {
+                       alert(rs.responseText);
+                }
+          }); 
+    })
+</script>
+  {% endblock  %}

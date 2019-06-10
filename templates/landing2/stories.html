@@ -1,0 +1,87 @@
+{% extends 'landing/base.html' %}
+{% load staticfiles %}
+{% block content %}
+     
+   <div class="banner dark-translucent-bg" style="background-image:url('/static/slide4a.jpg'); background-position: 50% 27%;">
+        <!-- breadcrumb start -->
+        <!-- ================ -->
+  
+        <!-- breadcrumb end -->
+        <div class="container">
+          <div class="row justify-content-lg-center">
+            <div class="col-lg-8 text-center pv-20">
+              <h3 class="title logo-font hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 40px"><span class="text-default"style="color: green" >Success Stories.</span></h3>
+              <div class="separator hc-element-invisible mt-10" data-animation-effect="fadeIn" data-effect-delay="100"></div>
+              <p class="text-center hc-element-invisible" data-animation-effect="fadeIn" data-effect-delay="100" style="font-size: 20px" style="color: white !important; "><font color="green"> </font> </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+     
+
+        <div class="container" style="margin-bottom: 40px; min-height: 350px;">
+          {% if stories %}
+              <div class="masonry-grid row">
+                
+                <!-- masonry grid item start -->
+                {% for story in stories %}
+                <div class="masonry-grid-item col-md-4 col-lg-4">
+                  <!-- blogpost start -->
+                  <article class="blogpost hc-shadow-2 light-gray-bg bordered">
+                    <div id="carousel-blog-post" class="carousel slide" data-ride="carousel">
+                      <!-- Indicators -->
+                      <ol class="carousel-indicators bottom margin-clear">
+                        <li data-target="#carousel-blog-post" data-slide-to="0" class="active"></li>
+                        
+                      </ol>
+
+                      <!-- Wrapper for slides -->
+                      <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active">
+                          <div class="overlay-container">
+                            <img src="{{story.photo.url}}"  style="height:300px; width: 100%" alt="">
+                           
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                    <header>
+                      <h2><a href="{% url 'story' story.id story.slug %}">{{story.name|title}}</a></h2>
+                      <div class="post-info">
+                        <span class="post-date">
+                          <span class="day">{{story.role|title}}</span> |
+                          <span class="month">{{story.organization|title}}</span>
+                        </span>
+                       
+                      </div>
+                    </header>
+                    
+                    
+                  </article>
+                  <!-- blogpost end -->
+                </div>
+                <!-- masonry grid item end -->
+                {% endfor %}
+
+                
+
+
+
+            </div>
+            {% else %}
+                <h4>Not yet published</h4>
+                {% endif %}
+            <!-- main end -->
+
+          
+      </div>
+     
+      <!-- main-container end -->
+
+      
+      
+      <!-- footer start (Add "dark" class to #footer in order to enable dark footer) -->
+      <!-- ================ -->
+     {% endblock %}
